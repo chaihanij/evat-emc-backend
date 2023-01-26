@@ -32,5 +32,9 @@ func FilterUserCriteria(input *entities.UserFilter) *bson.M {
 		filter["activate_code"] = *input.ActivateCode
 	}
 
+	if input.AccessToken != nil {
+		filter["access_token"] = *input.AccessToken
+	}
+
 	return &filter
 }

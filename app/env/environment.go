@@ -18,6 +18,8 @@ var (
 	RsaPrivateKey         string
 	JwtTokenLife          string
 	EncryptKey            string
+	HttpClientTimeOut     time.Duration
+	RetryAttempts         int
 )
 
 func Init() {
@@ -45,5 +47,22 @@ func Init() {
 	RsaPrivateKey = os.Getenv("RSA_PRIVATE_KEY")
 	JwtTokenLife = os.Getenv("JWT_TOKEN_LIFE")
 	EncryptKey = os.Getenv("ENCRYPT_KEY")
+
+	HttpClientTimeOutStr := os.Getenv("HTTP_CLIENT_TIMEOUT")
+	if HttpClientTimeOutStr != "" {
+		d, err := strconv.ParseUint(HttpClientTimeOutStr, 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		HttpClientTimeOut = time.Duration(d) * time.Second
+	}
+	RetryAttemptsStr := os.Getenv("RETRY_ATTEMPTS")
+	if RetryAttemptsStr != "" {
+		i, err := strconv.Atoi(RetryAttemptsStr)
+		if err != nil {
+			panic(err)
+		}
+		RetryAttempts = i
+	}
 
 }

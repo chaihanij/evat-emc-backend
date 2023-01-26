@@ -17,13 +17,15 @@ import (
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 
 	// use case
-	_userUC "gitlab.com/chaihanij/evat/app/layers/usecase/users"
+	_userUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
+	//
+
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 
-	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middleware"
+	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 )
 
 // @title EVAT Service
@@ -33,6 +35,8 @@ import (
 // @BasePath {{evat-service}}
 
 func main() {
+	os.Setenv("TZ", "Asia/Bangkok")
+
 	env.Init()
 	logger.Init()
 	log.WithFields(log.Fields{
@@ -43,6 +47,14 @@ func main() {
 		"MONGODB_PASS":            env.MongoDBPass,
 		"MONGODB_REQUEST_TIMEOUT": env.MongoDBRequestTimeout,
 	}).Info("main")
+
+	log.WithFields(log.Fields{
+		"JWT_TOKEN_LIFE": env.JwtTokenLife,
+		"ENCRYPT_KEY":    env.EncryptKey,
+		"PUBLIC_KEY":     env.RsaPublicKey,
+		"PRIVAT_KEY":     env.RsaPrivateKey,
+	}).Info("main")
+
 	db := database.ConnectMongoDB()
 
 	// init repo
@@ -52,18 +64,19 @@ func main() {
 	userRepo.Config()
 
 	// usecase
-	userUsecase := _userUC.InitUseCase(userRepo)
-
+	userUseCase := _userUseCase.InitUseCase(userRepo)
 	ginEngine := gin.New()
 	ginEngine.Use(gin.Recovery())
 	ginEngine.Use(middlewares.CORSMiddleware())
 
+	// middlewares
+	authMiddleware := middlewares.InitAuthMiddleware(userUseCase)
 	// diliveries
 	// Health Check
 	_healthCheck.NewEndpointHTTPHandler(ginEngine)
 
 	// diliveries
-	_usersHttp.NewEndpointHttpHandler(ginEngine, userUsecase)
+	_usersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, userUseCase)
 
 	port := os.Getenv("PORT")
 	if port == "" {

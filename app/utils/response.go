@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"gitlab.com/chaihanij/evat/app/errors"
-	"gitlab.com/chaihanij/evat/app/types"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,11 +29,11 @@ const (
 )
 
 type BaseSuccessResponse struct {
-	StatusCode    int            `json:"statusCode" example:"1000"`
-	StatusMessage string         `json:"statusMessage" example:"Success"`
-	Timestamp     types.DateTime `json:"timestamp" example:"2015-06-30T21:59:59Z"`
-	Data          interface{}    `json:"data,omitempty"`
-	MetaData      interface{}    `json:"metaData,omitempty"`
+	StatusCode    int         `json:"statusCode" example:"1000"`
+	StatusMessage string      `json:"statusMessage" example:"Success"`
+	Timestamp     time.Time   `json:"timestamp" example:"2015-06-30T21:59:59Z"`
+	Data          interface{} `json:"data,omitempty"`
+	MetaData      interface{} `json:"metaData,omitempty"`
 }
 
 type BaseRedirectSuccess struct {
@@ -48,7 +47,7 @@ func JSONSuccessResponse(c *gin.Context, data interface{}) {
 	r := new(BaseSuccessResponse)
 	r.StatusCode = StatusCode1000
 	r.StatusMessage = StatusMessageSuccess
-	r.Timestamp = *types.NewDateTime(time.Now())
+	r.Timestamp = time.Now()
 	r.Data = data
 	c.AbortWithStatusJSON(http.StatusOK, *r)
 }
@@ -57,7 +56,7 @@ func JSONSuccessCodeWithMetaDataResponse(c *gin.Context, data interface{}, metaD
 	r := new(BaseSuccessResponse)
 	r.StatusCode = StatusCode1000
 	r.StatusMessage = StatusMessageSuccess
-	r.Timestamp = *types.NewDateTime(time.Now())
+	r.Timestamp = time.Now()
 	r.Data = data
 	r.MetaData = metaData
 	c.AbortWithStatusJSON(http.StatusOK, *r)
@@ -67,17 +66,17 @@ func NewSuccessResponse(data interface{}) BaseSuccessResponse {
 	r := BaseSuccessResponse{
 		StatusCode:    StatusCode1000,
 		StatusMessage: StatusMessageSuccess,
-		Timestamp:     *types.NewDateTime(time.Now()),
+		Timestamp:     time.Now(),
 		Data:          data,
 	}
 	return r
 }
 
 type ErrorResponse struct {
-	StatusCode    int            `json:"statusCode" example:"1001"`
-	StatusMessage string         `json:"statusMessage" example:"fail"`
-	Message       string         `json:"message" example:"error message will be show here"`
-	Timestamp     types.DateTime `json:"timestamp" example:"2015-06-30T21:59:59Z"`
+	StatusCode    int       `json:"statusCode" example:"1001"`
+	StatusMessage string    `json:"statusMessage" example:"fail"`
+	Message       string    `json:"message" example:"error message will be show here"`
+	Timestamp     time.Time `json:"timestamp" example:"2015-06-30T21:59:59Z"`
 }
 
 func NewErrorResponse(message string) ErrorResponse {
@@ -85,17 +84,17 @@ func NewErrorResponse(message string) ErrorResponse {
 		StatusCode:    StatusCode1002,
 		StatusMessage: StatusMassageFail,
 		Message:       message,
-		Timestamp:     *types.NewDateTime(time.Now()),
+		Timestamp:     time.Now(),
 	}
 	return r
 }
 
 type ErrorResponseData struct {
-	StatusCode    int            `json:"statusCode" example:"1001"`
-	StatusMessage string         `json:"statusMessage" example:"fail"`
-	Message       string         `json:"message" example:"error message will be show here"`
-	Timestamp     types.DateTime `json:"timestamp" example:"2015-06-30T21:59:59Z"`
-	Data          interface{}    `json:"data"`
+	StatusCode    int         `json:"statusCode" example:"1001"`
+	StatusMessage string      `json:"statusMessage" example:"fail"`
+	Message       string      `json:"message" example:"error message will be show here"`
+	Timestamp     time.Time   `json:"timestamp" example:"2015-06-30T21:59:59Z"`
+	Data          interface{} `json:"data"`
 }
 
 func JSONErrorResponse(c *gin.Context, err error) {
@@ -145,7 +144,7 @@ func JSONErrorResponse(c *gin.Context, err error) {
 		StatusCode:    statusCode,
 		StatusMessage: StatusMassageFail,
 		Message:       message,
-		Timestamp:     *types.NewDateTime(time.Now()),
+		Timestamp:     time.Now(),
 	}
 	c.AbortWithStatusJSON(httpStatusCode, errorResponse)
 }
@@ -194,7 +193,7 @@ func JSONErrorWithDataResponse(c *gin.Context, err error, data interface{}) {
 		StatusCode:    statusCode,
 		StatusMessage: StatusMassageFail,
 		Message:       message,
-		Timestamp:     *types.NewDateTime(time.Now()),
+		Timestamp:     time.Now(),
 		Data:          data,
 	}
 

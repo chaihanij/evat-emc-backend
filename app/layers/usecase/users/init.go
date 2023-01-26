@@ -12,9 +12,11 @@ type useCase struct {
 }
 
 type UseCase interface {
+	Login(ctx context.Context, input *entities.Login) (*entities.User, error)
+	//
 	CreateUser(ctx context.Context, input *entities.UserCreate) (*entities.User, error)
 	DeleteUser(ctx context.Context, input *entities.UserFilter) error
-	FindAllHubCredentials(ctx context.Context, input *entities.UserFilter) (*int64, []entities.User, error)
+	FindAllUser(ctx context.Context, input *entities.UserFilter) (*int64, []entities.User, error)
 	FindOneUser(ctx context.Context, input *entities.UserFilter) (*entities.User, error)
 	UpdateUser(ctx context.Context, filter *entities.UserFilter, input *entities.UserPartialUpdate) (*entities.User, error)
 }

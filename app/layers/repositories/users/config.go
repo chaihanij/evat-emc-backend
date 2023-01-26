@@ -22,7 +22,7 @@ func (r repo) Config() ([]string, error) {
 				Options: options.Index().SetUnique(true),
 			},
 			{
-				Keys:    bson.D{{Key: "email", Value: 1}},
+				Keys:    bson.D{{Key: "username", Value: 1}},
 				Options: options.Index().SetUnique(true),
 			},
 		},

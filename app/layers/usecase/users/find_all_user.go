@@ -28,7 +28,7 @@ func (u useCase) findAllUser(wg *sync.WaitGroup, ctx context.Context, input *ent
 	users <- result
 }
 
-func (u useCase) FindAllHubCredentials(ctx context.Context, input *entities.UserFilter) (*int64, []entities.User, error) {
+func (u useCase) FindAllUser(ctx context.Context, input *entities.UserFilter) (*int64, []entities.User, error) {
 	count := make(chan *int64, 1)
 	users := make(chan []entities.User, 1)
 	errors := make(chan error, 2)

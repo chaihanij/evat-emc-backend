@@ -17,6 +17,7 @@ func (r repo) PartialUpdateUser(ctx context.Context, userFilter *entities.UserFi
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
 	filter := models.FilterUserCriteria(userFilter)
 	statement := models.ToUpdateUserFields(userPartialUpdate)
+	log.WithField("statement", statement).Info("PartialUpdateUser")
 	var user models.User
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).

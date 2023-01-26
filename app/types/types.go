@@ -1,28 +1,14 @@
 package types
 
 import (
+	"reflect"
 	"regexp"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
 
-type UserType string
-
-const (
-	UserTypeAdviser   UserType = "ADVISER"
-	UserTypeMember    UserType = "MEMBER"
-	UserTypeCommittee UserType = "COMMMITEE"
-)
-
-func isValidUserType(fl validator.FieldLevel) bool {
-	status := UserType(fl.Field().String())
-	switch status {
-	case UserTypeAdviser, UserTypeMember, UserTypeCommittee:
-		return true
-	default:
-		return false
-	}
-}
+var Validate = validator.New()
 
 type UserRole string
 
@@ -80,23 +66,30 @@ func isValidatePasswordComplexity(fl validator.FieldLevel) bool {
 	return true
 }
 
-var Validate = validator.New()
-
-func init() {
-	_ = Validate.RegisterValidation("userType", isValidUserType)
-	_ = Validate.RegisterValidation("userRole", isValidUserRole)
-	_ = Validate.RegisterValidation("passwordComplexity", isValidatePasswordComplexity)
+func GetTagName(fld reflect.StructField) string {
+	name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+	if name == "-" {
+		return ""
+	}
+	return name
 }
 
 func MsgForTag(fe validator.FieldError) string {
 	switch fe.Tag() {
 	case "required":
-		return "This field is required"
+		return "field is required"
 	case "email":
-		return "Invalid email"
+		return "invalid email"
 	case "passwordComplexity":
-		return "Invalid email"
+		return "weak password"
+	case "userRole":
+		return "invalid role"
 	}
-
 	return fe.Error() // default error
+}
+
+func init() {
+	_ = Validate.RegisterValidation("userRole", isValidUserRole)
+	_ = Validate.RegisterValidation("passwordComplexity", isValidatePasswordComplexity)
+	Validate.RegisterTagNameFunc(GetTagName)
 }

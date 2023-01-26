@@ -13,7 +13,7 @@ import (
 
 func GetJwtToken(id *string, uuid *string, jwtMapName string, jwtMapValue string) (*string, error) {
 	if id == nil || uuid == nil {
-		return nil, errors.InternalError{Message: constants.UserIdMissing}
+		return nil, errors.InternalError{Message: constants.UserUIDMissing}
 	}
 	stringId := *id
 	idEnc, err := EncryptAES(stringId, env.EncryptKey)

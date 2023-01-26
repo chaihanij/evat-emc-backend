@@ -32,6 +32,7 @@ func GetPublicKey() (*rsa.PublicKey, error) {
 
 func GetPrivateKey() (*rsa.PrivateKey, error) {
 	data, _ := pem.Decode([]byte(env.RsaPrivateKey))
+
 	if data == nil {
 		return nil, errors.New("private key file is not in pem format")
 	}

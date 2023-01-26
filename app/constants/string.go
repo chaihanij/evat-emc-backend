@@ -1,5 +1,7 @@
 package constants
 
 const (
-	XYourOrganizeAuth = "x-YourOrganize-auth"
+	Authorization string = "Authorization"
+	Bearer        string = "Bearer"
+	JWTDataKey    string = "jwtData"
 )
