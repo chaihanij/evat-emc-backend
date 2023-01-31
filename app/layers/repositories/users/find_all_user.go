@@ -29,7 +29,7 @@ func (r repo) FindAllUser(ctx context.Context, input *entities.UserFilter) ([]en
 	defer cancel()
 
 	findOptions := r.getFindOptions(input)
-	filter := models.FilterUserCriteria(input)
+	filter := models.NewUserFilter(input)
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).
 		Find(ctx, filter, findOptions)

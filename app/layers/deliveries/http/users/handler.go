@@ -14,22 +14,25 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 	handler := &Handler{
 		UsersUseCase: usersUseCase,
 	}
+
 	v1 := ginEngine.Group("v1")
 	{
-		v1.POST("/users.login", handler.Login)
-		v1.POST("/users.forget-password", handler.ForgetPassword)
-		v1.POST("/users.reset-password-by-otp", handler.ResetPasswordByOTP)
+		v1.POST("/login", handler.Login)
+		v1.POST("/forget-password", handler.ForgetPassword)
+		v1.POST("/reset-password-by-otp", handler.ResetPasswordByOTP)
 
 	}
 
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
-		v1Auth.GET("/profile.one", handler.FineOneUserProfile)
-		v1Auth.POST("/profile.update", handler.UpdateUserProfile)
-		// ADMIN
-		v1Auth.GET("/users.all", handler.FinAllUser)
-		v1Auth.POST("/users.create", handler.CreateUser)
-		v1Auth.POST("/users.update", handler.UpdateUser)
-		v1Auth.POST("/users.delete/:uid", handler.DeleteUser)
+		v1Auth.GET("/users", handler.FindAllUser)
+		v1Auth.POST("/users", handler.CreateUser)
+		v1Auth.GET("/users/:uid", handler.FineOneUser)
+		v1Auth.PUT("/users/:uid", handler.UpdateUser)
+		v1Auth.DELETE("/users/:uid", handler.DeleteUser)
+
+		v1Auth.GET("/profiles", handler.FindOneUserProfile)
+		v1Auth.PUT("/profiles/:uid", handler.UpdateUserProfile)
+
 	}
 }

@@ -16,9 +16,9 @@ const LogFilePath = "logs/evat.log"
 
 func Init() {
 	if env.Debug {
+		log.SetFormatter(&log.JSONFormatter{TimestampFormat: time.RFC3339})
 		log.SetLevel(log.DebugLevel)
 		log.SetOutput(os.Stdout)
-		log.SetFormatter(&log.JSONFormatter{TimestampFormat: time.RFC3339})
 	} else {
 		lumberjackLogrotate := &lumberjack.Logger{
 			Filename:   LogFilePath,
@@ -31,6 +31,9 @@ func Init() {
 		logMultiWriter := io.MultiWriter(os.Stdout, lumberjackLogrotate)
 		log.SetOutput(logMultiWriter)
 	}
+	log.SetFormatter(&log.JSONFormatter{TimestampFormat: time.RFC3339})
+	log.SetLevel(log.DebugLevel)
+	log.SetOutput(os.Stdout)
 
 	log.WithFields(log.Fields{
 		"RuntimeVersion": runtime.Version(),

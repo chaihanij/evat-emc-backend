@@ -13,7 +13,7 @@ import (
 func (r repo) FindOneUser(ctx context.Context, input *entities.UserFilter) (*entities.User, error) {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	filter := models.FilterUserCriteria(input)
+	filter := models.NewUserFilter(input)
 	var user models.User
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).

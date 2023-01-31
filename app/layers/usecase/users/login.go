@@ -34,6 +34,10 @@ func (u useCase) Login(ctx context.Context, input *entities.Login) (*entities.Us
 		log.WithError(err).Errorln("GetJwtToken")
 		return nil, err
 	}
-
-	return u.UsersRepo.PartialUpdateUser(ctx, &filter, &entities.UserPartialUpdate{AccessToken: accessToken, LastLogin: pointer.ToTime(time.Now())})
+	partialUpdateUser := &entities.UserPartialUpdate{
+		Email:       pointer.ToString(input.Email),
+		AccessToken: accessToken,
+		LastLogin:   pointer.ToTime(time.Now()),
+	}
+	return u.UsersRepo.PartialUpdateUser(ctx, partialUpdateUser)
 }

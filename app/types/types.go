@@ -1,6 +1,8 @@
 package types
 
 import (
+	"errors"
+	"fmt"
 	"reflect"
 	"regexp"
 	"strings"
@@ -9,6 +11,23 @@ import (
 )
 
 var Validate = validator.New()
+
+type TeamType string
+
+const (
+	TeamTypePopulation TeamType = "POPULATION"
+	UserRoleStudent    TeamType = "STUDENT"
+)
+
+func isValidTeamType(fl validator.FieldLevel) bool {
+	status := TeamType(fl.Field().String())
+	switch status {
+	case TeamTypePopulation, UserRoleStudent:
+		return true
+	default:
+		return false
+	}
+}
 
 type UserRole string
 
@@ -23,6 +42,23 @@ func isValidUserRole(fl validator.FieldLevel) bool {
 	status := UserRole(fl.Field().String())
 	switch status {
 	case UserRoleSuperAdmin, UserRoleAdmin, UserRoleUSER, UserRoleCommittee:
+		return true
+	default:
+		return false
+	}
+}
+
+type MemberType string
+
+const (
+	MemberTypeMember MemberType = "MEMBER"
+	MemberTypeMentor MemberType = "MENTOR"
+)
+
+func isValidMemberType(fl validator.FieldLevel) bool {
+	status := MemberType(fl.Field().String())
+	switch status {
+	case MemberTypeMember, MemberTypeMentor:
 		return true
 	default:
 		return false
@@ -84,12 +120,37 @@ func MsgForTag(fe validator.FieldError) string {
 		return "weak password"
 	case "userRole":
 		return "invalid role"
+	case "teamType":
+		return "invalid type"
 	}
 	return fe.Error() // default error
 }
 
+func HandleValidateError(err error, req interface{}) error {
+	var ve validator.ValidationErrors
+	if errors.As(err, &ve) {
+		for _, fe := range ve {
+			fieldName := fe.Field()
+			field, ok := reflect.TypeOf(req).Elem().FieldByName(fieldName)
+			if ok {
+				fieldName, ok := field.Tag.Lookup("json")
+				if ok {
+					msg := fmt.Sprintf("%s %s", fieldName, MsgForTag(fe))
+					return errors.New(msg)
+				}
+			} else {
+				msg := fmt.Sprintf("%s %s", fieldName, MsgForTag(fe))
+				return errors.New(msg)
+			}
+		}
+	}
+	return nil
+}
+
 func init() {
+	_ = Validate.RegisterValidation("teamType", isValidTeamType)
 	_ = Validate.RegisterValidation("userRole", isValidUserRole)
+	_ = Validate.RegisterValidation("memberType", isValidMemberType)
 	_ = Validate.RegisterValidation("passwordComplexity", isValidatePasswordComplexity)
 	Validate.RegisterTagNameFunc(GetTagName)
 }

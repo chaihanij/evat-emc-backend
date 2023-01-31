@@ -6,7 +6,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/utils"
 )
 
-func (h *Handler) FinAllUser(c *gin.Context) {
+func (h *Handler) FindAllUser(c *gin.Context) {
 	request, err := new(dtos.FindAllUserRequestJSON).Parse(c)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)

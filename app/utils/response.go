@@ -129,7 +129,7 @@ func JSONErrorResponse(c *gin.Context, err error) {
 		statusCode = StatusCode1006
 		message = err.Error()
 	case errors.DuplicateKeyError:
-		httpStatusCode = http.StatusInternalServerError
+		httpStatusCode = http.StatusConflict
 		statusCode = StatusCode1007
 		message = err.Error()
 	case errors.HttpClientError:

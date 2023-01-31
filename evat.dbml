@@ -1,0 +1,203 @@
+
+Table files {
+    _id                 string
+    uuid                string PK
+    original_filename   string
+    filename            string
+    file_extension      string
+    created_at          timestamp
+    updated_at          timestamp
+    created_by          string
+    updated_by          string
+}
+
+Enum team_type {
+  POPULATION
+  STUDENT
+}
+
+Table teams {
+    _id                 string
+    uuid                string PK
+    code                string
+    name                string
+    team_type           team_type
+    detail              string
+    year                string
+    created_at          timestamp
+    updated_at          timestamp
+    created_by          string
+    updated_by          string
+}
+
+Enum role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+  COMMMITEE
+}
+
+
+Table users {
+  _id             string
+  uid             string PK
+  username        string
+  email           string
+  first_name      string
+  last_name       string
+  tel             string
+  role            string
+  password        string
+  year            string
+  team_uuid       string [ref: - teams.uuid]
+  is_email_verify boolean
+  activate_code   string
+  access_token    string
+  is_active       string
+  last_login      timestamp
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Enum member_type {
+  MENTOR
+  MEMBER
+}
+
+Table members {
+  _id             string
+  uuid            string PK 
+  first_name      string
+  last_name       string
+  address         string
+  email           string  
+  tel             string
+  academy         string
+  year            string
+  member_type     member_type
+  is_team_leader  bool
+  team_uuid       string [ref: > teams.uuid]
+  documents       string [ref: < files.uuid]
+  image           string [ref: - files.uuid]
+  last_login      timestamp
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+
+Table assignments {
+  _id             string
+  uuid            string PK
+  no              int
+  title           string
+  description     string 
+  image           string [ref: < files.uuid]
+  file            string
+  full_score      float
+  is_active       bool
+  due_date        timestamp
+  year            string
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table assignments_teams {
+  _id             string
+  uuid            string PK
+  assignment_uuid string [ref: > assignments.uuid]
+  team_uuid       string [ref: > teams.uuid]
+  description     string
+  documents       string [ref: < files.uuid]
+  score           float
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table field_races {
+  _id             string
+  uuid            string PK
+  no              int
+  title           string
+  detial          string
+  image           string [ref: < files.uuid]
+  file            string
+  full_score      float
+  year            string
+  is_active       bool
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table field_races_teams {
+  _id             string
+  uuid            string PK
+  field_race_uuid string [ref: > field_races.uuid]
+  team_uuid       string [ref: > teams.uuid]
+  score           float
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table announcements {
+  _id             string
+  uuid            string PK
+  title           string
+  description     string
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+
+Table announcements_teams {
+  _id                string
+  uuid               string PK
+  announcement_uuid  string
+  team_uuid          string
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table albums {
+  _id             string
+  uuid            string PK
+  title           string
+  year            string
+  images          string  [ref: < files.uuid]
+  created_at      timestamp
+  updated_at      timestamp
+  created_by      string
+  updated_by      string
+}
+
+Table config {
+  _id                 string
+  uuid                string PK
+  is_open_menu_first  bool
+  is_open_menu_second bool
+  is_open_menu_third  bool
+  is_open_menu_fourth bool
+  is_open_menu_fifth  bool
+  is_open_menu_sixth  bool
+  address             string
+  email               string
+  facebook_url        string
+  twitter_url         string
+  instagram_url       string
+  youtube_url         string
+}

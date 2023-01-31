@@ -14,7 +14,7 @@ import (
 func (r repo) DeleteUser(ctx context.Context, input *entities.UserFilter) error {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	filter := models.FilterUserCriteria(input)
+	filter := models.NewUserFilter(input)
 	res, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).
 		DeleteOne(ctx, filter)

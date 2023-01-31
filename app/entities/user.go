@@ -2,23 +2,22 @@ package entities
 
 import (
 	"time"
-
-	"gitlab.com/chaihanij/evat/app/types"
 )
 
 type User struct {
 	ID            string
-	Username      string
 	UID           string
+	Username      string
 	Email         string
 	FirstName     string
 	LastName      string
 	Address       string
 	Tel           string
-	Role          types.UserRole
+	Role          string
 	Password      string
 	Year          string
-	TeamUID       string
+	TeamUUID      string
+	Team          interface{}
 	IsEmailVerify bool
 	ActivateCode  string
 	AccessToken   string
@@ -26,23 +25,8 @@ type User struct {
 	LastLogin     time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
-}
-
-type UserCreate struct {
-	Username      string
-	Email         string
-	FirstName     *string
-	LastName      *string
-	Address       *string
-	Tel           *string
-	Role          *types.UserRole
-	Password      *string
-	Year          *string
-	TeamUID       *string
-	IsEmailVerify *bool
-	ActivateCode  *string
-	AccessToken   *string
-	IsActive      *bool
+	CreatedBy     string
+	UpdatedBy     string
 }
 
 type UserMinimalCreate struct {
@@ -51,35 +35,37 @@ type UserMinimalCreate struct {
 }
 
 type UserPartialUpdate struct {
-	UID           *string
+	ID            *string
+	UID           string
 	Username      *string
 	Email         *string
 	FirstName     *string
 	LastName      *string
 	Address       *string
 	Tel           *string
-	Role          *types.UserRole
+	Role          *string
 	Password      *string
 	Year          *string
-	TeamUID       *string
+	TeamUUID      *string
 	IsEmailVerify *bool
 	ActivateCode  *string
 	AccessToken   *string
 	IsActive      *bool
 	LastLogin     *time.Time
+	UpdatedBy     *string
 }
 
 type UserFilter struct {
-	UID   *string
-	Email *string
-	Year  *string
-
+	UID           *string
+	Email         *string
+	Year          *string
 	IsEmailVerify *bool
 	IsActive      *bool
 	ActivateCode  *string
 	AccessToken   *string
-	Page          *int64
-	PageSize      *int64
+
+	Page     *int64
+	PageSize *int64
 }
 
 type ResetPassword struct {

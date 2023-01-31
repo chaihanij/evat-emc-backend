@@ -14,7 +14,7 @@ func (r repo) CountUser(ctx context.Context, input *entities.UserFilter) (*int64
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-	filter := models.FilterUserCriteria(input)
+	filter := models.NewUserFilter(input)
 	count, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).
 		CountDocuments(ctx, filter)

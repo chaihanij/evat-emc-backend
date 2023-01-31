@@ -1,13 +1,9 @@
 package dtos
 
 import (
-	_errors "errors"
-	"fmt"
-	"reflect"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
 	"gitlab.com/chaihanij/evat/app/types"
@@ -25,28 +21,12 @@ type UpdateUserProfileRequestJSON struct {
 
 func (req *UpdateUserProfileRequestJSON) Parse(c *gin.Context) (*UpdateUserProfileRequestJSON, error) {
 
-	err := c.ShouldBindJSON(req)
-	if err != nil {
+	if err := c.ShouldBindJSON(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
-	err = types.Validate.Struct(req)
-	if err != nil {
-		var ve validator.ValidationErrors
-		if _errors.As(err, &ve) {
-			for _, fe := range ve {
-				fieldName := fe.Field()
-				field, ok := reflect.TypeOf(req).Elem().FieldByName(fieldName)
-				if ok {
-					fieldName, ok := field.Tag.Lookup("json")
-					if ok {
-						msg := fmt.Sprintf("%s %s", fieldName, types.MsgForTag(fe))
-						return nil, errors.ParameterError{Message: msg}
-					}
-				} else {
-					msg := fmt.Sprintf("%s %s", fieldName, types.MsgForTag(fe))
-					return nil, errors.ParameterError{Message: msg}
-				}
-			}
+	if err := types.Validate.Struct(req); err != nil {
+		if err := types.HandleValidateError(err, req); err != nil {
+			return nil, errors.ParameterError{Message: err.Error()}
 		}
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
@@ -55,9 +35,8 @@ func (req *UpdateUserProfileRequestJSON) Parse(c *gin.Context) (*UpdateUserProfi
 }
 
 func (req *UpdateUserProfileRequestJSON) ToEntity() *entities.UserPartialUpdate {
-
 	return &entities.UserPartialUpdate{
-		UID:       &req.UID,
+		UID:       req.UID,
 		Username:  req.Username,
 		Email:     req.Email,
 		FirstName: req.FirstName,

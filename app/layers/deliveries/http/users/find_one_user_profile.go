@@ -6,7 +6,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/utils"
 )
 
-func (h *Handler) FineOneUserProfile(c *gin.Context) {
+func (h *Handler) FindOneUserProfile(c *gin.Context) {
 	request, err := new(dtos.FindOneUserProfileRequestJSON).Parse(c)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)

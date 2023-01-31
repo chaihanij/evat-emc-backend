@@ -14,15 +14,23 @@ import (
 	"gitlab.com/chaihanij/evat/app/logger"
 
 	// repo
+
+	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
+	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
+	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 
 	// use case
+	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
+	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_userUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 	//
 
+	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
+	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
@@ -46,26 +54,36 @@ func main() {
 		"MONGODB_USER":            env.MongoDBUser,
 		"MONGODB_PASS":            env.MongoDBPass,
 		"MONGODB_REQUEST_TIMEOUT": env.MongoDBRequestTimeout,
-	}).Info("main")
+	}).Debugln("main")
 
 	log.WithFields(log.Fields{
 		"JWT_TOKEN_LIFE": env.JwtTokenLife,
 		"ENCRYPT_KEY":    env.EncryptKey,
 		"PUBLIC_KEY":     env.RsaPublicKey,
 		"PRIVAT_KEY":     env.RsaPrivateKey,
-	}).Info("main")
+	}).Debugln("main")
 
 	db := database.ConnectMongoDB()
 
 	// init repo
+	filesRepo := _filesRepo.InitRepo(db)
+	membersRepo := _membersRepo.InitRepo(db)
+	teamsRepo := _teamsRepo.InitRepo(db)
 	userRepo := _userRepo.InitRepo(db)
 
 	// config repo
+	filesRepo.Config()
+	membersRepo.Config()
+	teamsRepo.Config()
 	userRepo.Config()
 
 	// usecase
 	userUseCase := _userUseCase.InitUseCase(userRepo)
+	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo)
+	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
+	//
 	ginEngine := gin.New()
+	ginEngine.Use(gin.Logger())
 	ginEngine.Use(gin.Recovery())
 	ginEngine.Use(middlewares.CORSMiddleware())
 
@@ -77,6 +95,8 @@ func main() {
 
 	// diliveries
 	_usersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, userUseCase)
+	_teamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, teamsUseCase)
+	_membersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, memberUseCase)
 
 	port := os.Getenv("PORT")
 	if port == "" {

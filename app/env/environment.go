@@ -3,6 +3,7 @@ package env
 import (
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 )
@@ -20,6 +21,8 @@ var (
 	EncryptKey            string
 	HttpClientTimeOut     time.Duration
 	RetryAttempts         int
+	DataPath              string
+	LogPath               string
 )
 
 func Init() {
@@ -63,6 +66,18 @@ func Init() {
 			panic(err)
 		}
 		RetryAttempts = i
+	}
+
+	DataPath = os.Getenv("DATA_PATH")
+	if DataPath == "" {
+		current, _ := os.Getwd()
+		DataPath = filepath.Join(current, "data")
+	}
+
+	LogPath = os.Getenv("LOG_PATH")
+	if LogPath == "" {
+		current, _ := os.Getwd()
+		LogPath = filepath.Join(current, "logs")
 	}
 
 }

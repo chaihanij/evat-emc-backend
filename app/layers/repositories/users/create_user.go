@@ -10,10 +10,10 @@ import (
 	"gitlab.com/chaihanij/evat/app/layers/repositories/users/models"
 )
 
-func (r repo) CreateUser(ctx context.Context, e *entities.UserCreate) (*entities.User, error) {
+func (r repo) CreateUser(ctx context.Context, input *entities.User) (*entities.User, error) {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	user := new(models.User).ParseToModel(e)
+	user := models.NewUser(input)
 	result, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).
 		InsertOne(ctx, user)
