@@ -15,25 +15,29 @@ import (
 )
 
 type UpdateMemberImageRequest struct {
-	MemberUUID       string                `json:"-" uri:"member_uuid" binding:"required,uuid"`
-	Image            *multipart.FileHeader `json:"-" form:"image" binding:"required"`
-	OriginalFileName string                `json:"-" swaggerignore:"true"`
-	FileName         string                `json:"-" swaggerignore:"true"`
-	FileExtension    string                `json:"-" swaggerignore:"true"`
-	FilePath         string                `json:"-" swaggerignore:"true"`
+	MemberUUID       string                `uri:"member_uuid" binding:"required,uuid"`
+	Image            *multipart.FileHeader `form:"image"`
+	OriginalFileName string                `swaggerignore:"true"`
+	FileName         string                `swaggerignore:"true"`
+	FileExtension    string                `swaggerignore:"true"`
+	FileFullPath     string                `swaggerignore:"true"`
+	FilePath         string                `swaggerignore:"true"`
 }
 
 func (req *UpdateMemberImageRequest) Parse(c *gin.Context) (*UpdateMemberImageRequest, error) {
-	if err := c.ShouldBind(req); err != nil {
+	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
-	log.WithField("value", req).Debugln("UpdateMemberImageRequest After ShouldBind Request")
+	image, err := c.FormFile("image")
+	if err != nil {
+		return nil, errors.InternalError{Message: err.Error()}
+	}
+	req.Image = image
 
 	fileExt := filepath.Ext(req.Image.Filename)
 	originalFileName := strings.TrimSuffix(filepath.Base(req.Image.Filename), filepath.Ext(req.Image.Filename))
-	now := time.Now()
-	filename := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", now.Unix()) + fileExt
-	dst := filepath.Join(env.DataPath, "members", "image", filename)
+	filename := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", time.Now().Unix()) + fileExt
+	dst := filepath.Join(env.DataPath, "members", "images", filename)
 	if err := c.SaveUploadedFile(req.Image, dst); err != nil {
 		log.WithError(err).Debugln("UpdateMemberImageRequest Parse Error")
 		return nil, errors.InternalError{Message: err.Error()}
@@ -41,16 +45,19 @@ func (req *UpdateMemberImageRequest) Parse(c *gin.Context) (*UpdateMemberImageRe
 	req.OriginalFileName = originalFileName
 	req.FileName = filename
 	req.FileExtension = fileExt
-	req.FilePath = dst
-	log.WithField("value", req).Debugln("UpdateMemberImageRequest Parse")
+	req.FilePath = filepath.Join("members", "images", filename)
+	req.FileFullPath = dst
+	log.WithField("value", req).Debugln("UpdateMemberImageRequest")
 	return req, nil
 }
 
 func (req *UpdateMemberImageRequest) ToEntity() *entities.File {
+	log.WithField("value", req).Debugln("UpdateMemberImageRequest ToEntity")
 	return &entities.File{
 		OriginalFileName: req.OriginalFileName,
 		FileName:         req.FileName,
 		FileExtension:    req.FileExtension,
+		FileFullPath:     req.FileFullPath,
 		FilePath:         req.FilePath,
 	}
 }

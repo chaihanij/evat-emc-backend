@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 
@@ -21,14 +22,16 @@ import (
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 
 	// use case
+	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
-	_userUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
+	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 	//
 
+	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
@@ -41,7 +44,6 @@ import (
 // @description Evat Service.
 // @contact.name chaihanij@gmail.com
 // @BasePath {{evat-service}}
-
 func main() {
 	os.Setenv("TZ", "Asia/Bangkok")
 
@@ -62,6 +64,13 @@ func main() {
 		"PUBLIC_KEY":     env.RsaPublicKey,
 		"PRIVAT_KEY":     env.RsaPrivateKey,
 	}).Debugln("main")
+	// Create data dir
+	memberImagesDir := filepath.Join(env.DataPath, "members", "images")
+	os.MkdirAll(memberImagesDir, os.ModePerm)
+	memberDoucmentsDir := filepath.Join(env.DataPath, "members", "documents")
+	os.MkdirAll(memberDoucmentsDir, os.ModePerm)
+	memberAssignmentsDir := filepath.Join(env.DataPath, "assignments")
+	os.MkdirAll(memberAssignmentsDir, os.ModePerm)
 
 	db := database.ConnectMongoDB()
 
@@ -78,9 +87,11 @@ func main() {
 	userRepo.Config()
 
 	// usecase
-	userUseCase := _userUseCase.InitUseCase(userRepo)
+	userUseCase := _usersUseCase.InitUseCase(userRepo)
 	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
+	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
+
 	//
 	ginEngine := gin.New()
 	ginEngine.Use(gin.Logger())
@@ -97,7 +108,7 @@ func main() {
 	_usersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, userUseCase)
 	_teamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, teamsUseCase)
 	_membersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, memberUseCase)
-
+	_filesHttp.NewEndpointHttpHandler(ginEngine, filesUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

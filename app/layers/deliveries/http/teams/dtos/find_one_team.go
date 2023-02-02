@@ -28,7 +28,7 @@ func (req *FindOneTeamRequestJSON) ToEntity() *entities.TeamFilter {
 
 type FindOneTeamResponseJSON TeamResponse
 
-func (m *FindOneTeamResponseJSON) Parse(input *entities.Team) *FindOneTeamResponseJSON {
+func (m *FindOneTeamResponseJSON) Parse(c *gin.Context, input *entities.Team) *FindOneTeamResponseJSON {
 	teams := &FindOneTeamResponseJSON{
 		UUID:      input.UUID,
 		Code:      input.Code,
@@ -42,24 +42,22 @@ func (m *FindOneTeamResponseJSON) Parse(input *entities.Team) *FindOneTeamRespon
 		CreatedBy: input.CreatedBy,
 		UpdatedBy: input.UpdatedBy,
 	}
-	if value, ok := input.Members.(entities.Members); ok {
+
+	if value, ok := input.Members.([]entities.Member); ok {
 		var members MembersResponse
 		for _, m := range value {
 			var member MemberResponse
-			copier.Copy(member, m)
+			copier.Copy(&member, m)
 			if val, ok := m.Image.(entities.File); ok {
-				var image FileResponse
-				copier.Copy(image, val)
-				member.Image = &image
+				member.Image = new(FileResponse).Parse(c, &val)
 			} else {
 				member.Image = nil
 			}
-			if val, ok := m.Documents.(entities.Files); ok {
+			if val, ok := m.Documents.([]entities.File); ok {
 				var documents FilesResponse
 				for _, value := range val {
-					var document FileResponse
-					copier.Copy(document, value)
-					documents = append(documents, document)
+					document := new(FileResponse).Parse(c, &value)
+					documents = append(documents, *document)
 				}
 				member.Documents = &documents
 			} else {

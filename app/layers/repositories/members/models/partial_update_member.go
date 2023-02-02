@@ -11,17 +11,8 @@ import (
 func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 
 	updateFields := bson.D{
-		bson.E{Key: "firstname", Value: input.FirstName},
-		bson.E{Key: "lastname", Value: input.LastName},
-		bson.E{Key: "address", Value: input.Address},
-		bson.E{Key: "email", Value: input.Email},
-		bson.E{Key: "tel", Value: input.Tel},
-		bson.E{Key: "academy", Value: input.Academy},
-		bson.E{Key: "year", Value: input.Year},
-		bson.E{Key: "member_type", Value: input.MemberType},
-		bson.E{Key: "is_team_leader", Value: input.IsTeamLeader},
-		bson.E{Key: "team_uuid", Value: input.TeamUUID},
 		bson.E{Key: "updated_at", Value: time.Now()},
+		bson.E{Key: "updated_by", Value: input.UpdatedBy},
 	}
 
 	if input.FirstName != nil {
@@ -33,7 +24,7 @@ func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 	}
 
 	if input.Address != nil {
-		updateFields = append(updateFields, bson.E{Key: "address", Value: input.Academy})
+		updateFields = append(updateFields, bson.E{Key: "address", Value: input.Address})
 	}
 
 	if input.Email != nil {

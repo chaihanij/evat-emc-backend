@@ -8,7 +8,7 @@ import (
 )
 
 func NewMemberFilter(input interface{}) *bson.M {
-	var filter bson.M
+	var filter bson.M = bson.M{}
 	if val, ok := input.(*entities.Member); ok {
 		if val.UUID != "" {
 			filter["uuid"] = val.UUID

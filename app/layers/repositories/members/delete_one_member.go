@@ -17,7 +17,7 @@ func (r repo) DeleteOneMemeber(ctx context.Context, input *entities.MemberFilter
 	defer cancel()
 	filter := models.NewMemberFilter(input)
 	result, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionTeams).
+		Collection(constants.CollectionMembers).
 		DeleteOne(ctx, filter, nil)
 
 	if err != nil {

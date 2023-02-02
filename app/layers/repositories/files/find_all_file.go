@@ -10,20 +10,25 @@ import (
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files/models"
 )
 
-func (r repo) FindOneFile(ctx context.Context, input interface{}) (*entities.File, error) {
+func (r repo) FindAllFile(ctx context.Context, input interface{}) ([]entities.File, error) {
 	log.Debugln("FindOneFile")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 	filter := models.NewFileFilter(input)
-	var file models.File
-	err := r.MongoDBClient.Database(env.MongoDBName).
+	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionFiles).
-		FindOne(ctx, filter, nil).
-		Decode(&file)
+		Find(ctx, filter, nil)
+
 	if err != nil {
-		log.WithError(err).Errorln("DB FindOneFile Error")
+		log.WithError(err).Errorln("DB FindAllFile Error")
 		return nil, err
 	}
-	log.WithField("value", file).Debugln("FindOneFile")
-	return file.ToEntity(), nil
+	var files models.Files
+	err = cursor.All(ctx, &files)
+	if err != nil {
+		log.WithError(err).Errorln("DB FindAllFile Error")
+		return nil, err
+	}
+	log.WithField("value", files).Debugln("DB FindAllFile")
+	return files.ToEntity(), nil
 }

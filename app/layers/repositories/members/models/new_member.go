@@ -21,8 +21,10 @@ func NewMember(input *entities.Member) *Member {
 		Academy:    input.Academy,
 		Year:       input.Year,
 		MemberType: input.MemberType,
+		Documents:  []string{},
 		CreatedAt:  now,
 		UpdatedAt:  now,
+		CreatedBy:  input.CreatedBy,
 	}
 	if val, ok := input.Image.(string); ok {
 		member.Image = val

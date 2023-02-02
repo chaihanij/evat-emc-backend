@@ -8,6 +8,7 @@ type File struct {
 	OriginalFileName string
 	FileName         string
 	FileExtension    string
+	FileFullPath     string
 	FilePath         string
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
@@ -21,4 +22,5 @@ type FileFilter struct {
 	OriginalFileName *string
 	FileName         *string
 	FilePath         *string
+	UUIDs            []string
 }

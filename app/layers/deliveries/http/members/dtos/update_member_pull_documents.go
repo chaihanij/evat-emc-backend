@@ -8,12 +8,12 @@ import (
 )
 
 type UpdateMemberPullDocumentRequest struct {
-	UUID         string `json:"-" uri:"member_uuid" binding:"required,uuid"`
-	DocumentUUID string `json:"-" uri:"document_uuid" binding:"required,uuid"`
+	UUID         string `uri:"member_uuid" binding:"required,uuid"`
+	DocumentUUID string `uri:"document_uuid" binding:"required,uuid"`
 }
 
 func (req *UpdateMemberPullDocumentRequest) Parse(c *gin.Context) (*UpdateMemberPullDocumentRequest, error) {
-	if err := c.ShouldBind(req); err != nil {
+	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
 	return req, nil

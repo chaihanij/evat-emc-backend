@@ -29,21 +29,18 @@ func (req *FindOneMemberRequest) ToEntity() *entities.MemberFilter {
 
 type FindOneMemberResponseJSON MemberResponse
 
-func (res *FindOneMemberResponseJSON) Parse(input *entities.Member) *FindOneMemberResponseJSON {
+func (res *FindOneMemberResponseJSON) Parse(c *gin.Context, input *entities.Member) *FindOneMemberResponseJSON {
 	copier.Copy(res, input)
 	if val, ok := input.Image.(entities.File); ok {
-		var image FileResponse
-		copier.Copy(image, val)
-		res.Image = &image
+		res.Image = new(FileResponse).Parse(c, &val)
 	} else {
 		res.Image = nil
 	}
-	if val, ok := input.Documents.(entities.Files); ok {
+	if val, ok := input.Documents.([]entities.File); ok {
 		var documents FilesResponse
 		for _, value := range val {
-			var document FileResponse
-			copier.Copy(document, value)
-			documents = append(documents, document)
+			document := new(FileResponse).Parse(c, &value)
+			documents = append(documents, *document)
 		}
 		res.Documents = &documents
 	} else {

@@ -17,6 +17,6 @@ func (h *Handler) FindOneMember(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.FindOneMemberResponseJSON).Parse(res)
+	responseData := new(dtos.FindOneMemberResponseJSON).Parse(c, res)
 	utils.JSONSuccessResponse(c, responseData)
 }

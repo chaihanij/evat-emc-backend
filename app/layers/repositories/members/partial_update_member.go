@@ -20,7 +20,7 @@ func (r repo) PartialUpdateMember(ctx context.Context, input *entities.MemberPar
 	update := models.PartialUpdateMember(input)
 	var member models.Member
 	err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionUsers).
+		Collection(constants.CollectionMembers).
 		FindOneAndUpdate(ctx, filter, update, opts).
 		Decode(&member)
 	if err != nil {

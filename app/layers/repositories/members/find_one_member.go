@@ -17,7 +17,7 @@ func (r repo) FindOneMember(ctx context.Context, input *entities.MemberFilter) (
 	filter := models.NewMemberFilter(input)
 	var member models.Member
 	err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionUsers).
+		Collection(constants.CollectionMembers).
 		FindOne(ctx, filter, nil).
 		Decode(&member)
 	if err != nil {

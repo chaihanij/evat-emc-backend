@@ -18,6 +18,6 @@ func (h *Handler) UpdateMemberImage(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.FileResponse).Parse(res)
+	responseData := new(dtos.FileResponse).Parse(c, res)
 	utils.JSONSuccessResponse(c, responseData)
 }

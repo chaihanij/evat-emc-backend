@@ -18,6 +18,6 @@ func (h *Handler) FinOneTeam(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.FindOneTeamResponseJSON).Parse(team)
+	responseData := new(dtos.FindOneTeamResponseJSON).Parse(c, team)
 	utils.JSONSuccessResponse(c, responseData)
 }

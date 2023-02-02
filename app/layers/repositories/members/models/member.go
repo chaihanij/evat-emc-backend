@@ -25,6 +25,8 @@ type Member struct {
 	Documents    []string           `bson:"documents"`
 	CreatedAt    time.Time          `bson:"created_at"`
 	UpdatedAt    time.Time          `bson:"updated_at"`
+	CreatedBy    string             `bson:"created_by"`
+	UpdatedBy    string             `bson:"updated_by"`
 }
 
 func (m *Member) ToEntity() (*entities.Member, error) {

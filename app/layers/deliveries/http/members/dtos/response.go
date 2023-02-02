@@ -1,24 +1,33 @@
 package dtos
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
 )
 
 type FileResponse struct {
-	UUID             string    `json:"uuid"`
-	OriginalFileName string    `json:"originalFileName"`
-	FileName         string    `json:"fileName"`
-	FileExtension    string    `json:"fileExtension"`
-	FilePath         string    `json:"filePath"`
-	CreatedAt        time.Time `json:"createdAt"`
-	UpdatedAt        time.Time `json:"updatedAt"`
+	URL              string `json:"url"`
+	UUID             string `json:"uuid"`
+	OriginalFileName string `json:"originalFileName"`
+	FileName         string `json:"fileName"`
+	// FileExtension    string    `json:"fileExtension"`
+	// FilePath         string    `json:"filePath"`
+	// FileFullPath     string    `json:"fileFullPath"`
+	// CreatedAt        time.Time `json:"createdAt"`
+	// UpdatedAt        time.Time `json:"updatedAt"`
 }
 
-func (file *FileResponse) Parse(data *entities.File) *FileResponse {
+func (file *FileResponse) Parse(c *gin.Context, data *entities.File) *FileResponse {
 	copier.Copy(file, data)
+	scheme := "http"
+	if c.Request.TLS != nil {
+		scheme = "https"
+	}
+	file.URL = fmt.Sprintf("%s://%s/v1/files/%s", scheme, c.Request.Host, data.UUID)
 	return file
 }
 

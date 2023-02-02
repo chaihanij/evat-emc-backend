@@ -14,7 +14,7 @@ import (
 func (r repo) CreateFile(ctx context.Context, input *entities.File) (*entities.File, error) {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	file := models.NewFile(input.OriginalFileName, input.FileName, input.FileExtension, input.FileName)
+	file := models.NewFile(input.OriginalFileName, input.FileName, input.FileExtension, input.FilePath, input.FileFullPath)
 	result, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionFiles).
 		InsertOne(ctx, file)

@@ -18,10 +18,11 @@ func (r repo) PushDocument(ctx context.Context, uuid string, input string) (*ent
 	defer cancel()
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
 	filter := bson.M{"uuid": uuid}
+	log.WithField("filter", filter).Debugln("PushDocument filter")
 	update := models.PushDocument(input)
 	var member models.Member
 	err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionUsers).
+		Collection(constants.CollectionMembers).
 		FindOneAndUpdate(ctx, filter, update, opts).
 		Decode(&member)
 	if err != nil {
@@ -41,7 +42,7 @@ func (r repo) PullDocument(ctx context.Context, uuid string, input string) (*ent
 	update := models.PullDocument(input)
 	var member models.Member
 	err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionUsers).
+		Collection(constants.CollectionMembers).
 		FindOneAndUpdate(ctx, filter, update, opts).
 		Decode(&member)
 	if err != nil {

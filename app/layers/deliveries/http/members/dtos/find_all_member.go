@@ -40,7 +40,7 @@ func (req *FindAllMemberRequest) ToEntity() *entities.MemberFilter {
 type FindAllMemberResponseJSON []MemberResponse
 
 func (res *FindAllMemberResponseJSON) Parse(input []entities.Member) *FindAllMemberResponseJSON {
-	var members FindAllMemberResponseJSON
+	var members FindAllMemberResponseJSON = FindAllMemberResponseJSON{}
 	for _, value := range input {
 		var member MemberResponse
 		copier.Copy(&member, value)

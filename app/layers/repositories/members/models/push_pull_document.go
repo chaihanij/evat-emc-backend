@@ -6,17 +6,21 @@ import (
 )
 
 func PushDocument(documentId string) *bson.M {
-	update := &bson.M{
-		"$push": bson.E{Key: "documents", Value: documentId},
+	update := bson.M{
+		"$addToSet": bson.M{
+			"documents": documentId,
+		},
 	}
 	log.WithField("value", update).Debugln("models.PushDocument")
-	return update
+	return &update
 }
 
 func PullDocument(documentId string) *bson.M {
-	update := &bson.M{
-		"$pull": bson.E{Key: "documents", Value: documentId},
+	update := bson.M{
+		"$pull": bson.M{
+			"documents": documentId,
+		},
 	}
 	log.WithField("value", update).Debugln("models.PullDocument")
-	return update
+	return &update
 }

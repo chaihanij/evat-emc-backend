@@ -12,11 +12,13 @@ func (h *Handler) FindAllMember(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	res, err := h.MemberUseCase.FindOneMember(c.Request.Context(), request.ToEntity())
+	totalRecords, members, err := h.MemberUseCase.FindAllMember(c.Request.Context(), request.ToEntity())
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.CreateMemberResponseJSON).Parse(res)
-	utils.JSONSuccessResponse(c, responseData)
+	responseData := new(dtos.FindAllMemberResponseJSON).Parse(members)
+	metaData := new(dtos.MetaDataResponse).Parse(request.Page, request.PageSize, totalRecords)
+	utils.JSONSuccessCodeWithMetaDataResponse(c, responseData, metaData)
+
 }

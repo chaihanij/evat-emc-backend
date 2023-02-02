@@ -15,26 +15,30 @@ import (
 )
 
 type UpdateMemberPushDocumentRequest struct {
-	MemberUUID string                `json:"-" uri:"member_uuid" binding:"required,uuid"`
-	Document   *multipart.FileHeader `form:"document" binding:"required"`
+	MemberUUID string                `uri:"member_uuid" binding:"required,uuid"`
+	Document   *multipart.FileHeader `form:"document"`
 
-	OriginalFileName string `json:"-" swaggerignore:"true"`
-	FileName         string `json:"-" swaggerignore:"true"`
-	FileExtension    string `json:"-" swaggerignore:"true"`
-	FilePath         string `json:"-" swaggerignore:"true"`
+	OriginalFileName string `swaggerignore:"true"`
+	FileName         string `swaggerignore:"true"`
+	FileExtension    string `swaggerignore:"true"`
+	FileFullPath     string `swaggerignore:"true"`
+	FilePath         string `swaggerignore:"true"`
 }
 
 func (req *UpdateMemberPushDocumentRequest) Parse(c *gin.Context) (*UpdateMemberPushDocumentRequest, error) {
-	if err := c.ShouldBind(req); err != nil {
+	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
-	log.WithField("value", req).Debugln("UpdateMemberPushDocumentRequest After ShouldBind Request")
-
+	document, err := c.FormFile("document")
+	if err != nil {
+		return nil, errors.InternalError{Message: err.Error()}
+	}
+	req.Document = document
 	fileExt := filepath.Ext(req.Document.Filename)
 	originalFileName := strings.TrimSuffix(filepath.Base(req.Document.Filename), filepath.Ext(req.Document.Filename))
 	now := time.Now()
 	filename := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", now.Unix()) + fileExt
-	dst := filepath.Join(env.DataPath, "members", "document", filename)
+	dst := filepath.Join(env.DataPath, "members", "documents", filename)
 	if err := c.SaveUploadedFile(req.Document, dst); err != nil {
 		log.WithError(err).Debugln("UpdateMemberPushDocumentRequest Parse Error")
 		return nil, errors.InternalError{Message: err.Error()}
@@ -42,7 +46,8 @@ func (req *UpdateMemberPushDocumentRequest) Parse(c *gin.Context) (*UpdateMember
 	req.OriginalFileName = originalFileName
 	req.FileName = filename
 	req.FileExtension = fileExt
-	req.FilePath = dst
+	req.FileFullPath = dst
+	req.FilePath = filepath.Join("members", "documents", filename)
 	log.WithField("value", req).Debugln("UpdateMemberPushDocumentRequest Parse")
 	return req, nil
 }
@@ -52,6 +57,7 @@ func (req *UpdateMemberPushDocumentRequest) ToEntity() *entities.File {
 		OriginalFileName: req.OriginalFileName,
 		FileName:         req.FileName,
 		FileExtension:    req.FileExtension,
+		FileFullPath:     req.FileFullPath,
 		FilePath:         req.FilePath,
 	}
 }

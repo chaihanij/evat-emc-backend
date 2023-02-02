@@ -15,6 +15,7 @@ type Repo interface {
 	Config() ([]string, error)
 	CreateFile(ctx context.Context, input *entities.File) (*entities.File, error)
 	FindOneFile(ctx context.Context, input interface{}) (*entities.File, error)
+	FindAllFile(ctx context.Context, input interface{}) ([]entities.File, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {
