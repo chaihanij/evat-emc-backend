@@ -9,7 +9,7 @@ import (
 )
 
 type DeleteUserRequestJSON struct {
-	UID string `uri:"uid"`
+	UID string `uri:"uid" binding:"required"`
 }
 
 func (req *DeleteUserRequestJSON) Parse(c *gin.Context) (*DeleteUserRequestJSON, error) {

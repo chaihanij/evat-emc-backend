@@ -10,6 +10,7 @@ import (
 
 var (
 	Debug                 bool
+	BaseUrl               string
 	MongoDBUrl            string
 	MongoDBName           string
 	MongoDBUser           string
@@ -33,6 +34,10 @@ func Init() {
 			log.Fatal(err)
 		}
 		Debug = debug
+	}
+	BaseUrl := os.Getenv("BASE_URL")
+	if BaseUrl == "" {
+		BaseUrl = "http://localhost:8080"
 	}
 	MongoDBUrl = os.Getenv("MONGODB_URL")
 	MongoDBName = os.Getenv("MONGODB_NAME")

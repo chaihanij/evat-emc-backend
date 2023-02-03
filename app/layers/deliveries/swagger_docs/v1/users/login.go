@@ -1,8 +1,8 @@
-package v1
+package users
 
-// Login
-// @Summary Login By Email
-// @Description Login By Email
+// Login Login
+// @Summary Login
+// @Description API For Login
 // @ID post-login
 // @Accept json
 // @Produce json
@@ -11,5 +11,5 @@ package v1
 // @Success 200 {object} dtos.LoginResponseSwagger
 // @Failure 400 {object} utils.ErrorResponse
 // @Failure 500 {object} utils.ErrorResponse
-// @Router /v1/users.login [post]
+// @Router /v1/login [post]
 func Login() {}

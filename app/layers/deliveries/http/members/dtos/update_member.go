@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
-	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
@@ -82,15 +81,20 @@ func (req *UpdateMemberRequest) ToEntity() *entities.MemberPartialUpdate {
 
 type UpdateMemberResponseJSON MemberResponse
 
-func (res *UpdateMemberResponseJSON) Parse(input *entities.Member) *UpdateMemberResponseJSON {
+func (res *UpdateMemberResponseJSON) Parse(c *gin.Context, input *entities.Member) *UpdateMemberResponseJSON {
 	copier.Copy(res, input)
 	if val, ok := input.Image.(entities.File); ok {
-		log.WithField("value", val).Debug("UpdateMemberResponseJSON Parse Image")
+		res.Image = new(FileResponse).Parse(c, &val)
 	} else {
 		res.Image = nil
 	}
-	if val, ok := input.Documents.(entities.Files); ok {
-		log.WithField("value", val).Debug("UpdateMemberResponseJSON Parse Documents")
+	if val, ok := input.Documents.([]entities.File); ok {
+		var documents FilesResponse
+		for _, value := range val {
+			document := new(FileResponse).Parse(c, &value)
+			documents = append(documents, *document)
+		}
+		res.Documents = &documents
 	} else {
 		res.Documents = &FilesResponse{}
 	}

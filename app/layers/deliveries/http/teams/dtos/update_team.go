@@ -10,8 +10,8 @@ import (
 	"gitlab.com/chaihanij/evat/app/types"
 )
 
-type UpdateTeamRequest struct {
-	UUID      string `json:"-" uri:"uuid" validate:"required"`
+type UpdateTeamRequestJSON struct {
+	UUID      string `json:"-" uri:"team_uuid" validate:"required"`
 	Code      string `json:"code" validate:"required"`
 	Name      string `json:"name" validate:"required"`
 	TeamType  string `json:"teamType" validate:"required,teamType"`
@@ -21,7 +21,7 @@ type UpdateTeamRequest struct {
 	UpdatedBy string `json:"-" swaggerignore:"true"`
 }
 
-func (req *UpdateTeamRequest) Parse(c *gin.Context) (*UpdateTeamRequest, error) {
+func (req *UpdateTeamRequestJSON) Parse(c *gin.Context) (*UpdateTeamRequestJSON, error) {
 
 	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
@@ -55,7 +55,7 @@ func (req *UpdateTeamRequest) Parse(c *gin.Context) (*UpdateTeamRequest, error) 
 	return req, nil
 }
 
-func (req *UpdateTeamRequest) ToEntity() *entities.TeamPartialUpdate {
+func (req *UpdateTeamRequestJSON) ToEntity() *entities.TeamPartialUpdate {
 	return &entities.TeamPartialUpdate{
 		UUID:      req.UUID,
 		Code:      &req.Code,

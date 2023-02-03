@@ -7,7 +7,7 @@ import (
 )
 
 func (h *Handler) UpdateTeam(c *gin.Context) {
-	request, err := new(dtos.UpdateTeamRequest).Parse(c)
+	request, err := new(dtos.UpdateTeamRequestJSON).Parse(c)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return

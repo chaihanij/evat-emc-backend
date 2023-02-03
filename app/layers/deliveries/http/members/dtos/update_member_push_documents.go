@@ -16,7 +16,7 @@ import (
 
 type UpdateMemberPushDocumentRequest struct {
 	MemberUUID string                `uri:"member_uuid" binding:"required,uuid"`
-	Document   *multipart.FileHeader `form:"document"`
+	Document   *multipart.FileHeader `swaggerignore:"true" form:"document"`
 
 	OriginalFileName string `swaggerignore:"true"`
 	FileName         string `swaggerignore:"true"`

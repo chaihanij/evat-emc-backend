@@ -16,7 +16,7 @@ import (
 
 type UpdateMemberImageRequest struct {
 	MemberUUID       string                `uri:"member_uuid" binding:"required,uuid"`
-	Image            *multipart.FileHeader `form:"image"`
+	Image            *multipart.FileHeader `swaggerignore:"true" form:"image"`
 	OriginalFileName string                `swaggerignore:"true"`
 	FileName         string                `swaggerignore:"true"`
 	FileExtension    string                `swaggerignore:"true"`

@@ -21,7 +21,9 @@ func (u useCase) FindOneMember(ctx context.Context, input *entities.MemberFilter
 		if err != nil && mongo.ErrNoDocuments != err {
 			return nil, err
 		}
-		member.Image = *image
+		if image != nil {
+			member.Image = *image
+		}
 	}
 	if val, ok := member.Documents.([]string); ok {
 		log.WithField("value", val).Debugln("FindOneMember documents")

@@ -6,6 +6,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/utils"
 )
 
+// TODO
 func (h *Handler) ChangePassword(c *gin.Context) {
 	request, err := new(dtos.ChangePasswordRequestJSON).Parse(c)
 	if err != nil {

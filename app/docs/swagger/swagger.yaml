@@ -1,0 +1,2185 @@
+basePath: '{{evat-service}}'
+definitions:
+  dtos.AssignmentResponse:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      document: {}
+      dueDate:
+        type: string
+      fullScore:
+        type: number
+      image: {}
+      isActive:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateAssignmentRequestJSON:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      full_score:
+        type: number
+      is_active:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      year:
+        type: string
+    required:
+    - due_date
+    - "no"
+    - title
+    - year
+    type: object
+  dtos.CreateAssignmentResponseJSON:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      document: {}
+      dueDate:
+        type: string
+      fullScore:
+        type: number
+      image: {}
+      isActive:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateAssignmentResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.CreateAssignmentResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.CreateMemberRequestJSON:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        example: MEMBER, MENTOR
+        type: string
+      teamUUID:
+        type: string
+      tel:
+        type: string
+      year:
+        type: string
+    required:
+    - firstname
+    - lastname
+    - memberType
+    - teamUUID
+    type: object
+  dtos.CreateMemberResponseJSON:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/dtos.FileResponse'
+        type: array
+      email:
+        type: string
+      firstname:
+        type: string
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        type: string
+      tel:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateMemberResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.CreateMemberResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.CreateTeamRequestJSON:
+    properties:
+      academy:
+        type: string
+      code:
+        type: string
+      detali:
+        type: string
+      name:
+        type: string
+      teamType:
+        type: string
+      year:
+        type: string
+    required:
+    - academy
+    - code
+    - detali
+    - name
+    - teamType
+    - year
+    type: object
+  dtos.CreateTeamResponseJSON:
+    properties:
+      academy:
+        type: string
+      code:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      detail:
+        type: string
+      name:
+        type: string
+      teamType:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateTeamResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.CreateTeamResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.CreateUserRequestJSON:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      teamUID:
+        type: string
+      tel:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    required:
+    - firstname
+    - lastname
+    - password
+    - username
+    - year
+    type: object
+  dtos.CreateUserResponseJSON:
+    properties:
+      address:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isActive:
+        type: boolean
+      lastLogin:
+        type: string
+      lastname:
+        type: string
+      role:
+        type: string
+      teamUID:
+        type: string
+      tel:
+        type: string
+      uid:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateUserResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.CreateUserResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.DeleteAssignmentResponseSwagger:
+    properties:
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.DeleteMemberResponseSwagger:
+    properties:
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.DeleteTeamResponseSwagger:
+    properties:
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.DeleteUserResponseSwagger:
+    properties:
+      data: {}
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FileResponse:
+    properties:
+      fileName:
+        type: string
+      originalFileName:
+        type: string
+      url:
+        type: string
+      uuid:
+        type: string
+    type: object
+  dtos.FindAllAssignmentResponseSwagger:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dtos.AssignmentResponse'
+        type: array
+      metaData:
+        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindAllMemberResponseSwagger:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse'
+        type: array
+      metaData:
+        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindAllTeamResponseSwagger:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dtos.TeamResponse'
+        type: array
+      metaData:
+        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindAllUserResponseSwagger:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dtos.User'
+        type: array
+      metaData:
+        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindOneAssignmentResponseJSON:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      document: {}
+      dueDate:
+        type: string
+      fullScore:
+        type: number
+      image: {}
+      isActive:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.FindOneAssignmentResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FindOneAssignmentResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindOneTeamResponseJSON:
+    properties:
+      academy:
+        type: string
+      code:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      detail:
+        type: string
+      members:
+        items:
+          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
+        type: array
+      name:
+        type: string
+      teamType:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.FindOneTeamResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FindOneTeamResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.FindOneUserResponseJSON:
+    properties:
+      accessToken:
+        type: string
+      activateCode:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isActive:
+        type: boolean
+      isEmailVerify:
+        type: boolean
+      lastLogin:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      teamUUID:
+        type: string
+      tel:
+        type: string
+      uid:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.FindOneUserResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FindOneUserResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.LoginRequestJSON:
+    properties:
+      email:
+        example: testuser@gmail.com
+        type: string
+      password:
+        example: P@ssw0rd@!@#$
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dtos.LoginResponseJSON:
+    properties:
+      accessToken:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      lastLogin:
+        type: string
+      lastname:
+        type: string
+      role:
+        type: string
+      teamUID:
+        type: string
+      uid:
+        type: string
+    type: object
+  dtos.LoginResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.LoginResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.TeamResponse:
+    properties:
+      academy:
+        type: string
+      code:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      detail:
+        type: string
+      members:
+        items:
+          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
+        type: array
+      name:
+        type: string
+      teamType:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.UpdateAssignmentDocumentResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FileResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateAssignmentImageResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FileResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateAssignmentRequestJSON:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      full_score:
+        type: number
+      is_active:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      year:
+        type: string
+    required:
+    - due_date
+    - "no"
+    - title
+    - year
+    type: object
+  dtos.UpdateAssignmentResponseJSON:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      document: {}
+      dueDate:
+        type: string
+      fullScore:
+        type: number
+      image: {}
+      isActive:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.UpdateAssignmentResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.UpdateAssignmentResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateMemberImageResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FileResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateMemberPullDocumentResponseSwagger:
+    properties:
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateMemberPushDocumentResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FileResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateMemberRequest:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      email:
+        type: string
+      firstname:
+        description: json
+        type: string
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        example: MEMBER, MENTOR
+        type: string
+      teamUUID:
+        type: string
+      tel:
+        type: string
+      year:
+        type: string
+    required:
+    - firstname
+    - lastname
+    - memberType
+    - teamUUID
+    type: object
+  dtos.UpdateMemberResponseJSON:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/dtos.FileResponse'
+        type: array
+      email:
+        type: string
+      firstname:
+        type: string
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        type: string
+      tel:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.UpdateMemberResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.UpdateMemberResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateTeamRequestJSON:
+    properties:
+      academy:
+        type: string
+      code:
+        type: string
+      detail:
+        type: string
+      name:
+        type: string
+      teamType:
+        type: string
+      year:
+        type: string
+    required:
+    - code
+    - name
+    - teamType
+    - year
+    type: object
+  dtos.UpdateTeamResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FindOneTeamResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.UpdateUserRequestJSON:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isActive:
+        type: boolean
+      lastname:
+        type: string
+      role:
+        type: string
+      teamUUID:
+        type: string
+      tel:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    required:
+    - username
+    type: object
+  dtos.UpdateUserResponseJSON:
+    properties:
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isActive:
+        type: boolean
+      lastname:
+        type: string
+      role:
+        type: string
+      teamUUID:
+        type: string
+      tel:
+        type: string
+      uid:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.UpdateUserResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.UpdateUserResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.User:
+    properties:
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      isActive:
+        type: boolean
+      lastLogin:
+        type: string
+      lastname:
+        type: string
+      role:
+        type: string
+      uid:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      username:
+        type: string
+      year:
+        type: string
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/dtos.FileResponse'
+        type: array
+      email:
+        type: string
+      firstname:
+        type: string
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        type: string
+      tel:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse:
+    properties:
+      academy:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/dtos.FileResponse'
+        type: array
+      email:
+        type: string
+      firstname:
+        type: string
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
+      isTeamLeader:
+        type: boolean
+      lastname:
+        type: string
+      memberType:
+        type: string
+      tel:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  utils.ErrorResponse:
+    properties:
+      message:
+        example: error message will be show here
+        type: string
+      statusCode:
+        example: 1001
+        type: integer
+      statusMessage:
+        example: fail
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+info:
+  contact:
+    name: chaihanij@gmail.com
+  description: EVAT eMCS Service.
+  title: EVAT eMCS Service
+  version: 1.0.0
+paths:
+  /v1/assignment/:assignment_uuid:
+    put:
+      consumes:
+      - application/json
+      description: API For Update Assignment
+      operationId: put-assignments
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: assignment_uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      - description: All params related to assignment
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateAssignmentRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateAssignmentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Assignment
+      tags:
+      - ASSIGNMENTS
+  /v1/assignments:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One Assignment
+      operationId: get-one-assignment
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of assignments
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindOneAssignmentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One Assignment
+      tags:
+      - MEMBERS
+    post:
+      consumes:
+      - application/json
+      description: API For Create Assignments
+      operationId: post-assignment
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of member
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: All params related to assignments
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateAssignmentRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateAssignmentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create Assignments
+      tags:
+      - ASSIGNMENTS
+  /v1/assignments/:assignment_uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Delete Assignment
+      operationId: delete-assignment
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: assignment_uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.DeleteAssignmentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Delete Assignment
+      tags:
+      - ASSIGNMENTS
+  /v1/assignments/:assignment_uuid/document:
+    post:
+      consumes:
+      - multipart/form-data
+      description: API For Update Assignment Document
+      operationId: post-assignment-document
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: assignment_uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      - description: file document upload
+        in: formData
+        name: document
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateAssignmentDocumentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Assignment Document
+      tags:
+      - MEMBERS
+  /v1/assignments/:assignment_uuid/image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: API For Update Assignment Image
+      operationId: post-assignment-image
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: assignment_uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      - description: file image upload
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateAssignmentImageResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Assignment Image
+      tags:
+      - MEMBERS
+  /v1/files/:file_uuid:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One File
+      operationId: get-one-file
+      parameters:
+      - description: file_uuid of files
+        in: path
+        name: file_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One File
+      tags:
+      - FILES
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: API For Login
+      operationId: post-login
+      parameters:
+      - description: All params related to users
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.LoginRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.LoginResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Login
+      tags:
+      - USERS
+  /v1/members:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One Member
+      operationId: get-one-member
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of member
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindAllMemberResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One Member
+      tags:
+      - MEMBERS
+    post:
+      consumes:
+      - application/json
+      description: API For Create Member
+      operationId: post-member
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of member
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: All params related to members
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateMemberRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateMemberResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create Member
+      tags:
+      - MEMBERS
+  /v1/members/:member_uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Delete Member
+      operationId: delete-member
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: member_uuid of member
+        in: path
+        name: member_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.DeleteMemberResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Delete Member
+      tags:
+      - MEMBERS
+  /v1/members/:member_uuid/documents:
+    post:
+      consumes:
+      - multipart/form-data
+      description: API For Update Member  Push Document
+      operationId: post-member-documents
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: member_uuid of member
+        in: path
+        name: member_uuid
+        required: true
+        type: string
+      - description: file document upload
+        in: formData
+        name: document
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateMemberPushDocumentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Member Push Document
+      tags:
+      - MEMBERS
+  /v1/members/:member_uuid/documents/:document_uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Update Member Pull Document
+      operationId: delete-member-documents
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: member_uuid of member
+        in: path
+        name: member_uuid
+        required: true
+        type: string
+      - description: document_uuid of files
+        in: path
+        name: document_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateMemberPullDocumentResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Member Pull Document
+      tags:
+      - MEMBERS
+  /v1/members/:member_uuid/image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: API For Update Member Image
+      operationId: post-member-image
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: member_uuid of member
+        in: path
+        name: member_uuid
+        required: true
+        type: string
+      - description: file image upload
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateMemberImageResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Member Image
+      tags:
+      - MEMBERS
+  /v1/members/:uuid:
+    put:
+      consumes:
+      - application/json
+      description: API For Update Member
+      operationId: put-member
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: member_uuid of member
+        in: path
+        name: member_uuid
+        required: true
+        type: string
+      - description: All params related to members
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateMemberRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateMemberResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Member
+      tags:
+      - MEMBERS
+  /v1/teams:
+    get:
+      consumes:
+      - application/json
+      description: API For Find All Team
+      operationId: get-all-teams
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: year of EVAT eMC
+        in: query
+        name: year
+        type: string
+      - description: Offset for search teams
+        in: query
+        name: page
+        type: string
+      - description: PageSize of teams
+        in: query
+        name: pageSize
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindAllTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find All Team
+      tags:
+      - TEAMS
+    post:
+      consumes:
+      - application/json
+      description: API For Create Team
+      operationId: post-team
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: All params related to teams
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateTeamRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create Team
+      tags:
+      - TEAMS
+  /v1/teams/:uid:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One Team
+      operationId: get-one-team
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of team
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindOneTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One Team
+      tags:
+      - TEAMS
+  /v1/teams/:uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Delete Team
+      operationId: delete-team
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of teams
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.DeleteTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Delete Team
+      tags:
+      - TEAMS
+    put:
+      consumes:
+      - application/json
+      description: API For Update Team
+      operationId: put-team
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of teams
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: All params related to teams
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateTeamRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update Team
+      tags:
+      - TEAMS
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: API For Find All User
+      operationId: get-all-user
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: year of EVAT eMC
+        in: query
+        name: year
+        type: string
+      - description: Offset for search users
+        in: query
+        name: page
+        type: string
+      - description: PageSize of users
+        in: query
+        name: pageSize
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindAllUserResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find All User
+      tags:
+      - USERS
+    post:
+      consumes:
+      - application/json
+      description: API For Create User
+      operationId: post-user
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: All params related to users
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateUserRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateUserResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create User
+      tags:
+      - USERS
+  /v1/users/:uid:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One User
+      operationId: get-one-user
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uid of user
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindOneUserResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One User
+      tags:
+      - USERS
+  /v1/users/:uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Delete User
+      operationId: detele-user
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uid of user
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.DeleteUserResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Delete User
+      tags:
+      - USERS
+    put:
+      consumes:
+      - application/json
+      description: API For Update User
+      operationId: put-user
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uid of user
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: All params related to users
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateUserRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UpdateUserResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Update User
+      tags:
+      - USERS
+swagger: "2.0"

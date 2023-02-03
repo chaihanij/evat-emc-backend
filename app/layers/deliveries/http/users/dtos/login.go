@@ -20,14 +20,14 @@ type LoginRequestJSON struct {
 }
 
 type LoginResponseJSON struct {
-	UID         string         `json:"uid"`
-	Email       string         `json:"email"`
-	FirstName   string         `json:"firstname"`
-	LastName    string         `json:"lastname"`
-	Role        types.UserRole `json:"role"`
-	TeamUID     string         `json:"teamUID"`
-	LastLogin   types.DateTime `json:"lastLogin"`
-	AccessToken string         `json:"accessToken"`
+	UID         string     `json:"uid"`
+	Email       string     `json:"email"`
+	FirstName   string     `json:"firstname"`
+	LastName    string     `json:"lastname"`
+	Role        string     `json:"role"`
+	TeamUID     string     `json:"teamUID"`
+	LastLogin   *time.Time `json:"lastLogin"`
+	AccessToken string     `json:"accessToken"`
 }
 
 func (req *LoginRequestJSON) Parse(c *gin.Context) (*LoginRequestJSON, error) {
@@ -64,7 +64,7 @@ func (req *LoginRequestJSON) ToEntity() *entities.Login {
 
 func (m *LoginResponseJSON) Parse(data *entities.User) *LoginResponseJSON {
 	_ = copier.Copy(&m, data)
-	m.LastLogin = *types.NewDateTime(data.LastLogin)
+	m.LastLogin = &data.LastLogin
 	return m
 }
 

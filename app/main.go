@@ -15,13 +15,14 @@ import (
 	"gitlab.com/chaihanij/evat/app/logger"
 
 	// repo
-
+	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 
 	// use case
+	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
 	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
@@ -29,8 +30,8 @@ import (
 
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
-	//
 
+	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
@@ -39,14 +40,13 @@ import (
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 )
 
-// @title EVAT Service
+// @title EVAT eMCS Service
 // @version 1.0.0
-// @description Evat Service.
+// @description EVAT eMCS Service.
 // @contact.name chaihanij@gmail.com
 // @BasePath {{evat-service}}
 func main() {
 	os.Setenv("TZ", "Asia/Bangkok")
-
 	env.Init()
 	logger.Init()
 	log.WithFields(log.Fields{
@@ -65,28 +65,29 @@ func main() {
 		"PRIVAT_KEY":     env.RsaPrivateKey,
 	}).Debugln("main")
 	// Create data dir
-	memberImagesDir := filepath.Join(env.DataPath, "members", "images")
-	os.MkdirAll(memberImagesDir, os.ModePerm)
-	memberDoucmentsDir := filepath.Join(env.DataPath, "members", "documents")
-	os.MkdirAll(memberDoucmentsDir, os.ModePerm)
-	memberAssignmentsDir := filepath.Join(env.DataPath, "assignments")
-	os.MkdirAll(memberAssignmentsDir, os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "members", "images"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "members", "documents"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "images"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "documents"), os.ModePerm)
 
 	db := database.ConnectMongoDB()
 
 	// init repo
+	assignmentsRepo := _assignmentsRepo.InitRepo(db)
 	filesRepo := _filesRepo.InitRepo(db)
 	membersRepo := _membersRepo.InitRepo(db)
 	teamsRepo := _teamsRepo.InitRepo(db)
 	userRepo := _userRepo.InitRepo(db)
 
 	// config repo
+	assignmentsRepo.Config()
 	filesRepo.Config()
 	membersRepo.Config()
 	teamsRepo.Config()
 	userRepo.Config()
 
 	// usecase
+	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
 	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
@@ -105,6 +106,7 @@ func main() {
 	_healthCheck.NewEndpointHTTPHandler(ginEngine)
 
 	// diliveries
+	_assignmentsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, assignmentsUseCase)
 	_usersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, userUseCase)
 	_teamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, teamsUseCase)
 	_membersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, memberUseCase)

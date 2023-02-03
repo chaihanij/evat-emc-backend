@@ -18,6 +18,6 @@ func (h *Handler) UpdateMember(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.CreateMemberResponseJSON).Parse(res)
+	responseData := new(dtos.UpdateMemberResponseJSON).Parse(c, res)
 	utils.JSONSuccessResponse(c, responseData)
 }

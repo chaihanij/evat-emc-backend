@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
+	"gitlab.com/chaihanij/evat/app/env"
 )
 
 type FileResponse struct {
@@ -14,20 +15,11 @@ type FileResponse struct {
 	UUID             string `json:"uuid"`
 	OriginalFileName string `json:"originalFileName"`
 	FileName         string `json:"fileName"`
-	// FileExtension    string    `json:"fileExtension"`
-	// FilePath         string    `json:"filePath"`
-	// FileFullPath     string    `json:"fileFullPath"`
-	// CreatedAt        time.Time `json:"createdAt"`
-	// UpdatedAt        time.Time `json:"updatedAt"`
 }
 
 func (file *FileResponse) Parse(c *gin.Context, data *entities.File) *FileResponse {
 	copier.Copy(file, data)
-	scheme := "http"
-	if c.Request.TLS != nil {
-		scheme = "https"
-	}
-	file.URL = fmt.Sprintf("%s://%s/v1/files/%s", scheme, c.Request.Host, data.UUID)
+	file.URL = fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, data.UUID)
 	return file
 }
 
