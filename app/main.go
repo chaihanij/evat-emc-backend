@@ -50,6 +50,7 @@ func main() {
 	env.Init()
 	logger.Init()
 	log.WithFields(log.Fields{
+		"BASE_URL":                env.BaseUrl,
 		"DEBUG":                   env.Debug,
 		"MONGODB_URL":             env.MongoDBUrl,
 		"MONGODB_NAME":            env.MongoDBName,

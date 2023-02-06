@@ -35,7 +35,7 @@ func Init() {
 		}
 		Debug = debug
 	}
-	BaseUrl := os.Getenv("BASE_URL")
+	BaseUrl = os.Getenv("BASE_URL")
 	if BaseUrl == "" {
 		BaseUrl = "http://localhost:8080"
 	}
@@ -71,6 +71,8 @@ func Init() {
 			panic(err)
 		}
 		RetryAttempts = i
+	} else {
+		RetryAttempts = 1
 	}
 
 	DataPath = os.Getenv("DATA_PATH")

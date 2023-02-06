@@ -31,6 +31,6 @@ func NewAssignmentFilter(input interface{}) *bson.M {
 			filter["year"] = val.Year
 		}
 	}
-	log.WithField("value", filter).Debugln("models.NewMemberFilter")
+	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")
 	return &filter
 }

@@ -39,8 +39,8 @@ ADD Makefile Makefile
 
 RUN go mod download
 
-# Install Fresh for local development
-RUN go get github.com/pilu/fresh
+# Install air for local development
+RUN go install github.com/cosmtrek/air@latest
 
 # Install go tool for convert go test output to junit xml
 RUN go get -u github.com/jstemmer/go-junit-report
@@ -48,7 +48,8 @@ RUN go get github.com/axw/gocov/gocov
 RUN go get github.com/AlekSi/gocov-xml
 
 # Set Docker's entry point commands
-RUN cd app/ && go build -o /go/bin/app.bin cmd/main.go
+RUN cd /go/src/evat/app && go build -o /go/bin/app.bin main.go
+
 
 # ------------------------------------------------------------------------------
 # Deployment image
@@ -79,4 +80,5 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Set Docker's entry point commands
-ENTRYPOINT ["/usr/bin/tini","--","/app/app.bin"]
+# ENTRYPOINT ["/usr/bin/tini","--","/app/app.bin"]
+CMD [ "/app/app.bin" ]

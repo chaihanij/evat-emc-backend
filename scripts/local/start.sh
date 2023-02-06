@@ -44,8 +44,10 @@ dNBVpY40ZjXjIzgb6ZSFrZAEsHTdBHB78VLrunLKPLCxZ+1SYw7HWI2sC0O0RH7N
 L1eEq87g2daQwh4BFfUi9D2l64LQ1S7XPJADKQkyWDRFA5RGpNfEnHjZW+e+Gm9r
 IiGZkw/zYuPNaOc/+bWhNGQ=
 -----END PRIVATE KEY-----
-"\
-DEBUG=True \
+" \
+GIN_MODE=release \
+BASE_URL="http://localhost:8080" \
+DEBUG=False \
 MONGODB_URL='mongodb://0.0.0.0:27017' \
 MONGODB_NAME=evat_db \
 MONGODB_USER=evatuser \

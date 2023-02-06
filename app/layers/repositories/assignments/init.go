@@ -13,7 +13,7 @@ type repo struct {
 
 type Repo interface {
 	Config() ([]string, error)
-	CountAssignments(ctx context.Context, input *entities.AssignmentFilter) (*int64, error)
+	CountAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, error)
 	CreateAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
 	DeleteOneAssignment(ctx context.Context, input *entities.AssignmentFilter) error
 	FindAllAssignment(ctx context.Context, input *entities.AssignmentFilter) ([]entities.Assignment, error)

@@ -9,7 +9,7 @@ import (
 
 func (u useCase) countAssignment(wg *sync.WaitGroup, ctx context.Context, input *entities.AssignmentFilter, count chan *int64, errors chan error) {
 	defer wg.Done()
-	result, err := u.AssignmentsRepo.CountAssignments(ctx, input)
+	result, err := u.AssignmentsRepo.CountAssignment(ctx, input)
 	if err != nil {
 		errors <- err
 		return

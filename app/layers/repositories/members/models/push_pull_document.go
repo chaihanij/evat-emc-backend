@@ -7,7 +7,7 @@ import (
 
 func PushDocument(documentId string) *bson.M {
 	update := bson.M{
-		"$addToSet": bson.M{
+		"$push": bson.M{
 			"documents": documentId,
 		},
 	}
