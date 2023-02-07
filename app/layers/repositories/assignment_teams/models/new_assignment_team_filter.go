@@ -12,6 +12,12 @@ func NewAssignmentTeamFilter(input interface{}) *bson.M {
 		if val.UUID != "" {
 			filter["uuid"] = val.UUID
 		}
+		if val.AssignmentUUID != "" {
+			filter["assignment_uuid"] = val.AssignmentUUID
+		}
+		if val.TeamUUID != "" {
+			filter["team_uuid"] = val.TeamUUID
+		}
 	}
 	if val, ok := input.(*entities.AssignmentTeamFilter); ok {
 		if val.UUID != nil {

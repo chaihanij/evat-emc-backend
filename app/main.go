@@ -15,6 +15,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/logger"
 
 	// repo
+	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
@@ -79,18 +80,19 @@ func main() {
 	membersRepo := _membersRepo.InitRepo(db)
 	teamsRepo := _teamsRepo.InitRepo(db)
 	userRepo := _userRepo.InitRepo(db)
-
+	assignmentTeamsRepo := _assignmentTeamsRepo.InitRepo(db)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
 	membersRepo.Config()
 	teamsRepo.Config()
 	userRepo.Config()
+	assignmentTeamsRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
-	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo)
+	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo, assignmentTeamsRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 

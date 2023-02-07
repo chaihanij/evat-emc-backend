@@ -20,6 +20,7 @@ func NewMember(input *entities.Member) *Member {
 		Tel:        input.Tel,
 		Academy:    input.Academy,
 		Year:       input.Year,
+		TeamUUID:   input.TeamUUID,
 		MemberType: input.MemberType,
 		Documents:  []string{},
 		CreatedAt:  now,

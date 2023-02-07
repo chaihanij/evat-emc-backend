@@ -19,9 +19,13 @@ func PartialUpdateAssignmentTeam(input *entities.AssignmentTeamPartialUpdate) *b
 	if input.Score != nil {
 		updateFields = append(updateFields, bson.E{Key: "score", Value: input.Score})
 	}
+	if input.IsConfirmed != nil {
+		updateFields = append(updateFields, bson.E{Key: "is_confirmed", Value: input.IsConfirmed})
+	}
 	if val, ok := input.Documents.([]string); ok {
 		updateFields = append(updateFields, bson.E{Key: "documents", Value: val})
 	}
+
 	update := bson.D{{Key: "$set", Value: updateFields}}
 	log.WithField("value", update).Debugln("models.PartialUpdateAssignmentTeam")
 	return &update

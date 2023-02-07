@@ -31,7 +31,9 @@ func PartialUpdateAssignment(input *entities.AssignmentPartialUpdate) *bson.D {
 	if input.DueDate != nil {
 		updateFields = append(updateFields, bson.E{Key: "due_date", Value: input.DueDate})
 	}
-
+	if input.IsActive != nil {
+		updateFields = append(updateFields, bson.E{Key: "is_active", Value: input.IsActive})
+	}
 	if val, ok := input.Image.(*string); ok {
 		updateFields = append(updateFields, bson.E{Key: "image", Value: val})
 	}

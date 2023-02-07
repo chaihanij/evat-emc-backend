@@ -15,6 +15,7 @@ type AssignmentTeam struct {
 	TeamUUID       string             `bson:"team_uuid"`
 	Description    string             `bson:"uuid"`
 	Documents      []string           `bson:"documents"`
+	IsConfirmed    bool               `bson:"is_confirmed"`
 	Score          float64            `bson:"score"`
 	CreatedAt      time.Time          `bson:"created_at"`
 	UpdatedAt      time.Time          `bson:"updated_at"`

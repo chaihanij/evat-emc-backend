@@ -4,15 +4,17 @@ import (
 	"context"
 
 	"gitlab.com/chaihanij/evat/app/entities"
+	assignmentTeams "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 )
 
 type useCase struct {
-	TeamsRepo   teams.Repo
-	MembersRepo members.Repo
-	FilesRepo   files.Repo
+	TeamsRepo           teams.Repo
+	MembersRepo         members.Repo
+	FilesRepo           files.Repo
+	AssignmentTeamsRepo assignmentTeams.Repo
 }
 
 type UseCase interface {
@@ -22,14 +24,16 @@ type UseCase interface {
 	FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*entities.Team, error)
 	UpdateTeam(ctx context.Context, input *entities.TeamPartialUpdate) (*entities.Team, error)
 
-	//
-	CreateMember(ctx context.Context, input *entities.Member) (*entities.Member, error)
+	SendAssignmentTeam(ctx context.Context, input *entities.AssignmentTeam) (*entities.AssignmentTeam, error)
+	SendAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeam, file *entities.File) (*entities.File, error)
+	SendAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUID string) error
 }
 
-func InitUseCase(teamsRepo teams.Repo, membersRepo members.Repo, filesRepo files.Repo) UseCase {
+func InitUseCase(teamsRepo teams.Repo, membersRepo members.Repo, filesRepo files.Repo, assignmentTeamsRepo assignmentTeams.Repo) UseCase {
 	return &useCase{
-		TeamsRepo:   teamsRepo,
-		MembersRepo: membersRepo,
-		FilesRepo:   filesRepo,
+		TeamsRepo:           teamsRepo,
+		MembersRepo:         membersRepo,
+		FilesRepo:           filesRepo,
+		AssignmentTeamsRepo: assignmentTeamsRepo,
 	}
 }

@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/constants"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
@@ -71,15 +70,32 @@ func (req *CreateAssignmentRequestJSON) ToEntity() *entities.Assignment {
 
 type CreateAssignmentResponseJSON AssignmentResponse
 
-func (m *CreateAssignmentResponseJSON) Parse(c *gin.Context, data *entities.Assignment) *CreateAssignmentResponseJSON {
-	copier.Copy(m, data)
-	if val, ok := data.Document.(*entities.File); ok {
-		m.Document = new(FileResponse).Parse(c, val)
+func (m *CreateAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *CreateAssignmentResponseJSON {
+	assignment := &CreateAssignmentResponseJSON{
+		UUID:        input.UUID,
+		No:          input.No,
+		Title:       input.Title,
+		Description: input.Description,
+		FullScore:   input.FullScore,
+		IsActive:    input.IsActive,
+		DueDate:     input.DueDate,
+		Year:        input.Year,
+		CreatedAt:   input.CreatedAt,
+		UpdatedAt:   input.UpdatedAt,
+		CreatedBy:   input.CreatedBy,
+		UpdatedBy:   input.UpdatedBy,
 	}
-	if val, ok := data.Image.(*entities.File); ok {
-		m.Image = new(FileResponse).Parse(c, val)
+	if val, ok := input.Document.(entities.File); ok {
+		assignment.Document = new(FileResponse).Parse(c, &val)
+	} else {
+		assignment.Document = nil
 	}
-	return m
+	if val, ok := input.Image.(entities.File); ok {
+		assignment.Image = new(FileResponse).Parse(c, &val)
+	} else {
+		assignment.Image = nil
+	}
+	return assignment
 }
 
 type CreateAssignmentResponseSwagger struct {

@@ -8,12 +8,14 @@ definitions:
         type: string
       description:
         type: string
-      document: {}
+      document:
+        $ref: '#/definitions/dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
-      image: {}
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -33,11 +35,11 @@ definitions:
     properties:
       description:
         type: string
-      due_date:
+      dueDate:
         type: string
-      full_score:
+      fullScore:
         type: number
-      is_active:
+      isActive:
         type: boolean
       "no":
         type: integer
@@ -46,7 +48,7 @@ definitions:
       year:
         type: string
     required:
-    - due_date
+    - dueDate
     - "no"
     - title
     - year
@@ -59,12 +61,14 @@ definitions:
         type: string
       description:
         type: string
-      document: {}
+      document:
+        $ref: '#/definitions/dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
-      image: {}
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -149,6 +153,8 @@ definitions:
         type: string
       memberType:
         type: string
+      teamUUID:
+        type: string
       tel:
         type: string
       updatedAt:
@@ -189,9 +195,7 @@ definitions:
       year:
         type: string
     required:
-    - academy
     - code
-    - detali
     - name
     - teamType
     - year
@@ -449,12 +453,14 @@ definitions:
         type: string
       description:
         type: string
-      document: {}
+      document:
+        $ref: '#/definitions/dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
-      image: {}
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -629,6 +635,38 @@ definitions:
         example: "2015-06-30T21:59:59Z"
         type: string
     type: object
+  dtos.SendAssignmentTeamRequestJSON:
+    properties:
+      description:
+        type: string
+      isConfirmed:
+        type: boolean
+    type: object
+  dtos.SendAssignmentTeamResponseJSON:
+    properties:
+      assignment_uuid:
+        type: string
+      description:
+        type: string
+      isConfirmed:
+        type: boolean
+      team_uuid:
+        type: string
+    type: object
+  dtos.SendAssignmentTeamResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.SendAssignmentTeamResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
   dtos.TeamResponse:
     properties:
       academy:
@@ -690,11 +728,11 @@ definitions:
     properties:
       description:
         type: string
-      due_date:
+      dueDate:
         type: string
-      full_score:
+      fullScore:
         type: number
-      is_active:
+      isActive:
         type: boolean
       "no":
         type: integer
@@ -703,7 +741,7 @@ definitions:
       year:
         type: string
     required:
-    - due_date
+    - dueDate
     - "no"
     - title
     - year
@@ -716,12 +754,14 @@ definitions:
         type: string
       description:
         type: string
-      document: {}
+      document:
+        $ref: '#/definitions/dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
-      image: {}
+      image:
+        $ref: '#/definitions/dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -846,6 +886,8 @@ definitions:
       lastname:
         type: string
       memberType:
+        type: string
+      teamUUID:
         type: string
       tel:
         type: string
@@ -1047,6 +1089,8 @@ definitions:
         type: string
       memberType:
         type: string
+      teamUUID:
+        type: string
       tel:
         type: string
       updatedAt:
@@ -1236,7 +1280,7 @@ paths:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Find One Assignment
       tags:
-      - MEMBERS
+      - ASSIGNMENTS
     post:
       consumes:
       - application/json
@@ -1363,7 +1407,7 @@ paths:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Update Assignment Document
       tags:
-      - MEMBERS
+      - ASSIGNMENTS
   /v1/assignments/:assignment_uuid/image:
     post:
       consumes:
@@ -1407,7 +1451,7 @@ paths:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Update Assignment Image
       tags:
-      - MEMBERS
+      - ASSIGNMENTS
   /v1/files/:file_uuid:
     get:
       consumes:
@@ -1851,6 +1895,55 @@ paths:
           schema:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Create Team
+      tags:
+      - TEAMS
+  /v1/teams/:team_uuid/assignemnts/:assignemnt_uuid:
+    post:
+      consumes:
+      - application/json
+      description: API For Send Assignment Team
+      operationId: post-team-assignment-teams
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: team_uuid of teams
+        in: path
+        name: team_uuid
+        required: true
+        type: string
+      - description: uuid of assignments
+        in: path
+        name: assignment_uuid
+        type: string
+      - description: All params related to teams
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SendAssignmentTeamRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.SendAssignmentTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Send Assignment Team
       tags:
       - TEAMS
   /v1/teams/:uid:

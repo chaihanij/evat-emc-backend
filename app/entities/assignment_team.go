@@ -9,6 +9,7 @@ type AssignmentTeam struct {
 	TeamUUID       string
 	Description    string
 	Documents      interface{}
+	IsConfirmed    bool
 	Score          float64
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
@@ -22,6 +23,7 @@ type AssignmentTeamPartialUpdate struct {
 	AssignmentUUID *string
 	TeamUUID       *string
 	Description    *string
+	IsConfirmed    *bool
 	Documents      interface{}
 	Score          *float64
 	UpdatedBy      string

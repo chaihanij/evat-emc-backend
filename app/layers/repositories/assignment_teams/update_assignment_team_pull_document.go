@@ -11,22 +11,22 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r repo) UpdateAssignmentTeam(ctx context.Context, input *entities.AssignmentTeam) (*entities.AssignmentTeam, error) {
-	log.Debugln("DB UpdateAssignmentTeam")
+func (r repo) UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUID string) (*entities.AssignmentTeam, error) {
+	log.Debugln("DB UpdateAssignmentTeamPullDocument")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After).SetUpsert(true)
 	filter := models.NewAssignmentTeamFilter(input)
-	update := models.UpdateAssignmentTeam(input)
+	update := models.UpdateAssignmentTeamPullDocument(documentUUID)
 	var assignmentTeam models.AssignmentTeam
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionAssignmentTeams).
 		FindOneAndUpdate(ctx, filter, update, opts).
 		Decode(&assignmentTeam)
 	if err != nil {
-		log.WithError(err).Errorln("DB UpdateAssignmentTeam Error")
+		log.WithError(err).Errorln("DB UpdateAssignmentTeamPullDocument Error")
 		return nil, err
 	}
-	log.WithField("value", assignmentTeam).Debugln("DB UpdateAssignmentTeam")
+	log.WithField("value", assignmentTeam).Debugln("DB UpdateAssignmentTeamPullDocument")
 	return assignmentTeam.ToEntity()
 }

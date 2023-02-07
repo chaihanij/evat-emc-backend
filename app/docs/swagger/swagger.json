@@ -87,7 +87,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "MEMBERS"
+                    "ASSIGNMENTS"
                 ],
                 "summary": "Find One Assignment",
                 "operationId": "get-one-assignment",
@@ -268,7 +268,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "MEMBERS"
+                    "ASSIGNMENTS"
                 ],
                 "summary": "Update Assignment Document",
                 "operationId": "post-assignment-document",
@@ -333,7 +333,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "MEMBERS"
+                    "ASSIGNMENTS"
                 ],
                 "summary": "Update Assignment Image",
                 "operationId": "post-assignment-image",
@@ -1050,6 +1050,79 @@
                 }
             }
         },
+        "/v1/teams/:team_uuid/assignemnts/:assignemnt_uuid": {
+            "post": {
+                "description": "API For Send Assignment Team",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "Send Assignment Team",
+                "operationId": "post-team-assignment-teams",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "team_uuid of teams",
+                        "name": "team_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of assignments",
+                        "name": "assignment_uuid",
+                        "in": "path"
+                    },
+                    {
+                        "description": "All params related to teams",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SendAssignmentTeamRequestJSON"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SendAssignmentTeamResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/teams/:uid": {
             "get": {
                 "description": "API For Find One Team",
@@ -1553,14 +1626,18 @@
                 "description": {
                     "type": "string"
                 },
-                "document": {},
+                "document": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "dueDate": {
                     "type": "string"
                 },
                 "fullScore": {
                     "type": "number"
                 },
-                "image": {},
+                "image": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "isActive": {
                     "type": "boolean"
                 },
@@ -1587,7 +1664,7 @@
         "dtos.CreateAssignmentRequestJSON": {
             "type": "object",
             "required": [
-                "due_date",
+                "dueDate",
                 "no",
                 "title",
                 "year"
@@ -1596,13 +1673,13 @@
                 "description": {
                     "type": "string"
                 },
-                "due_date": {
+                "dueDate": {
                     "type": "string"
                 },
-                "full_score": {
+                "fullScore": {
                     "type": "number"
                 },
-                "is_active": {
+                "isActive": {
                     "type": "boolean"
                 },
                 "no": {
@@ -1628,14 +1705,18 @@
                 "description": {
                     "type": "string"
                 },
-                "document": {},
+                "document": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "dueDate": {
                     "type": "string"
                 },
                 "fullScore": {
                     "type": "number"
                 },
-                "image": {},
+                "image": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "isActive": {
                     "type": "boolean"
                 },
@@ -1760,6 +1841,9 @@
                 "memberType": {
                     "type": "string"
                 },
+                "teamUUID": {
+                    "type": "string"
+                },
                 "tel": {
                     "type": "string"
                 },
@@ -1800,9 +1884,7 @@
         "dtos.CreateTeamRequestJSON": {
             "type": "object",
             "required": [
-                "academy",
                 "code",
-                "detali",
                 "name",
                 "teamType",
                 "year"
@@ -2197,14 +2279,18 @@
                 "description": {
                     "type": "string"
                 },
-                "document": {},
+                "document": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "dueDate": {
                     "type": "string"
                 },
                 "fullScore": {
                     "type": "number"
                 },
-                "image": {},
+                "image": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "isActive": {
                     "type": "boolean"
                 },
@@ -2463,6 +2549,54 @@
                 }
             }
         },
+        "dtos.SendAssignmentTeamRequestJSON": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "isConfirmed": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dtos.SendAssignmentTeamResponseJSON": {
+            "type": "object",
+            "properties": {
+                "assignment_uuid": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "isConfirmed": {
+                    "type": "boolean"
+                },
+                "team_uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.SendAssignmentTeamResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/dtos.SendAssignmentTeamResponseJSON"
+                },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
         "dtos.TeamResponse": {
             "type": "object",
             "properties": {
@@ -2550,7 +2684,7 @@
         "dtos.UpdateAssignmentRequestJSON": {
             "type": "object",
             "required": [
-                "due_date",
+                "dueDate",
                 "no",
                 "title",
                 "year"
@@ -2559,13 +2693,13 @@
                 "description": {
                     "type": "string"
                 },
-                "due_date": {
+                "dueDate": {
                     "type": "string"
                 },
-                "full_score": {
+                "fullScore": {
                     "type": "number"
                 },
-                "is_active": {
+                "isActive": {
                     "type": "boolean"
                 },
                 "no": {
@@ -2591,14 +2725,18 @@
                 "description": {
                     "type": "string"
                 },
-                "document": {},
+                "document": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "dueDate": {
                     "type": "string"
                 },
                 "fullScore": {
                     "type": "number"
                 },
-                "image": {},
+                "image": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
                 "isActive": {
                     "type": "boolean"
                 },
@@ -2779,6 +2917,9 @@
                     "type": "string"
                 },
                 "memberType": {
+                    "type": "string"
+                },
+                "teamUUID": {
                     "type": "string"
                 },
                 "tel": {
@@ -3076,6 +3217,9 @@
                     "type": "string"
                 },
                 "memberType": {
+                    "type": "string"
+                },
+                "teamUUID": {
                     "type": "string"
                 },
                 "tel": {

@@ -11,12 +11,12 @@ import (
 )
 
 type CreateTeamRequestJSON struct {
-	Code      string `json:"code" validate:"required" binding:"required"`
-	Name      string `json:"name" validate:"required"  binding:"required"`
-	TeamType  string `json:"teamType" validate:"required,teamType"  binding:"required"`
-	Academy   string `json:"academy" validate:""  binding:"required"`
-	Detail    string `json:"detali" validate:""  binding:"required"`
-	Year      string `json:"year" validate:"required"  binding:"required"`
+	Code      string `json:"code" validate:"required"`
+	Name      string `json:"name" validate:"required" `
+	TeamType  string `json:"teamType" validate:"required,teamType"`
+	Academy   string `json:"academy" validate:""`
+	Detail    string `json:"detali" validate:""`
+	Year      string `json:"year" validate:"required"`
 	CreatedBy string `json:"-" swaggerignore:"true"`
 }
 

@@ -24,5 +24,10 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 		v1Auth.GET("/teams/:team_uuid", handler.FinOneTeam)
 		v1Auth.PUT("/teams/:team_uuid", handler.UpdateTeam)
 		v1Auth.DELETE("/teams/:team_uuid", handler.DeleteTeam)
+
+		//
+		v1Auth.POST("/teams/:team_uuid/assignemnts/:assignemnt_uuid", handler.SendAssignmentTeam)
+		v1Auth.POST("/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents", handler.SendAssignmentTeamPushDocument)
+		v1Auth.DELETE("/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents/:document_uuid", handler.SendAssignmentTeamPullhDocument)
 	}
 }

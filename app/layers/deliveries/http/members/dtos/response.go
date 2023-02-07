@@ -35,6 +35,7 @@ type MemberResponse struct {
 	Academy      string         `json:"academy"`
 	Image        *FileResponse  `json:"image"`
 	Year         string         `json:"year"`
+	TeamUUID     string         `json:"teamUUID"`
 	MemberType   string         `json:"memberType"`
 	Documents    *FilesResponse `json:"documents"`
 	IsTeamLeader bool           `json:"isTeamLeader"`

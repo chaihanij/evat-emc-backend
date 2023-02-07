@@ -1,17 +1,19 @@
 version: "3.8"
 services:
-  evat-emc-service:
+  emc-service:
     build:
       context: .
       dockerfile: Dockerfile
       target: builder
-    command: sh -c 'wait-for evat-emc-databse:27017 --timeout=60 && cd app/ && air'
+    command: sh -c 'wait-for emc-database:27017 --timeout=60 && cd app/ && air'
     restart: always
     volumes:
       - ./app:/go/src/evat/app
       - ./volumes/local/app:/app
     ports:
       - "8080:8080"
+    depends_on:
+      - emc-database
     environment:
       BASE_URL: "http://127.0.0.1:8080"
       DATA_PATH: /app/data
@@ -20,7 +22,7 @@ services:
       GIN_MODE: debug
       SERVICE_NAME: evat-emc-service
       JWT_TOKEN_LIFE: 0
-      MONGODB_URL: mongodb://evat-emc-databse:27017
+      MONGODB_URL: mongodb://emc-database:27017
       MONGODB_NAME: evat-emc-db
       MONGODB_USER: evatuser
       MONGODB_PASS: bHQ4mpnbCw6dp446
@@ -66,7 +68,7 @@ services:
         IiGZkw/zYuPNaOc/+bWhNGQ=
         -----END PRIVATE KEY-----
 
-  evat-emc-databse:
+  emc-database:
     image: mongo:6
     restart: always
     ports:
@@ -78,5 +80,5 @@ services:
       - MONGO_INITDB_PASSWORD=bHQ4mpnbCw6dp446
       - MONGO_INITDB_DATABASE=evat-emc-db
     volumes:
-      - ./mongodb/docker-entrypoint-initdb.d/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./resources/mongodb/docker-entrypoint-initdb.d/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
       - ./volumes/local/db:/data/db

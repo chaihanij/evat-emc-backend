@@ -21,7 +21,9 @@ func (u useCase) FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*
 			if err != nil && mongo.ErrNoDocuments != err {
 				return nil, err
 			}
-			member.Image = *image
+			if image != nil {
+				member.Image = *image
+			}
 		}
 		if val, ok := member.Documents.([]string); ok {
 			log.WithField("value", val).Debugln("FindOneTeam Member Documents")
@@ -29,7 +31,11 @@ func (u useCase) FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*
 			if err != nil && mongo.ErrNoDocuments != err {
 				return nil, err
 			}
-			member.Documents = documents
+			if len(documents) > 0 {
+				member.Documents = documents
+			} else {
+				member.Documents = []entities.File{}
+			}
 		}
 		log.WithField("member", member).Debugln("FindOneTeam Member")
 		members[index] = member
