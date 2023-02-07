@@ -11,7 +11,6 @@ package teams
 // @Param team_uuid path string true "team_uuid of teams"
 // @Param assignment_uuid path string true "uuid of assignments"
 // @Param document_uuid path string true "document_uuid of documents"
-// @Param body body dtos.SendAssignmentTeamPullDocumentRequestJSON true "All params related to teams"
 // @Success 200 {object} dtos.SendAssignmentTeamPushDocumentJSONJSwagger
 // @Failure 400 {object} utils.ErrorResponse
 // @Failure 404 {object} utils.ErrorResponse
