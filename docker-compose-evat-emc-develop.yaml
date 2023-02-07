@@ -1,22 +1,26 @@
 version: "3.8"
 services:
-  evat-emc-service:
+  emc-service-dev:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: evat-emc-service
     restart: always
-    volumes:
-      - ./resources/volumes/dev/app/data:/app/data
     ports:
-      - "8080:8080"
+      - "8000:8080"
+    volumes:
+      - ./volumes/local/app:/app
+    depends_on:
+      - emc-database-dev
     environment:
-      BASE_URL: "http://127.0.0.1:8080"
+      BASE_URL: "http://127.0.0.1:8000"
+      DATA_PATH: /app/data
+      LOG_PATH: /app/logs
       DEBUG: T
       GIN_MODE: debug
       SERVICE_NAME: evat-emc-service
       JWT_TOKEN_LIFE: 0
-      MONGODB_URL: mongodb://evat-emc-databse:27017
+      MONGODB_URL: mongodb://emc-databse-dev:27017
       MONGODB_NAME: evat-emc-db
       MONGODB_USER: evatuser
       MONGODB_PASS: bHQ4mpnbCw6dp446
@@ -62,7 +66,7 @@ services:
         IiGZkw/zYuPNaOc/+bWhNGQ=
         -----END PRIVATE KEY-----
 
-  evat-emc-databse:
+  emc-databse-dev:
     image: mongo:6
     container_name: evat-emc-databse
     restart: always
