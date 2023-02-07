@@ -10,7 +10,6 @@ import (
 
 type AssignmentTeam struct {
 	ID             primitive.ObjectID `bson:"_id"`
-	UUID           string             `bson:"uuid"`
 	AssignmentUUID string             `bson:"assignment_uuid"`
 	TeamUUID       string             `bson:"team_uuid"`
 	Description    string             `bson:"uuid"`

@@ -3,7 +3,6 @@ package models
 import (
 	"time"
 
-	"github.com/google/uuid"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -16,7 +15,6 @@ func NewAssignmentTeam(input *entities.AssignmentTeam) *AssignmentTeam {
 	now := time.Now()
 	return &AssignmentTeam{
 		ID:             primitive.NewObjectID(),
-		UUID:           uuid.NewString(),
 		AssignmentUUID: input.AssignmentUUID,
 		TeamUUID:       input.TeamUUID,
 		Description:    input.Description,

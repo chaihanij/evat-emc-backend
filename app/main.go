@@ -4,11 +4,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pseidemann/finish"
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/database"
 	"gitlab.com/chaihanij/evat/app/env"
@@ -123,22 +120,26 @@ func main() {
 		Addr:    ":" + port,
 		Handler: ginEngine,
 	}
-
-	timeOut, err := strconv.Atoi(os.Getenv("GRACEFUL_TIMEOUT"))
-	if err != nil {
-		timeOut = 30 // second
+	err := srv.ListenAndServe()
+	if err != http.ErrServerClosed {
+		log.Fatal(err)
 	}
 
-	graceful := &finish.Finisher{Timeout: time.Duration(timeOut) * time.Second}
-	graceful.Add(srv)
+	// timeOut, err := strconv.Atoi(os.Getenv("GRACEFUL_TIMEOUT"))
+	// if err != nil {
+	// 	timeOut = 30 // second
+	// }
 
-	go func() {
-		err := srv.ListenAndServe()
-		if err != http.ErrServerClosed {
-			log.Fatal(err)
-		}
-	}()
+	// graceful := &finish.Finisher{Timeout: time.Duration(timeOut) * time.Second}
+	// graceful.Add(srv)
 
-	graceful.Wait()
+	// go func() {
+	// 	err := srv.ListenAndServe()
+	// 	if err != http.ErrServerClosed {
+	// 		log.Fatal(err)
+	// 	}
+	// }()
+
+	// graceful.Wait()
 
 }

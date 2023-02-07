@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r repo) UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUID string) (*entities.AssignmentTeam, error) {
+func (r repo) UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) (*entities.AssignmentTeam, error) {
 	log.Debugln("DB UpdateAssignmentTeamPullDocument")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()

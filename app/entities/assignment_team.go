@@ -4,7 +4,6 @@ import "time"
 
 type AssignmentTeam struct {
 	ID             string
-	UUID           string
 	AssignmentUUID string
 	TeamUUID       string
 	Description    string
@@ -19,7 +18,6 @@ type AssignmentTeam struct {
 
 type AssignmentTeamPartialUpdate struct {
 	ID             *string
-	UUID           *string
 	AssignmentUUID *string
 	TeamUUID       *string
 	Description    *string
@@ -30,7 +28,6 @@ type AssignmentTeamPartialUpdate struct {
 }
 
 type AssignmentTeamFilter struct {
-	UUID           *string
 	AssignmentUUID *string
 	TeamUUID       *string
 	Year           *string

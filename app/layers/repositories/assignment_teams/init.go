@@ -21,8 +21,8 @@ type Repo interface {
 	PartialUpdateAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamPartialUpdate) (*entities.AssignmentTeam, error)
 	UpdateAssignmentTeam(ctx context.Context, input *entities.AssignmentTeam) (*entities.AssignmentTeam, error)
 
-	UpdateAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUIDs []string) (*entities.AssignmentTeam, error)
-	UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUID string) (*entities.AssignmentTeam, error)
+	UpdateAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) (*entities.AssignmentTeam, error)
+	UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) (*entities.AssignmentTeam, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

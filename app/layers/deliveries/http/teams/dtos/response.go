@@ -25,6 +25,15 @@ func (file *FileResponse) Parse(c *gin.Context, data *entities.File) *FileRespon
 
 type FilesResponse []FileResponse
 
+type AssignmentResponse struct {
+	AssignmentUUID string         `json:"assignmentUUID"`
+	TeamUUID       string         `json:"assignmentUUID"`
+	Description    string         `json:"description"`
+	Documents      *FilesResponse `json:"documents"`
+	IsConfirmed    bool           `json:"ssConfirmed"`
+	Score          float64        `json:"score"`
+}
+
 type MemberResponse struct {
 	UUID         string         `json:"uuid"`
 	FirstName    string         `json:"firstname"`

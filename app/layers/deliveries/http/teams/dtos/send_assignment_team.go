@@ -3,6 +3,7 @@ package dtos
 import (
 	"time"
 
+	"github.com/AlekSi/pointer"
 	"github.com/gin-gonic/gin"
 	"gitlab.com/chaihanij/evat/app/constants"
 	"gitlab.com/chaihanij/evat/app/entities"
@@ -13,7 +14,7 @@ type SendAssignmentTeamRequestJSON struct {
 	TeamUUID       string `json:"-" uri:"team_uuid"`
 	AssignmentUUID string `json:"-" uri:"assignment_uuid"`
 	Description    string `json:"description"`
-	IsConfirmed    bool   `json:"isConfirmed"`
+	IsConfirmed    bool   `json:"isConfirmed" validate:"required"`
 	UpdatedBy      string `json:"-"`
 }
 
@@ -41,12 +42,12 @@ func (req *SendAssignmentTeamRequestJSON) Parse(c *gin.Context) (*SendAssignment
 	return req, nil
 }
 
-func (req *SendAssignmentTeamRequestJSON) ToEntity() *entities.AssignmentTeam {
-	return &entities.AssignmentTeam{
-		TeamUUID:       req.TeamUUID,
-		AssignmentUUID: req.AssignmentUUID,
-		Description:    req.Description,
-		IsConfirmed:    req.IsConfirmed,
+func (req *SendAssignmentTeamRequestJSON) ToEntity() *entities.AssignmentTeamPartialUpdate {
+	return &entities.AssignmentTeamPartialUpdate{
+		TeamUUID:       pointer.ToString(req.TeamUUID),
+		AssignmentUUID: pointer.ToString(req.AssignmentUUID),
+		Description:    pointer.ToString(req.Description),
+		IsConfirmed:    pointer.ToBool(req.IsConfirmed),
 		UpdatedBy:      req.UpdatedBy,
 	}
 }

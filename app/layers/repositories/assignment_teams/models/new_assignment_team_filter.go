@@ -9,9 +9,6 @@ import (
 func NewAssignmentTeamFilter(input interface{}) *bson.M {
 	var filter bson.M = bson.M{}
 	if val, ok := input.(*entities.AssignmentTeam); ok {
-		if val.UUID != "" {
-			filter["uuid"] = val.UUID
-		}
 		if val.AssignmentUUID != "" {
 			filter["assignment_uuid"] = val.AssignmentUUID
 		}
@@ -20,13 +17,19 @@ func NewAssignmentTeamFilter(input interface{}) *bson.M {
 		}
 	}
 	if val, ok := input.(*entities.AssignmentTeamFilter); ok {
-		if val.UUID != nil {
-			filter["uuid"] = val.UUID
+		if val.AssignmentUUID != nil {
+			filter["assignment_uuid"] = val.AssignmentUUID
+		}
+		if val.TeamUUID != nil {
+			filter["team_uuid"] = val.TeamUUID
 		}
 	}
 	if val, ok := input.(*entities.AssignmentTeamPartialUpdate); ok {
-		if val.UUID != nil {
-			filter["uuid"] = val.UUID
+		if val.AssignmentUUID != nil {
+			filter["assignment_uuid"] = val.AssignmentUUID
+		}
+		if val.TeamUUID != nil {
+			filter["team_uuid"] = val.TeamUUID
 		}
 	}
 	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")

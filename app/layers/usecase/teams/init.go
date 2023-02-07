@@ -24,9 +24,10 @@ type UseCase interface {
 	FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*entities.Team, error)
 	UpdateTeam(ctx context.Context, input *entities.TeamPartialUpdate) (*entities.Team, error)
 
-	SendAssignmentTeam(ctx context.Context, input *entities.AssignmentTeam) (*entities.AssignmentTeam, error)
-	SendAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeam, file *entities.File) (*entities.File, error)
-	SendAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeam, documentUUID string) error
+	FindOneAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamFilter) (*entities.AssignmentTeam, error)
+	SendAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamPartialUpdate) (*entities.AssignmentTeam, error)
+	SendAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, file *entities.File) (*entities.File, error)
+	SendAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) error
 }
 
 func InitUseCase(teamsRepo teams.Repo, membersRepo members.Repo, filesRepo files.Repo, assignmentTeamsRepo assignmentTeams.Repo) UseCase {

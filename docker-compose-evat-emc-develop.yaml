@@ -4,16 +4,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: evat-emc-service
     restart: always
     ports:
-      - "8000:8080"
+      - "8080:8080"
     volumes:
       - ./volumes/local/app:/app
     depends_on:
       - emc-database-dev
     environment:
-      BASE_URL: "http://127.0.0.1:8000"
+      BASE_URL: "http://43.229.78.58:8080"
       DATA_PATH: /app/data
       LOG_PATH: /app/logs
       DEBUG: T
@@ -68,7 +67,6 @@ services:
 
   emc-databse-dev:
     image: mongo:6
-    container_name: evat-emc-databse
     restart: always
     ports:
       - "47017:27017"
@@ -79,5 +77,5 @@ services:
       - MONGO_INITDB_PASSWORD=bHQ4mpnbCw6dp446
       - MONGO_INITDB_DATABASE=evat-emc-db
     volumes:
-      - ./mongodb/docker-entrypoint-initdb.d/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./resources/mongodb/docker-entrypoint-initdb.d/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
       - ./volumes/dev/db:/data/db

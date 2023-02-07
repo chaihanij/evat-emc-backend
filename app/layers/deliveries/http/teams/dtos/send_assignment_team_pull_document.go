@@ -3,6 +3,7 @@ package dtos
 import (
 	"time"
 
+	"github.com/AlekSi/pointer"
 	"github.com/gin-gonic/gin"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
@@ -21,10 +22,10 @@ func (req *SendAssignmentTeamPullDocumentRequestJSON) Parse(c *gin.Context) (*Se
 	return req, nil
 }
 
-func (req *SendAssignmentTeamPullDocumentRequestJSON) ToEntity() (*entities.AssignmentTeam, string) {
-	return &entities.AssignmentTeam{
-			TeamUUID:       req.TeamUUID,
-			AssignmentUUID: req.AssignmentUUID,
+func (req *SendAssignmentTeamPullDocumentRequestJSON) ToEntity() (*entities.AssignmentTeamPartialUpdate, string) {
+	return &entities.AssignmentTeamPartialUpdate{
+			TeamUUID:       pointer.ToString(req.TeamUUID),
+			AssignmentUUID: pointer.ToString(req.AssignmentUUID),
 		},
 		req.DocumentUUID
 }

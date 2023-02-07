@@ -15,7 +15,7 @@ func (r repo) PartialUpdateAssignmentTeam(ctx context.Context, input *entities.A
 	log.Debugln("DB PartialUpdateAssignmentTeam")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
+	opts := options.FindOneAndUpdate().SetReturnDocument(options.After).SetUpsert(true)
 	filter := models.NewAssignmentTeamFilter(input)
 	update := models.PartialUpdateAssignmentTeam(input)
 	var assignmentTeam models.AssignmentTeam

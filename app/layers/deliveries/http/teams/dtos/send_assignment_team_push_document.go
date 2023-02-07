@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AlekSi/pointer"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -19,7 +20,7 @@ import (
 type SendAssignmentTeamPushDocumentRequestJSON struct {
 	TeamUUID         string                `uri:"team_uuid"`
 	AssignmentUUID   string                `uri:"assignment_uuid"`
-	Document         *multipart.FileHeader `swaggerignore:"true" form:"document"`
+	Document         *multipart.FileHeader `form:"document"`
 	OriginalFileName string                `swaggerignore:"true"`
 	FileName         string                `swaggerignore:"true"`
 	FileExtension    string                `swaggerignore:"true"`
@@ -71,10 +72,11 @@ func (req *SendAssignmentTeamPushDocumentRequestJSON) Parse(c *gin.Context) (*Se
 	return req, nil
 }
 
-func (req *SendAssignmentTeamPushDocumentRequestJSON) ToEntity() (*entities.AssignmentTeam, *entities.File) {
-	return &entities.AssignmentTeam{
-			TeamUUID:       req.TeamUUID,
-			AssignmentUUID: req.AssignmentUUID,
+func (req *SendAssignmentTeamPushDocumentRequestJSON) ToEntity() (*entities.AssignmentTeamPartialUpdate, *entities.File) {
+	return &entities.AssignmentTeamPartialUpdate{
+			TeamUUID:       pointer.ToString(req.TeamUUID),
+			AssignmentUUID: pointer.ToString(req.AssignmentUUID),
+			UpdatedBy:      req.UpdatedBy,
 		},
 		&entities.File{
 			OriginalFileName: req.OriginalFileName,

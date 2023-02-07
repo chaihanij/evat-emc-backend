@@ -5,10 +5,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func UpdateAssignmentTeamPushDocument(documentUUIDs []string) *bson.M {
+func UpdateAssignmentTeamPushDocument(documentUUID string) *bson.M {
 	update := bson.M{
-		"$push": bson.M{
-			"documents": documentUUIDs,
+		"$addToSet": bson.M{
+			"documents": bson.M{"$each": "documents"},
 		},
 	}
 	log.WithField("value", update).Debugln("models.UpdateAssignmentTeamPushDocument")
