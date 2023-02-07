@@ -20,7 +20,7 @@ import (
 type SendAssignmentTeamPushDocumentRequestJSON struct {
 	TeamUUID         string                `uri:"team_uuid"`
 	AssignmentUUID   string                `uri:"assignment_uuid"`
-	Document         *multipart.FileHeader `form:"document"`
+	Document         *multipart.FileHeader `swaggerignore:"true" form:"document"`
 	OriginalFileName string                `swaggerignore:"true"`
 	FileName         string                `swaggerignore:"true"`
 	FileExtension    string                `swaggerignore:"true"`

@@ -51,7 +51,7 @@ func (res *FindOneAssignmentTeamResponseJSON) Parse(c *gin.Context, input *entit
 	}
 }
 
-type FindAssignmentTeamResponseSwagger struct {
+type FindOneAssignmentTeamResponseSwagger struct {
 	StatusCode    int                               `json:"statusCode" example:"1000"`
 	StatusMessage string                            `json:"statusMessage" example:"Success"`
 	Timestamp     time.Time                         `json:"timestamp" example:"2015-06-30T21:59:59Z"`

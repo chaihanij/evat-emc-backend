@@ -1059,6 +1059,68 @@ const docTemplate_swagger = `{
             }
         },
         "/v1/teams/:team_uuid/assignemnts/:assignemnt_uuid": {
+            "get": {
+                "description": "API For Find One AssignmentTeam",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "Find One AssignmentTeam",
+                "operationId": "get-team-assignment-teams",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "team_uuid of teams",
+                        "name": "team_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of assignments",
+                        "name": "assignment_uuid",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.FindOneAssignmentTeamResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "API For Send Assignment Team",
                 "consumes": [
@@ -1108,6 +1170,152 @@ const docTemplate_swagger = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/dtos.SendAssignmentTeamResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents": {
+            "post": {
+                "description": "API For Send Assignment Team Push Document",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "Send AssignmentTeam Push Document",
+                "operationId": "post-team-assignment-teams-documents",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "team_uuid of teams",
+                        "name": "team_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of assignments",
+                        "name": "assignment_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "All params related to teams",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SendAssignmentTeamPushDocumentRequestJSON"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SendAssignmentTeamPushDocumentJSONJSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents/:document_uuid": {
+            "delete": {
+                "description": "API For Send Assignment Team",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "Send Assignment Team Pull Document",
+                "operationId": "delete-team-assignment-teams-documents",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "team_uuid of teams",
+                        "name": "team_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of assignments",
+                        "name": "assignment_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "document_uuid of documents",
+                        "name": "document_uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SendAssignmentTeamPushDocumentJSONJSwagger"
                         }
                     },
                     "400": {
@@ -2342,6 +2550,49 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "dtos.FindOneAssignmentTeamResponseJSON": {
+            "type": "object",
+            "properties": {
+                "assignmentUUID": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "documents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dtos.FileResponse"
+                    }
+                },
+                "score": {
+                    "type": "number"
+                },
+                "ssConfirmed": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dtos.FindOneAssignmentTeamResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/dtos.FindOneAssignmentTeamResponseJSON"
+                },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
         "dtos.FindOneTeamResponseJSON": {
             "type": "object",
             "properties": {
@@ -2557,8 +2808,42 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "dtos.SendAssignmentTeamPushDocumentJSONJSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/dtos.FileResponse"
+                },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
+        "dtos.SendAssignmentTeamPushDocumentRequestJSON": {
+            "type": "object",
+            "properties": {
+                "assignmentUUID": {
+                    "type": "string"
+                },
+                "teamUUID": {
+                    "type": "string"
+                }
+            }
+        },
         "dtos.SendAssignmentTeamRequestJSON": {
             "type": "object",
+            "required": [
+                "isConfirmed"
+            ],
             "properties": {
                 "description": {
                     "type": "string"

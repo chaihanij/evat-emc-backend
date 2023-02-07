@@ -490,6 +490,35 @@ definitions:
         example: "2015-06-30T21:59:59Z"
         type: string
     type: object
+  dtos.FindOneAssignmentTeamResponseJSON:
+    properties:
+      assignmentUUID:
+        type: string
+      description:
+        type: string
+      documents:
+        items:
+          $ref: '#/definitions/dtos.FileResponse'
+        type: array
+      score:
+        type: number
+      ssConfirmed:
+        type: boolean
+    type: object
+  dtos.FindOneAssignmentTeamResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FindOneAssignmentTeamResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
   dtos.FindOneTeamResponseJSON:
     properties:
       academy:
@@ -635,12 +664,35 @@ definitions:
         example: "2015-06-30T21:59:59Z"
         type: string
     type: object
+  dtos.SendAssignmentTeamPushDocumentJSONJSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.FileResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.SendAssignmentTeamPushDocumentRequestJSON:
+    properties:
+      assignmentUUID:
+        type: string
+      teamUUID:
+        type: string
+    type: object
   dtos.SendAssignmentTeamRequestJSON:
     properties:
       description:
         type: string
       isConfirmed:
         type: boolean
+    required:
+    - isConfirmed
     type: object
   dtos.SendAssignmentTeamResponseJSON:
     properties:
@@ -1898,6 +1950,48 @@ paths:
       tags:
       - TEAMS
   /v1/teams/:team_uuid/assignemnts/:assignemnt_uuid:
+    get:
+      consumes:
+      - application/json
+      description: API For Find One AssignmentTeam
+      operationId: get-team-assignment-teams
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: team_uuid of teams
+        in: path
+        name: team_uuid
+        required: true
+        type: string
+      - description: uuid of assignments
+        in: path
+        name: assignment_uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindOneAssignmentTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find One AssignmentTeam
+      tags:
+      - TEAMS
     post:
       consumes:
       - application/json
@@ -1944,6 +2038,105 @@ paths:
           schema:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Send Assignment Team
+      tags:
+      - TEAMS
+  /v1/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents:
+    post:
+      consumes:
+      - application/json
+      description: API For Send Assignment Team Push Document
+      operationId: post-team-assignment-teams-documents
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: team_uuid of teams
+        in: path
+        name: team_uuid
+        required: true
+        type: string
+      - description: uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      - description: All params related to teams
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SendAssignmentTeamPushDocumentRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.SendAssignmentTeamPushDocumentJSONJSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Send AssignmentTeam Push Document
+      tags:
+      - TEAMS
+  /v1/teams/:team_uuid/assignemnts/:assignemnt_uuid/documents/:document_uuid:
+    delete:
+      consumes:
+      - application/json
+      description: API For Send Assignment Team
+      operationId: delete-team-assignment-teams-documents
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: team_uuid of teams
+        in: path
+        name: team_uuid
+        required: true
+        type: string
+      - description: uuid of assignments
+        in: path
+        name: assignment_uuid
+        required: true
+        type: string
+      - description: document_uuid of documents
+        in: path
+        name: document_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.SendAssignmentTeamPushDocumentJSONJSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Send Assignment Team Pull Document
       tags:
       - TEAMS
   /v1/teams/:uid:
