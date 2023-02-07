@@ -65,7 +65,7 @@ services:
         IiGZkw/zYuPNaOc/+bWhNGQ=
         -----END PRIVATE KEY-----
 
-  emc-databse-dev:
+  emc-database-dev:
     image: mongo:6
     restart: always
     ports:
