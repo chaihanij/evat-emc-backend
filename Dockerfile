@@ -48,7 +48,7 @@ RUN go get github.com/axw/gocov/gocov
 RUN go get github.com/AlekSi/gocov-xml
 
 # Set Docker's entry point commands
-RUN cd /go/src/evat/app && go build -o /go/bin/app.bin main.go
+RUN go build -o /go/src/evat/evat-emc-backend app/main.go
 
 # ------------------------------------------------------------------------------
 # Deployment image
@@ -63,21 +63,20 @@ RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata && \
 
 RUN groupadd -g 211000 appgroup && useradd -u 211000 -g 211000 -G appgroup appuser
 
-# Set working directory
-WORKDIR /app
+# # Set working directory
+WORKDIR /app/
 
 
-# #Get artifact from buiber stage
-COPY --from=builder /go/bin/app.bin /app/app.bin
-
-# # Set Docker's entry point commands
-RUN chown -R appuser:appgroup /app
+# # #Get artifact from buiber stage
+COPY --from=builder /go/src/evat/evat-emc-backend  /app.bin
+RUN 
+# # # Set Docker's entry point commands
+RUN chown -R appuser:appgroup /app && chmod +x /app.bin
 USER appuser
-
-# # Set Docker's entry point commands
-# # ENTRYPOINT ["/usr/bin/tini","--","/app/app.bin"]
-# CMD ["/app/app.bin"]
 
 EXPOSE 8080
 
-CMD ["/go/bin/app.bin"]
+# # # Set Docker's entry point commands
+# ENTRYPOINT ["/usr/bin/tini","--","/app/evat-emc-backend"]
+# CMD ["/app/evat-emc-backend"]
+CMD [ "/app.bin"]

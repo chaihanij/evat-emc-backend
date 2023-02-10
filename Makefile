@@ -32,6 +32,10 @@ production:
 	docker compose  -f "docker-compose-evat-emc-production.yaml" pull
 	docker compose  -f "docker-compose-evat-emc-production.yaml" up -d
 
+production-up:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-production.yaml" up  evat-emc-back-end-emc-service
+
 develop:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" build
@@ -39,6 +43,10 @@ develop:
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" rm -f
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" pull
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" up -d
+
+develop-up:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop.yaml" up  emc-service
 
 local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============= "
