@@ -50,16 +50,13 @@ RUN go get github.com/AlekSi/gocov-xml
 # Set Docker's entry point commands
 RUN cd /go/src/evat/app && go build -o /go/bin/app.bin main.go
 
-
 # ------------------------------------------------------------------------------
 # Deployment image
 # ------------------------------------------------------------------------------
 
-#App stage
+# #App stage
 FROM golang:1.19
 
-# Install OS Package
-ENV TINI_VERSION 0.19.0
 RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata && \
     apt-get clean
 
@@ -69,16 +66,18 @@ RUN groupadd -g 211000 appgroup && useradd -u 211000 -g 211000 -G appgroup appus
 # Set working directory
 WORKDIR /app
 
-#Get artifact from buiber stage
-RUN mkdir -p migrations
 
-#Get artifact from buiber stage
+# #Get artifact from buiber stage
 COPY --from=builder /go/bin/app.bin /app/app.bin
 
-# Set Docker's entry point commands
+# # Set Docker's entry point commands
 RUN chown -R appuser:appgroup /app
 USER appuser
 
-# Set Docker's entry point commands
-# ENTRYPOINT ["/usr/bin/tini","--","/app/app.bin"]
-CMD [ "/app/app.bin" ]
+# # Set Docker's entry point commands
+# # ENTRYPOINT ["/usr/bin/tini","--","/app/app.bin"]
+# CMD ["/app/app.bin"]
+
+EXPOSE 8080
+
+CMD ["/go/bin/app.bin"]

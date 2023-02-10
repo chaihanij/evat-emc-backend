@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: builder
-    command: sh -c 'wait-for emc-database:27017 --timeout=60 && cd app/ && air'
+    command: sh -c 'wait-for emc-database-local:27017 --timeout=60 && cd app/ && air'
     restart: always
     volumes:
       - ./app:/go/src/evat/app
