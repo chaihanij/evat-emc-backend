@@ -1,3 +1,89 @@
+version: "3.8"
+services:
+  emc-service-local:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    command: sh -c 'wait-for emc-database-local:27017 --timeout=60 && cd app/ && air'
+    restart: always
+    volumes:
+      - ./app:/go/src/evat/app
+      - ./volumes/local/app:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - emc-database-local
+    environment:
+      BASE_URL: "http://127.0.0.1:8080"
+      DATA_PATH: /app/data
+      LOG_PATH: /app/logs
+      DEBUG: T
+      GIN_MODE: debug
+      SERVICE_NAME: evat-emc-service
+      JWT_TOKEN_LIFE: 0
+      MONGODB_URL: mongodb://emc-database-local:27017
+      MONGODB_NAME: evat-emc-db
+      MONGODB_USER: evatuser
+      MONGODB_PASS: bHQ4mpnbCw6dp446
+      MONGODB_REQUEST_TIMEOUT: 60
+      ENCRYPT_KEY: b054eb59dcf46db5da45ade306d005a2473def4a51f0ee93371bd64e77ae4b20
+      RSA_PUBLIC_KEY: |-
+        -----BEGIN PUBLIC KEY-----
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgDH0VQ4cQkuklpq/Uhoe
+        uy9oh8jefPT2nrk+sD81bEl7BOYjlJmiMi82+HwYODH5RlimOlyzaj49AfsXWgrq
+        ZbOqQoro52YixLYL0Eu1ug+E0i2EuVnlIWsMt+A81Z5WprNGgXAgdaS7ca6k4mIf
+        ESLQ2+aPitw8ti2Fge8lhstTxx5AF+B+vAmZxdUwK0ves9XGISeL+unNamcc1Gaf
+        +I0i+TVgvPKdQbUPOGkRJT38LHqLZfhvsH0PfmA4AoUz7E3euU0nwhvWr5mQYPjc
+        b2vp8RbNhlsgPs6Ni+6921WLD6Y/yATgJ72YrbsrqZ7w7ZEgpnzHIjVO3TN3ED7W
+        dwIDAQAB
+        -----END PUBLIC KEY-----
+      RSA_PRIVATE_KEY: |-
+        -----BEGIN PRIVATE KEY-----
+        MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCAMfRVDhxCS6SW
+        mr9SGh67L2iHyN589PaeuT6wPzVsSXsE5iOUmaIyLzb4fBg4MflGWKY6XLNqPj0B
+        +xdaCupls6pCiujnZiLEtgvQS7W6D4TSLYS5WeUhawy34DzVnlams0aBcCB1pLtx
+        rqTiYh8RItDb5o+K3Dy2LYWB7yWGy1PHHkAX4H68CZnF1TArS96z1cYhJ4v66c1q
+        ZxzUZp/4jSL5NWC88p1BtQ84aRElPfwseotl+G+wfQ9+YDgChTPsTd65TSfCG9av
+        mZBg+Nxva+nxFs2GWyA+zo2L7r3bVYsPpj/IBOAnvZituyupnvDtkSCmfMciNU7d
+        M3cQPtZ3AgMBAAECggEAWlFXoDkxxa9/hS//jTuj3SN4lPn7brQzsP44YXoXDHT0
+        vC3ccYyQTqUfKJBdi/IBewNoEgRPz5GL8AJUoHbCT+b2FK3Di4xVAJx11EoS/cSD
+        QoUZVnE0UogWTNIqaiKFUCtMiFNUOy5VdbGir3CMDMmnttZI2X9zMrL9td6kZMOJ
+        aOGFSpH0PxzuIDqh05Ze8A0VduSznHNHLHO+ADrT7hblR4v9q9OzGJTA7CzbpTKS
+        Me1/nL9Dn/SxNGXFs6yhaMLx9h1O+8/R464myvuktqbKL3/H+C7lddn0WsLOTh/d
+        sLEP147JERWqn1S1lI+Kjv98dDvWJis64mNOqE9iMQKBgQDIoIVtYD81nUTv4jPF
+        mvrI2lbfB7cJ1XsFsI9W1/lpWNBzHyTFfptsq75OHm/zw2DRysYzEH7fBY6lrpWv
+        MtOoENx81HvaaYaHGkUjnHqU94OY4m4c8DY/rbYNQM0fUVcXdocm2KWPCG/I3jh8
+        4zOlrd7nrOq1qYQoQRStCvpeCQKBgQCjk7GfQnFk+Bs7ZnIVbcTJrcL6qPcvC+KJ
+        m74zRAFdDWwWIFO974UTTIS8t1y7PFD38oT7ahyW7n5BZfdJuZvF69GpbrRX5t6Q
+        j33IgP5malfagYs/IeEjXHSH6ybkQRh+lX8we+yPynzbede3ltCESrOVfsn7Jlm7
+        hcUWK0SwfwKBgQCsvemkXzaNhzgQA4foIKTFw5kAt7fV88XVBEymzZamKh5wwOP8
+        WCKi0s0snfBuxk7a0+kLlqxmgnZsGYIwM2ciUkJGCP4K9MksEmZtXxH8qZDZVjzR
+        FdLfyUXy61SyHmsKfLepruf925nELfIdNdMGWEqQ18XPXIG51y9iPw2LYQKBgEgc
+        6IVpaUw2BOte8pR32/V9YSPYMYDQIILB4kv/gwpezHPEtKZbXbNwXGRGAd+Za6ij
+        hfTAhvITGh4Csc4SwZWzrK6hW2gVI7FfUPh/xaeo4io2Sgj/Cp3oOIdjJ7Yg7IeB
+        qJzbRSLvBbRMNsl891gbBqi1SJ4r/gspogVv9cxJAoGALe2Q2P0efcnyEZqxYSPy
+        dNBVpY40ZjXjIzgb6ZSFrZAEsHTdBHB78VLrunLKPLCxZ+1SYw7HWI2sC0O0RH7N
+        L1eEq87g2daQwh4BFfUi9D2l64LQ1S7XPJADKQkyWDRFA5RGpNfEnHjZW+e+Gm9r
+        IiGZkw/zYuPNaOc/+bWhNGQ=
+        -----END PRIVATE KEY-----
+
+  emc-database-local:
+    image: mongo:6
+    restart: always
+    ports:
+      - "37017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=6QvgRthCDbfCr2tG
+      - MONGO_INITDB_USERNAME=evatuser
+      - MONGO_INITDB_PASSWORD=bHQ4mpnbCw6dp446
+      - MONGO_INITDB_DATABASE=evat-emc-db
+    volumes:
+      - ./resources/mongodb/docker-entrypoint-initdb.d/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./volumes/local/db:/data/db
+
+
 example-docs-gen:
 	@echo "============= Docs -> https://github.com/swaggo/swag ============= "
 	swag init --dir ./example/docs-generator --swagger ./example/docs-generator/docs/swagger/
@@ -23,6 +109,7 @@ build-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============= "
 	docker compose  -f "docker-compose-evat-emc-local.yaml" build  emc-service-local
 
+
 production:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-production.yaml" build
@@ -47,17 +134,6 @@ local:
 	docker compose  -f "docker-compose-evat-emc-local.yaml" pull
 	docker compose  -f "docker-compose-evat-emc-local.yaml" up -d
 
-restart-production:
-	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-production.yaml" restart emc-service-production
-
-restart-develop:
-	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-develop.yaml" restart emc-service-dev
-
-restart-local:
-	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-local.yaml" restart emc-service-local
 
 ps-production:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
@@ -70,6 +146,7 @@ ps-develop:
 ps-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============= "
 	docker compose  -f "docker-compose-evat-emc-local.yaml" ps
+
 
 logs-production:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="

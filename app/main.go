@@ -89,7 +89,7 @@ func main() {
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
-	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, membersRepo, filesRepo, assignmentTeamsRepo)
+	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 

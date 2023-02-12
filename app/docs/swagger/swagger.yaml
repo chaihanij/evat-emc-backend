@@ -500,10 +500,12 @@ definitions:
         items:
           $ref: '#/definitions/dtos.FileResponse'
         type: array
+      isConfirmed:
+        type: boolean
       score:
         type: number
-      ssConfirmed:
-        type: boolean
+      teamUUID:
+        type: string
     type: object
   dtos.FindOneAssignmentTeamResponseSwagger:
     properties:
@@ -654,6 +656,46 @@ definitions:
     properties:
       data:
         $ref: '#/definitions/dtos.LoginResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
+  dtos.RegisterTeamRequestJSON:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      isConsent:
+        type: boolean
+      lastname:
+        type: string
+      teamName:
+        type: string
+      teamType:
+        type: string
+      tel:
+        type: string
+      year:
+        type: string
+    required:
+    - email
+    - firstname
+    - isConsent
+    - lastname
+    - teamName
+    - teamType
+    - tel
+    - year
+    type: object
+  dtos.RegisterTeamResponseSwagger:
+    properties:
       statusCode:
         example: 1000
         type: integer
@@ -1864,6 +1906,41 @@ paths:
       summary: Update Member
       tags:
       - MEMBERS
+  /v1/register-teams:
+    post:
+      consumes:
+      - application/json
+      description: API For Register Team
+      operationId: post-egister-team
+      parameters:
+      - description: All params related to teams
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RegisterTeamRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.RegisterTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Register Team
+      tags:
+      - TEAMS
   /v1/teams:
     get:
       consumes:

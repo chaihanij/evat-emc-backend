@@ -121,7 +121,7 @@ func MsgForTag(fe validator.FieldError) string {
 	case "userRole":
 		return "invalid role"
 	case "teamType":
-		return "invalid type"
+		return "invalid type POPULATION, STUDENT"
 	}
 	return fe.Error() // default error
 }

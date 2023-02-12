@@ -931,6 +931,59 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "/v1/register-teams": {
+            "post": {
+                "description": "API For Register Team",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "Register Team",
+                "operationId": "post-egister-team",
+                "parameters": [
+                    {
+                        "description": "All params related to teams",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.RegisterTeamRequestJSON"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.RegisterTeamResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/teams": {
             "get": {
                 "description": "API For Find All Team",
@@ -2565,11 +2618,14 @@ const docTemplate_swagger = `{
                         "$ref": "#/definitions/dtos.FileResponse"
                     }
                 },
+                "isConfirmed": {
+                    "type": "boolean"
+                },
                 "score": {
                     "type": "number"
                 },
-                "ssConfirmed": {
-                    "type": "boolean"
+                "teamUUID": {
+                    "type": "string"
                 }
             }
         },
@@ -2794,6 +2850,62 @@ const docTemplate_swagger = `{
                 "data": {
                     "$ref": "#/definitions/dtos.LoginResponseJSON"
                 },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
+        "dtos.RegisterTeamRequestJSON": {
+            "type": "object",
+            "required": [
+                "email",
+                "firstname",
+                "isConsent",
+                "lastname",
+                "teamName",
+                "teamType",
+                "tel",
+                "year"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "isConsent": {
+                    "type": "boolean"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "teamName": {
+                    "type": "string"
+                },
+                "teamType": {
+                    "type": "string"
+                },
+                "tel": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.RegisterTeamResponseSwagger": {
+            "type": "object",
+            "properties": {
                 "statusCode": {
                     "type": "integer",
                     "example": 1000

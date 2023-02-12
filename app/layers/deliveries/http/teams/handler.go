@@ -16,6 +16,12 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 	handler := &Handler{
 		TeamsUseCase: teamsUseCase,
 	}
+
+	v1 := ginEngine.Group("v1")
+	{
+		v1.POST("/register-teams", handler.RegisterTeam)
+	}
+
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
 		v1Auth.GET("/teams", handler.FinAllTeam)

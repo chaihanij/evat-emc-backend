@@ -27,10 +27,10 @@ type FilesResponse []FileResponse
 
 type AssignmentResponse struct {
 	AssignmentUUID string         `json:"assignmentUUID"`
-	TeamUUID       string         `json:"assignmentUUID"`
+	TeamUUID       string         `json:"teamUUID"`
 	Description    string         `json:"description"`
 	Documents      *FilesResponse `json:"documents"`
-	IsConfirmed    bool           `json:"ssConfirmed"`
+	IsConfirmed    bool           `json:"isConfirmed"`
 	Score          float64        `json:"score"`
 }
 
