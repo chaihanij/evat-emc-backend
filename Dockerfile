@@ -60,23 +60,14 @@ FROM golang:1.19
 RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata && \
     apt-get clean
 
+WORKDIR /app
 
-RUN groupadd -g 211000 appgroup && useradd -u 211000 -g 211000 -G appgroup appuser
-
-# # Set working directory
-WORKDIR /app/
-
-
-# # #Get artifact from buiber stage
 COPY --from=builder /go/src/evat/evat-emc-backend  /app.bin
-RUN 
-# # # Set Docker's entry point commands
-RUN chown -R appuser:appgroup /app && chmod +x /app.bin
-USER appuser
+
 
 EXPOSE 8080
 
 # # # Set Docker's entry point commands
-# ENTRYPOINT ["/usr/bin/tini","--","/app/evat-emc-backend"]
+ENTRYPOINT ["/usr/bin/tini","--","/app.bin"]
 # CMD ["/app/evat-emc-backend"]
-CMD [ "/app.bin"]
+# CMD [ "/app.bin"]

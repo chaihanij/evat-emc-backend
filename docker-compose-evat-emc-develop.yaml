@@ -8,7 +8,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./volumes/dev/app:/app
+      - ./volumes/dev/app:/app:rw
     depends_on:
       - emc-database-dev
     environment:
