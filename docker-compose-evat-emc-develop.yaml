@@ -12,7 +12,7 @@ services:
     depends_on:
       - emc-database-dev
     environment:
-      BASE_URL: "http://43.229.78.58:8080"
+      BASE_URL: "https://emc.evat.or.th/api/dev"
       DATA_PATH: /app/data
       LOG_PATH: /app/logs
       DEBUG: T
