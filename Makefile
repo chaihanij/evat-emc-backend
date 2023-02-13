@@ -47,17 +47,41 @@ local:
 	docker compose  -f "docker-compose-evat-emc-local.yaml" pull
 	docker compose  -f "docker-compose-evat-emc-local.yaml" up -d
 
-restart-production:
+up-production:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-production.yaml" restart emc-service-production
+	docker compose  -f "docker-compose-evat-emc-production.yaml" up emc-service-production
 
-restart-develop:
+up-develop:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-develop.yaml" restart emc-service-dev
+	docker compose  -f "docker-compose-evat-emc-develop.yaml" up emc-service-dev
 
-restart-local:
+up-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-local.yaml" restart emc-service-local
+	docker compose  -f "docker-compose-evat-emc-local.yaml" up emc-service-local
+
+stop-production:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-production.yaml" stop emc-service-production
+
+stop-develop:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop.yaml" stop emc-service-dev
+
+stop-local:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-local.yaml" stop emc-service-local
+
+up-production:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-production.yaml" up emc-service-production
+
+up-develop:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop.yaml" up emc-service-dev
+
+up-local:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-local.yaml" up emc-service-local
 
 ps-production:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="

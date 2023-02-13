@@ -18,6 +18,7 @@ type RegisterTeamRequestJSON struct {
 	Email     string `json:"email" validate:"required,email"`
 	Tel       string `json:"tel" validate:"required"`
 	Year      string `json:"year" validate:"required"`
+	Password  string `json:"password" validate:"required,passwordComplexity"`
 	IsConsent bool   `json:"isConsent" validate:"required"`
 }
 
@@ -53,6 +54,7 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			Email:     req.Email,
 			Tel:       req.Tel,
 			Year:      req.Year,
+			Role:      string(types.UserRoleUSER),
 		}
 }
 
