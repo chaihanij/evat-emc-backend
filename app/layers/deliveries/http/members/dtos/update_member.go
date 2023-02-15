@@ -21,6 +21,7 @@ type UpdateMemberRequest struct {
 	Email        string `json:"email"  validate:"email"`
 	Tel          string `json:"tel"`
 	Academy      string `json:"academy"`
+	Major        string `json:"major"`
 	Year         string `json:"year"`
 	MemberType   string `json:"memberType" validate:"required,memberType" example:"MEMBER, MENTOR"`
 	TeamUUID     string `json:"teamUUID" validate:"required"`
@@ -70,6 +71,7 @@ func (req *UpdateMemberRequest) ToEntity() *entities.MemberPartialUpdate {
 		Email:        &req.Email,
 		Tel:          &req.Tel,
 		Academy:      &req.Academy,
+		Major:        &req.Major,
 		Year:         &req.Year,
 		MemberType:   &req.MemberType,
 		TeamUUID:     &req.TeamUUID,

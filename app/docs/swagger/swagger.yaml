@@ -112,6 +112,8 @@ definitions:
         type: boolean
       lastname:
         type: string
+      major:
+        type: string
       memberType:
         example: MEMBER, MENTOR
         type: string
@@ -150,6 +152,8 @@ definitions:
       isTeamLeader:
         type: boolean
       lastname:
+        type: string
+      major:
         type: string
       memberType:
         type: string
@@ -676,6 +680,8 @@ definitions:
         type: boolean
       lastname:
         type: string
+      password:
+        type: string
       teamName:
         type: string
       teamType:
@@ -689,6 +695,7 @@ definitions:
     - firstname
     - isConsent
     - lastname
+    - password
     - teamName
     - teamType
     - tel
@@ -940,6 +947,8 @@ definitions:
         type: boolean
       lastname:
         type: string
+      major:
+        type: string
       memberType:
         example: MEMBER, MENTOR
         type: string
@@ -978,6 +987,8 @@ definitions:
       isTeamLeader:
         type: boolean
       lastname:
+        type: string
+      major:
         type: string
       memberType:
         type: string
@@ -1180,6 +1191,8 @@ definitions:
       isTeamLeader:
         type: boolean
       lastname:
+        type: string
+      major:
         type: string
       memberType:
         type: string

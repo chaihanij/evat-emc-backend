@@ -2056,6 +2056,9 @@ const docTemplate_swagger = `{
                 "lastname": {
                     "type": "string"
                 },
+                "major": {
+                    "type": "string"
+                },
                 "memberType": {
                     "type": "string",
                     "example": "MEMBER, MENTOR"
@@ -2105,6 +2108,9 @@ const docTemplate_swagger = `{
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {
@@ -2871,6 +2877,7 @@ const docTemplate_swagger = `{
                 "firstname",
                 "isConsent",
                 "lastname",
+                "password",
                 "teamName",
                 "teamType",
                 "tel",
@@ -2887,6 +2894,9 @@ const docTemplate_swagger = `{
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "teamName": {
@@ -3270,6 +3280,9 @@ const docTemplate_swagger = `{
                 "lastname": {
                     "type": "string"
                 },
+                "major": {
+                    "type": "string"
+                },
                 "memberType": {
                     "type": "string",
                     "example": "MEMBER, MENTOR"
@@ -3319,6 +3332,9 @@ const docTemplate_swagger = `{
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {
@@ -3619,6 +3635,9 @@ const docTemplate_swagger = `{
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {

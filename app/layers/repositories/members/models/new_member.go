@@ -19,6 +19,7 @@ func NewMember(input *entities.Member) *Member {
 		Email:      input.Email,
 		Tel:        input.Tel,
 		Academy:    input.Academy,
+		Major:      input.Major,
 		Year:       input.Year,
 		TeamUUID:   input.TeamUUID,
 		MemberType: input.MemberType,

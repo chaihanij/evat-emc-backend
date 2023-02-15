@@ -33,6 +33,7 @@ type MemberResponse struct {
 	Email        string         `json:"email"`
 	Tel          string         `json:"tel"`
 	Academy      string         `json:"academy"`
+	Major        string         `json:"major"`
 	Image        *FileResponse  `json:"image"`
 	Year         string         `json:"year"`
 	TeamUUID     string         `json:"teamUUID"`

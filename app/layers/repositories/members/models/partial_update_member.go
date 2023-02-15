@@ -39,6 +39,10 @@ func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 		updateFields = append(updateFields, bson.E{Key: "academy", Value: input.Academy})
 	}
 
+	if input.Major != nil {
+		updateFields = append(updateFields, bson.E{Key: "major", Value: input.Major})
+	}
+
 	if input.Year != nil {
 		updateFields = append(updateFields, bson.E{Key: "year", Value: input.Year})
 	}

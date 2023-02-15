@@ -11,6 +11,7 @@ type Member struct {
 	Email        string
 	Tel          string
 	Academy      string
+	Major        string
 	Image        interface{} // string or file
 	Year         string
 	MemberType   string
@@ -34,6 +35,7 @@ type MemberPartialUpdate struct {
 	Email        *string
 	Tel          *string
 	Academy      *string
+	Major        *string
 	Image        interface{} // string or file
 	Year         *string
 	MemberType   *string

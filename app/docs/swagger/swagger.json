@@ -2048,6 +2048,9 @@
                 "lastname": {
                     "type": "string"
                 },
+                "major": {
+                    "type": "string"
+                },
                 "memberType": {
                     "type": "string",
                     "example": "MEMBER, MENTOR"
@@ -2097,6 +2100,9 @@
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {
@@ -2863,6 +2869,7 @@
                 "firstname",
                 "isConsent",
                 "lastname",
+                "password",
                 "teamName",
                 "teamType",
                 "tel",
@@ -2879,6 +2886,9 @@
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "teamName": {
@@ -3262,6 +3272,9 @@
                 "lastname": {
                     "type": "string"
                 },
+                "major": {
+                    "type": "string"
+                },
                 "memberType": {
                     "type": "string",
                     "example": "MEMBER, MENTOR"
@@ -3311,6 +3324,9 @@
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {
@@ -3611,6 +3627,9 @@
                     "type": "boolean"
                 },
                 "lastname": {
+                    "type": "string"
+                },
+                "major": {
                     "type": "string"
                 },
                 "memberType": {

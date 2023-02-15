@@ -17,6 +17,7 @@ type Member struct {
 	Email        string             `bson:"email"`
 	Tel          string             `bson:"tel"`
 	Academy      string             `bson:"academy"`
+	Major        string             `bson:"major"`
 	Year         string             `bson:"year"`
 	MemberType   string             `bson:"member_type"`
 	IsTeamLeader bool               `bson:"is_team_leader"`

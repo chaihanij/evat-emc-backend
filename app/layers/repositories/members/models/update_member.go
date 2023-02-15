@@ -16,6 +16,7 @@ func UpdateMember(input *entities.Member) *bson.D {
 		bson.E{Key: "email", Value: input.Email},
 		bson.E{Key: "tel", Value: input.Tel},
 		bson.E{Key: "academy", Value: input.Academy},
+		bson.E{Key: "major", Value: input.Major},
 		bson.E{Key: "year", Value: input.Year},
 		bson.E{Key: "member_type", Value: input.Year},
 		bson.E{Key: "is_team_leader", Value: input.IsTeamLeader},
