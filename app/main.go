@@ -12,6 +12,8 @@ import (
 	"gitlab.com/chaihanij/evat/app/logger"
 
 	// repo
+	_announcementsTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/announcements"
+
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
@@ -20,6 +22,7 @@ import (
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 
 	// use case
+	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
 	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
 	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
@@ -29,6 +32,7 @@ import (
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 
+	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
@@ -78,6 +82,7 @@ func main() {
 	teamsRepo := _teamsRepo.InitRepo(db)
 	userRepo := _userRepo.InitRepo(db)
 	assignmentTeamsRepo := _assignmentTeamsRepo.InitRepo(db)
+	announcementsTeamsRepo := _announcementsTeamsRepo.InitRepo(db)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -85,6 +90,7 @@ func main() {
 	teamsRepo.Config()
 	userRepo.Config()
 	assignmentTeamsRepo.Config()
+	announcementsTeamsRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -92,6 +98,7 @@ func main() {
 	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
+	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
 
 	//
 	ginEngine := gin.New()
@@ -111,6 +118,8 @@ func main() {
 	_teamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, teamsUseCase)
 	_membersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, memberUseCase)
 	_filesHttp.NewEndpointHttpHandler(ginEngine, filesUseCase)
+	_announcementsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, announcementsUseCase)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

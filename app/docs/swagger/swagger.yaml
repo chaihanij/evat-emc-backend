@@ -1,5 +1,24 @@
 basePath: '{{evat-service}}'
 definitions:
+  dtos.AnnouncementResponse:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
   dtos.AssignmentResponse:
     properties:
       createdAt:
@@ -29,6 +48,52 @@ definitions:
       uuid:
         type: string
       year:
+        type: string
+    type: object
+  dtos.CreateAnnouncementRequestJSON:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+      year:
+        type: string
+    required:
+    - description
+    - title
+    - year
+    type: object
+  dtos.CreateAnnouncementResponseJSON:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  dtos.CreateAnnouncementResponseSwagger:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.CreateAnnouncementResponseJSON'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
         type: string
     type: object
   dtos.CreateAssignmentRequestJSON:
@@ -377,6 +442,24 @@ definitions:
       uuid:
         type: string
     type: object
+  dtos.FindAllAnnouncementResponseSwagger:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dtos.AnnouncementResponse'
+        type: array
+      metaData:
+        $ref: '#/definitions/dtos.MetaDataResponse'
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
+        type: string
+    type: object
   dtos.FindAllAssignmentResponseSwagger:
     properties:
       data:
@@ -384,7 +467,7 @@ definitions:
           $ref: '#/definitions/dtos.AssignmentResponse'
         type: array
       metaData:
-        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse'
+        $ref: '#/definitions/dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -402,7 +485,7 @@ definitions:
           $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse'
         type: array
       metaData:
-        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse'
+        $ref: '#/definitions/dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -420,7 +503,7 @@ definitions:
           $ref: '#/definitions/dtos.TeamResponse'
         type: array
       metaData:
-        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse'
+        $ref: '#/definitions/dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -438,7 +521,7 @@ definitions:
           $ref: '#/definitions/dtos.User'
         type: array
       metaData:
-        $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse'
+        $ref: '#/definitions/dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -669,6 +752,18 @@ definitions:
       timestamp:
         example: "2015-06-30T21:59:59Z"
         type: string
+    type: object
+  dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
     type: object
   dtos.RegisterTeamRequestJSON:
     properties:
@@ -1156,18 +1251,6 @@ definitions:
       year:
         type: string
     type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse:
-    properties:
-      page:
-        example: 1
-        type: integer
-      pageSize:
-        example: 20
-        type: integer
-      totalRecords:
-        example: 10
-        type: integer
-    type: object
   gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse:
     properties:
       academy:
@@ -1209,18 +1292,6 @@ definitions:
       year:
         type: string
     type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse:
-    properties:
-      page:
-        example: 1
-        type: integer
-      pageSize:
-        example: 20
-        type: integer
-      totalRecords:
-        example: 10
-        type: integer
-    type: object
   gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse:
     properties:
       academy:
@@ -1258,30 +1329,6 @@ definitions:
       year:
         type: string
     type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse:
-    properties:
-      page:
-        example: 1
-        type: integer
-      pageSize:
-        example: 20
-        type: integer
-      totalRecords:
-        example: 10
-        type: integer
-    type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse:
-    properties:
-      page:
-        example: 1
-        type: integer
-      pageSize:
-        example: 20
-        type: integer
-      totalRecords:
-        example: 10
-        type: integer
-    type: object
   utils.ErrorResponse:
     properties:
       message:
@@ -1304,6 +1351,96 @@ info:
   title: EVAT eMCS Service
   version: 1.0.0
 paths:
+  /v1/announcement:
+    get:
+      consumes:
+      - application/json
+      description: API For Find All Announcements
+      operationId: get-all-announcements
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: year of EVAT eMC
+        in: query
+        name: year
+        type: string
+      - description: Offset for search assignments
+        in: query
+        name: page
+        type: string
+      - description: PageSize of assignments
+        in: query
+        name: pageSize
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindAllAnnouncementResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Find All Announcements
+      tags:
+      - ANNOUNCEMENTS
+    post:
+      consumes:
+      - application/json
+      description: API For Create Announcement
+      operationId: post-assignment
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of announcements
+        in: path
+        name: announcement_uuid
+        required: true
+        type: string
+      - description: All params related to announcements
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateAnnouncementRequestJSON'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateAnnouncementResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create Announcement
+      tags:
+      - ANNOUNCEMENTS
   /v1/assignment/:assignment_uuid:
     put:
       consumes:

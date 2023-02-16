@@ -13,6 +13,7 @@ type repo struct {
 
 type Repo interface {
 	Config() ([]string, error)
+	CountAnnouncement(ctx context.Context, input *entities.AnnouncementFilter) (*int64, error)
 	CreateAnnouncement(ctx context.Context, input *entities.Announcement) (*entities.Announcement, error)
 	DeleteAnnouncement(ctx context.Context, input *entities.AnnouncementFilter) error
 	FindAllAnnouncement(ctx context.Context, input *entities.AnnouncementFilter) ([]entities.Announcement, error)

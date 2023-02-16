@@ -18,6 +18,140 @@ const docTemplate_swagger = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/announcement": {
+            "get": {
+                "description": "API For Find All Announcements",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ANNOUNCEMENTS"
+                ],
+                "summary": "Find All Announcements",
+                "operationId": "get-all-announcements",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "year of EVAT eMC",
+                        "name": "year",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Offset for search assignments",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "PageSize of assignments",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.FindAllAnnouncementResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "API For Create Announcement",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ANNOUNCEMENTS"
+                ],
+                "summary": "Create Announcement",
+                "operationId": "post-assignment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of announcements",
+                        "name": "announcement_uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "All params related to announcements",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateAnnouncementRequestJSON"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateAnnouncementResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/assignment/:assignment_uuid": {
             "put": {
                 "description": "API For Update Assignment",
@@ -1883,6 +2017,35 @@ const docTemplate_swagger = `{
         }
     },
     "definitions": {
+        "dtos.AnnouncementResponse": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
         "dtos.AssignmentResponse": {
             "type": "object",
             "properties": {
@@ -1927,6 +2090,74 @@ const docTemplate_swagger = `{
                 },
                 "year": {
                     "type": "string"
+                }
+            }
+        },
+        "dtos.CreateAnnouncementRequestJSON": {
+            "type": "object",
+            "required": [
+                "description",
+                "title",
+                "year"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CreateAnnouncementResponseJSON": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CreateAnnouncementResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/dtos.CreateAnnouncementResponseJSON"
+                },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
                 }
             }
         },
@@ -2438,6 +2669,32 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "dtos.FindAllAnnouncementResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dtos.AnnouncementResponse"
+                    }
+                },
+                "metaData": {
+                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                },
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
         "dtos.FindAllAssignmentResponseSwagger": {
             "type": "object",
             "properties": {
@@ -2448,7 +2705,7 @@ const docTemplate_swagger = `{
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse"
+                    "$ref": "#/definitions/dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2474,7 +2731,7 @@ const docTemplate_swagger = `{
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse"
+                    "$ref": "#/definitions/dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2500,7 +2757,7 @@ const docTemplate_swagger = `{
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse"
+                    "$ref": "#/definitions/dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2526,7 +2783,7 @@ const docTemplate_swagger = `{
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse"
+                    "$ref": "#/definitions/dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2867,6 +3124,23 @@ const docTemplate_swagger = `{
                 "timestamp": {
                     "type": "string",
                     "example": "2015-06-30T21:59:59Z"
+                }
+            }
+        },
+        "dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
                 }
             }
         },
@@ -3584,23 +3858,6 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "pageSize": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "totalRecords": {
-                    "type": "integer",
-                    "example": 10
-                }
-            }
-        },
         "gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse": {
             "type": "object",
             "properties": {
@@ -3663,23 +3920,6 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "pageSize": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "totalRecords": {
-                    "type": "integer",
-                    "example": 10
-                }
-            }
-        },
         "gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse": {
             "type": "object",
             "properties": {
@@ -3733,40 +3973,6 @@ const docTemplate_swagger = `{
                 },
                 "year": {
                     "type": "string"
-                }
-            }
-        },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "pageSize": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "totalRecords": {
-                    "type": "integer",
-                    "example": 10
-                }
-            }
-        },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "pageSize": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "totalRecords": {
-                    "type": "integer",
-                    "example": 10
                 }
             }
         },
