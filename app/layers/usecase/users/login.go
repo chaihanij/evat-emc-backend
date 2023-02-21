@@ -35,7 +35,7 @@ func (u useCase) Login(ctx context.Context, input *entities.Login) (*entities.Us
 		return nil, err
 	}
 	partialUpdateUser := &entities.UserPartialUpdate{
-		Email:       pointer.ToString(input.Email),
+		UID:         user.UID,
 		AccessToken: accessToken,
 		LastLogin:   pointer.ToTime(time.Now()),
 	}
