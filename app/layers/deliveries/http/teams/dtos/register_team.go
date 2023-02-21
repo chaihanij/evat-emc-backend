@@ -52,6 +52,7 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			FirstName: req.FirstName,
 			LastName:  req.LastName,
 			Email:     req.Email,
+			Password:  req.Password,
 			Tel:       req.Tel,
 			Year:      req.Year,
 			Role:      string(types.UserRoleUSER),

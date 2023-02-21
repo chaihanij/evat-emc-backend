@@ -105,7 +105,7 @@ logs-develop:
 
 logs-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============= "
-	docker compose  -f "docker-compose-evat-emc-local.yaml" logs emc-service-local
+	docker compose  -f "docker-compose-evat-emc-local.yaml" logs -f emc-service-local
 
 clean: down
 	@echo "=============cleaning up============="
