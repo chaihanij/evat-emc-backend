@@ -9,19 +9,23 @@ import (
 )
 
 type Team struct {
-	ID        primitive.ObjectID `bson:"_id"`
-	UUID      string             `bson:"uuid"`
-	Code      string             `bson:"code"`
-	Name      string             `bson:"name"`
-	TeamType  string             `bson:"team_type"`
-	Academy   string             `bson:"academy"`
-	Detail    string             `bson:"detail"`
-	Members   []string           `bson:"members"`
-	Year      string             `bson:"year"`
-	CreatedAt time.Time          `bson:"created_at"`
-	UpdatedAt time.Time          `bson:"updated_at"`
-	CreatedBy string             `bson:"created_by"`
-	UpdatedBy string             `bson:"updated_by"`
+	ID            primitive.ObjectID `bson:"_id"`
+	UUID          string             `bson:"uuid"`
+	Code          string             `bson:"code"`
+	Name          string             `bson:"name"`
+	TeamType      string             `bson:"team_type"`
+	Academy       string             `bson:"academy"`
+	Detail        string             `bson:"detail"`
+	Members       []string           `bson:"members"`
+	Year          string             `bson:"year"`
+	Slip          string             `bson:"slip"`
+	IsPaid        bool               `bson:"is_paid"`
+	PaymentMethod string             `bson:"payment_method"`
+	IsVerify      bool               `bson:"is_verify"`
+	CreatedAt     time.Time          `bson:"created_at"`
+	UpdatedAt     time.Time          `bson:"updated_at"`
+	CreatedBy     string             `bson:"created_by"`
+	UpdatedBy     string             `bson:"updated_by"`
 }
 
 func (t *Team) ToEntity() (*entities.Team, error) {

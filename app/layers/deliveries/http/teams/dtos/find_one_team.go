@@ -43,6 +43,12 @@ func (m *FindOneTeamResponseJSON) Parse(c *gin.Context, input *entities.Team) *F
 		UpdatedBy: input.UpdatedBy,
 	}
 
+	if value, ok := input.Slip.(entities.File); ok {
+		teams.Slip = new(FileResponse).Parse(c, &value)
+	} else {
+		teams.Slip = nil
+	}
+
 	if value, ok := input.Members.([]entities.Member); ok {
 		var members MembersResponse
 		for _, m := range value {

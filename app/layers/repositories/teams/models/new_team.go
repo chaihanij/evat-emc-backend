@@ -13,6 +13,10 @@ func NewTeam(input *entities.Team) *Team {
 	if val, ok := input.Members.([]string); ok {
 		members = val
 	}
+	var slip string
+	if val, ok := input.Slip.(string); ok {
+		slip = val
+	}
 	return &Team{
 		ID:        primitive.NewObjectID(),
 		UUID:      uuid.NewString(),
@@ -22,6 +26,8 @@ func NewTeam(input *entities.Team) *Team {
 		Academy:   input.Academy,
 		Detail:    input.Detail,
 		Year:      input.Year,
+		Slip:      slip,
+		IsVerify:  false,
 		Members:   members,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),

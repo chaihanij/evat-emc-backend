@@ -25,12 +25,11 @@ type UseCase interface {
 	FindAllTeam(ctx context.Context, input *entities.TeamFilter) (*int64, []entities.Team, error)
 	FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*entities.Team, error)
 	UpdateTeam(ctx context.Context, input *entities.TeamPartialUpdate) (*entities.Team, error)
-
+	UpdateTeamSlip(ctx context.Context, teamUUID string, file *entities.File) (*entities.Team, error)
 	FindOneAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamFilter) (*entities.AssignmentTeam, error)
 	SendAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamPartialUpdate) (*entities.AssignmentTeam, error)
 	SendAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, file *entities.File) (*entities.File, error)
 	SendAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) error
-
 	RegisterTeam(ctx context.Context, team *entities.Team, user *entities.User) (*entities.Team, *entities.User, error)
 }
 

@@ -17,10 +17,15 @@ func UpdateTeam(input *entities.Team) *bson.D {
 		bson.E{Key: "academy", Value: input.Academy},
 		bson.E{Key: "detail", Value: input.Detail},
 		bson.E{Key: "year", Value: input.Year},
+		bson.E{Key: "payment_method", Value: input.PaymentMethod},
+		bson.E{Key: "is_paid", Value: input.IsPaid},
+		bson.E{Key: "is_verify", Value: input.IsVerify},
 		bson.E{Key: "updated_at", Value: time.Now()},
 		bson.E{Key: "updated_by", Value: input.UpdatedBy},
 	}
-
+	if val, ok := input.Slip.(string); ok {
+		updateFields = append(updateFields, bson.E{Key: "members", Value: val})
+	}
 	if val, ok := input.Members.([]string); ok {
 		updateFields = append(updateFields, bson.E{Key: "members", Value: val})
 	}

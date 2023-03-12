@@ -20,6 +20,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 	v1 := ginEngine.Group("v1")
 	{
 		v1.POST("/register-teams", handler.RegisterTeam)
+		v1.POST("/teams/:team_uuid/slip", handler.UpdateTeamSlip)
 	}
 
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
