@@ -10,6 +10,8 @@ import (
 
 var (
 	Debug                 bool
+	Host                  string
+	BasePath              string
 	BaseUrl               string
 	MongoDBUrl            string
 	MongoDBName           string
@@ -34,6 +36,14 @@ func Init() {
 			log.Fatal(err)
 		}
 		Debug = debug
+	}
+	Host = os.Getenv("HOST")
+	if Host == "" {
+		Host = "localhost:8080"
+	}
+	BasePath = os.Getenv("BASE_PATH")
+	if BasePath == "" {
+		BaseUrl = "/"
 	}
 	BaseUrl = os.Getenv("BASE_URL")
 	if BaseUrl == "" {

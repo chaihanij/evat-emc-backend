@@ -10,6 +10,54 @@
     },
     "basePath": "{{evat-service}}",
     "paths": {
+        "/health": {
+            "get": {
+                "description": "HealtCheck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "HEALTHCHECK"
+                ],
+                "summary": "HealtCheck",
+                "operationId": "healt-check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.BaseSuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/announcement": {
             "get": {
                 "description": "API For Find All Announcements",
@@ -1409,13 +1457,11 @@
                         "required": true
                     },
                     {
-                        "description": "All params related to teams",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dtos.SendAssignmentTeamPushDocumentRequestJSON"
-                        }
+                        "type": "file",
+                        "description": "file document upload",
+                        "name": "document",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1676,6 +1722,71 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/dtos.DeleteTeamResponseSwagger"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/teams/:uuid/slip": {
+            "post": {
+                "description": "API For UpdateTeamSlip",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TEAMS"
+                ],
+                "summary": "UpdateTeamSlip",
+                "operationId": "post-team-slip",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "for authentication",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uuid of teams",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "image slip",
+                        "name": "slip",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.FindOneTeamResponseSwagger"
                         }
                     },
                     "400": {
@@ -2038,53 +2149,6 @@
                 }
             }
         },
-        "dtos.AssignmentResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "createdBy": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "document": {
-                    "$ref": "#/definitions/dtos.FileResponse"
-                },
-                "dueDate": {
-                    "type": "string"
-                },
-                "fullScore": {
-                    "type": "number"
-                },
-                "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
-                },
-                "isActive": {
-                    "type": "boolean"
-                },
-                "no": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "updatedBy": {
-                    "type": "string"
-                },
-                "uuid": {
-                    "type": "string"
-                },
-                "year": {
-                    "type": "string"
-                }
-            }
-        },
         "dtos.CreateAnnouncementRequestJSON": {
             "type": "object",
             "required": [
@@ -2198,7 +2262,7 @@
                     "type": "string"
                 },
                 "document": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "dueDate": {
                     "type": "string"
@@ -2207,7 +2271,7 @@
                     "type": "number"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "isActive": {
                     "type": "boolean"
@@ -2315,7 +2379,7 @@
                 "documents": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.FileResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                     }
                 },
                 "email": {
@@ -2325,7 +2389,7 @@
                     "type": "string"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                 },
                 "isTeamLeader": {
                     "type": "boolean"
@@ -2644,23 +2708,6 @@
                 }
             }
         },
-        "dtos.FileResponse": {
-            "type": "object",
-            "properties": {
-                "fileName": {
-                    "type": "string"
-                },
-                "originalFileName": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                },
-                "uuid": {
-                    "type": "string"
-                }
-            }
-        },
         "dtos.FindAllAnnouncementResponseSwagger": {
             "type": "object",
             "properties": {
@@ -2671,7 +2718,7 @@
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_announcements_dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2693,11 +2740,11 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.AssignmentResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.AssignmentResponse"
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2719,11 +2766,11 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse"
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2749,7 +2796,7 @@
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2775,7 +2822,7 @@
                     }
                 },
                 "metaData": {
-                    "$ref": "#/definitions/dtos.MetaDataResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -2804,7 +2851,7 @@
                     "type": "string"
                 },
                 "document": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "dueDate": {
                     "type": "string"
@@ -2813,7 +2860,7 @@
                     "type": "number"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "isActive": {
                     "type": "boolean"
@@ -2870,7 +2917,7 @@
                 "documents": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.FileResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                     }
                 },
                 "isConfirmed": {
@@ -2922,14 +2969,26 @@
                 "detail": {
                     "type": "string"
                 },
+                "is_paid": {
+                    "type": "boolean"
+                },
+                "is_verify": {
+                    "type": "boolean"
+                },
                 "members": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse"
                     }
                 },
                 "name": {
                     "type": "string"
+                },
+                "payment_method": {
+                    "type": "string"
+                },
+                "slip": {
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                 },
                 "teamType": {
                     "type": "string"
@@ -3119,23 +3178,6 @@
                 }
             }
         },
-        "dtos.MetaDataResponse": {
-            "type": "object",
-            "properties": {
-                "page": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "pageSize": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "totalRecords": {
-                    "type": "integer",
-                    "example": 10
-                }
-            }
-        },
         "dtos.RegisterTeamRequestJSON": {
             "type": "object",
             "required": [
@@ -3200,7 +3242,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -3213,17 +3255,6 @@
                 "timestamp": {
                     "type": "string",
                     "example": "2015-06-30T21:59:59Z"
-                }
-            }
-        },
-        "dtos.SendAssignmentTeamPushDocumentRequestJSON": {
-            "type": "object",
-            "properties": {
-                "assignmentUUID": {
-                    "type": "string"
-                },
-                "teamUUID": {
-                    "type": "string"
                 }
             }
         },
@@ -3296,14 +3327,26 @@
                 "detail": {
                     "type": "string"
                 },
+                "is_paid": {
+                    "type": "boolean"
+                },
+                "is_verify": {
+                    "type": "boolean"
+                },
                 "members": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse"
                     }
                 },
                 "name": {
                     "type": "string"
+                },
+                "payment_method": {
+                    "type": "string"
+                },
+                "slip": {
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                 },
                 "teamType": {
                     "type": "string"
@@ -3326,7 +3369,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -3346,7 +3389,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -3407,7 +3450,7 @@
                     "type": "string"
                 },
                 "document": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "dueDate": {
                     "type": "string"
@@ -3416,7 +3459,7 @@
                     "type": "number"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
                 },
                 "isActive": {
                     "type": "boolean"
@@ -3465,7 +3508,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -3502,7 +3545,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                 },
                 "statusCode": {
                     "type": "integer",
@@ -3582,7 +3625,7 @@
                 "documents": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.FileResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                     }
                 },
                 "email": {
@@ -3592,7 +3635,7 @@
                     "type": "string"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                 },
                 "isTeamLeader": {
                     "type": "boolean"
@@ -3850,7 +3893,122 @@
                 }
             }
         },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse": {
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_announcements_dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.AssignmentResponse": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "document": {
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
+                },
+                "dueDate": {
+                    "type": "string"
+                },
+                "fullScore": {
+                    "type": "number"
+                },
+                "image": {
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse"
+                },
+                "isActive": {
+                    "type": "boolean"
+                },
+                "no": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse": {
+            "type": "object",
+            "properties": {
+                "fileName": {
+                    "type": "string"
+                },
+                "originalFileName": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse": {
+            "type": "object",
+            "properties": {
+                "fileName": {
+                    "type": "string"
+                },
+                "originalFileName": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse": {
             "type": "object",
             "properties": {
                 "academy": {
@@ -3868,7 +4026,7 @@
                 "documents": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.FileResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                     }
                 },
                 "email": {
@@ -3878,7 +4036,7 @@
                     "type": "string"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse"
                 },
                 "isTeamLeader": {
                     "type": "boolean"
@@ -3912,7 +4070,41 @@
                 }
             }
         },
-        "gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse": {
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse": {
+            "type": "object",
+            "properties": {
+                "fileName": {
+                    "type": "string"
+                },
+                "originalFileName": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse": {
             "type": "object",
             "properties": {
                 "academy": {
@@ -3930,7 +4122,7 @@
                 "documents": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dtos.FileResponse"
+                        "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                     }
                 },
                 "email": {
@@ -3940,7 +4132,7 @@
                     "type": "string"
                 },
                 "image": {
-                    "$ref": "#/definitions/dtos.FileResponse"
+                    "$ref": "#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse"
                 },
                 "isTeamLeader": {
                     "type": "boolean"
@@ -3965,6 +4157,59 @@
                 },
                 "year": {
                     "type": "string"
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "gitlab_com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "totalRecords": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "utils.BaseSuccessResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "metaData": {},
+                "statusCode": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2015-06-30T21:59:59Z"
                 }
             }
         },

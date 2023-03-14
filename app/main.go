@@ -40,6 +40,12 @@ import (
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
+
+	// swagger
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	docs "gitlab.com/chaihanij/evat/app/docs/swagger"
 )
 
 // @title EVAT eMCS Service
@@ -68,6 +74,7 @@ func main() {
 		"PRIVAT_KEY":     env.RsaPrivateKey,
 	}).Debugln("main")
 	// Create data dir
+	os.MkdirAll(filepath.Join(env.DataPath, "teams", "slips"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "members", "images"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "members", "documents"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "images"), os.ModePerm)
@@ -105,6 +112,10 @@ func main() {
 	ginEngine.Use(gin.Logger())
 	ginEngine.Use(gin.Recovery())
 	ginEngine.Use(middlewares.CORSMiddleware())
+	// swagerr
+	docs.SwaggerInfo.Host = env.Host
+	docs.SwaggerInfo.BasePath = env.BasePath
+	ginEngine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// middlewares
 	authMiddleware := middlewares.InitAuthMiddleware(userUseCase)

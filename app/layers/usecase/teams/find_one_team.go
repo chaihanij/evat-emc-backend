@@ -46,6 +46,15 @@ func (u useCase) FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*
 		return nil, err
 	}
 	team.Members = members
+	if val, ok := team.Slip.(string); ok {
+		silp, err := u.FilesRepo.FindOneFile(ctx, &entities.FileFilter{UUID: pointer.ToString(val)})
+		if err != nil && mongo.ErrNoDocuments != err {
+			return nil, err
+		}
+		if silp != nil {
+			team.Slip = *silp
+		}
+	}
 	log.WithField("team", team).Debugln("FindOneTeam")
 
 	return team, nil

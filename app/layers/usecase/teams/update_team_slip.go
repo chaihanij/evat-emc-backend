@@ -15,6 +15,5 @@ func (u useCase) UpdateTeamSlip(ctx context.Context, teamUUID string, file *enti
 	if err != nil {
 		return nil, err
 	}
-	team.Slip = file
-	return team, nil
+	return u.FindOneTeam(ctx, &entities.TeamFilter{UUID: &team.UUID})
 }

@@ -19,37 +19,6 @@ definitions:
       year:
         type: string
     type: object
-  dtos.AssignmentResponse:
-    properties:
-      createdAt:
-        type: string
-      createdBy:
-        type: string
-      description:
-        type: string
-      document:
-        $ref: '#/definitions/dtos.FileResponse'
-      dueDate:
-        type: string
-      fullScore:
-        type: number
-      image:
-        $ref: '#/definitions/dtos.FileResponse'
-      isActive:
-        type: boolean
-      "no":
-        type: integer
-      title:
-        type: string
-      updatedAt:
-        type: string
-      updatedBy:
-        type: string
-      uuid:
-        type: string
-      year:
-        type: string
-    type: object
   dtos.CreateAnnouncementRequestJSON:
     properties:
       description:
@@ -127,13 +96,13 @@ definitions:
       description:
         type: string
       document:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -206,14 +175,14 @@ definitions:
         type: string
       documents:
         items:
-          $ref: '#/definitions/dtos.FileResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
         type: array
       email:
         type: string
       firstname:
         type: string
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
       isTeamLeader:
         type: boolean
       lastname:
@@ -431,17 +400,6 @@ definitions:
         example: "2015-06-30T21:59:59Z"
         type: string
     type: object
-  dtos.FileResponse:
-    properties:
-      fileName:
-        type: string
-      originalFileName:
-        type: string
-      url:
-        type: string
-      uuid:
-        type: string
-    type: object
   dtos.FindAllAnnouncementResponseSwagger:
     properties:
       data:
@@ -449,7 +407,7 @@ definitions:
           $ref: '#/definitions/dtos.AnnouncementResponse'
         type: array
       metaData:
-        $ref: '#/definitions/dtos.MetaDataResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_announcements_dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -464,10 +422,10 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/dtos.AssignmentResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.AssignmentResponse'
         type: array
       metaData:
-        $ref: '#/definitions/dtos.MetaDataResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -482,10 +440,10 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse'
         type: array
       metaData:
-        $ref: '#/definitions/dtos.MetaDataResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -503,7 +461,7 @@ definitions:
           $ref: '#/definitions/dtos.TeamResponse'
         type: array
       metaData:
-        $ref: '#/definitions/dtos.MetaDataResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -521,7 +479,7 @@ definitions:
           $ref: '#/definitions/dtos.User'
         type: array
       metaData:
-        $ref: '#/definitions/dtos.MetaDataResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse'
       statusCode:
         example: 1000
         type: integer
@@ -541,13 +499,13 @@ definitions:
       description:
         type: string
       document:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -585,7 +543,7 @@ definitions:
         type: string
       documents:
         items:
-          $ref: '#/definitions/dtos.FileResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
         type: array
       isConfirmed:
         type: boolean
@@ -620,12 +578,20 @@ definitions:
         type: string
       detail:
         type: string
+      is_paid:
+        type: boolean
+      is_verify:
+        type: boolean
       members:
         items:
-          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
         type: array
       name:
         type: string
+      payment_method:
+        type: string
+      slip:
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
       teamType:
         type: string
       updatedAt:
@@ -753,18 +719,6 @@ definitions:
         example: "2015-06-30T21:59:59Z"
         type: string
     type: object
-  dtos.MetaDataResponse:
-    properties:
-      page:
-        example: 1
-        type: integer
-      pageSize:
-        example: 20
-        type: integer
-      totalRecords:
-        example: 10
-        type: integer
-    type: object
   dtos.RegisterTeamRequestJSON:
     properties:
       email:
@@ -811,7 +765,7 @@ definitions:
   dtos.SendAssignmentTeamPushDocumentJSONJSwagger:
     properties:
       data:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
       statusCode:
         example: 1000
         type: integer
@@ -820,13 +774,6 @@ definitions:
         type: string
       timestamp:
         example: "2015-06-30T21:59:59Z"
-        type: string
-    type: object
-  dtos.SendAssignmentTeamPushDocumentRequestJSON:
-    properties:
-      assignmentUUID:
-        type: string
-      teamUUID:
         type: string
     type: object
   dtos.SendAssignmentTeamRequestJSON:
@@ -875,12 +822,20 @@ definitions:
         type: string
       detail:
         type: string
+      is_paid:
+        type: boolean
+      is_verify:
+        type: boolean
       members:
         items:
-          $ref: '#/definitions/gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse'
         type: array
       name:
         type: string
+      payment_method:
+        type: string
+      slip:
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
       teamType:
         type: string
       updatedAt:
@@ -895,7 +850,7 @@ definitions:
   dtos.UpdateAssignmentDocumentResponseSwagger:
     properties:
       data:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       statusCode:
         example: 1000
         type: integer
@@ -909,7 +864,7 @@ definitions:
   dtos.UpdateAssignmentImageResponseSwagger:
     properties:
       data:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       statusCode:
         example: 1000
         type: integer
@@ -951,13 +906,13 @@ definitions:
       description:
         type: string
       document:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       dueDate:
         type: string
       fullScore:
         type: number
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
       isActive:
         type: boolean
       "no":
@@ -990,7 +945,7 @@ definitions:
   dtos.UpdateMemberImageResponseSwagger:
     properties:
       data:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
       statusCode:
         example: 1000
         type: integer
@@ -1016,7 +971,7 @@ definitions:
   dtos.UpdateMemberPushDocumentResponseSwagger:
     properties:
       data:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
       statusCode:
         example: 1000
         type: integer
@@ -1071,14 +1026,14 @@ definitions:
         type: string
       documents:
         items:
-          $ref: '#/definitions/dtos.FileResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
         type: array
       email:
         type: string
       firstname:
         type: string
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
       isTeamLeader:
         type: boolean
       lastname:
@@ -1251,7 +1206,84 @@ definitions:
       year:
         type: string
     type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse:
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_announcements_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.AssignmentResponse:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      document:
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
+      dueDate:
+        type: string
+      fullScore:
+        type: number
+      image:
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse'
+      isActive:
+        type: boolean
+      "no":
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      uuid:
+        type: string
+      year:
+        type: string
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.FileResponse:
+    properties:
+      fileName:
+        type: string
+      originalFileName:
+        type: string
+      url:
+        type: string
+      uuid:
+        type: string
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_assignments_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse:
+    properties:
+      fileName:
+        type: string
+      originalFileName:
+        type: string
+      url:
+        type: string
+      uuid:
+        type: string
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MemberResponse:
     properties:
       academy:
         type: string
@@ -1263,14 +1295,14 @@ definitions:
         type: string
       documents:
         items:
-          $ref: '#/definitions/dtos.FileResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
         type: array
       email:
         type: string
       firstname:
         type: string
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.FileResponse'
       isTeamLeader:
         type: boolean
       lastname:
@@ -1292,7 +1324,30 @@ definitions:
       year:
         type: string
     type: object
-  gitlab.com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse:
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_members_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse:
+    properties:
+      fileName:
+        type: string
+      originalFileName:
+        type: string
+      url:
+        type: string
+      uuid:
+        type: string
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MemberResponse:
     properties:
       academy:
         type: string
@@ -1304,14 +1359,14 @@ definitions:
         type: string
       documents:
         items:
-          $ref: '#/definitions/dtos.FileResponse'
+          $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
         type: array
       email:
         type: string
       firstname:
         type: string
       image:
-        $ref: '#/definitions/dtos.FileResponse'
+        $ref: '#/definitions/gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.FileResponse'
       isTeamLeader:
         type: boolean
       lastname:
@@ -1327,6 +1382,44 @@ definitions:
       uuid:
         type: string
       year:
+        type: string
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_teams_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  gitlab_com_chaihanij_evat_app_layers_deliveries_http_users_dtos.MetaDataResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      pageSize:
+        example: 20
+        type: integer
+      totalRecords:
+        example: 10
+        type: integer
+    type: object
+  utils.BaseSuccessResponse:
+    properties:
+      data: {}
+      metaData: {}
+      statusCode:
+        example: 1000
+        type: integer
+      statusMessage:
+        example: Success
+        type: string
+      timestamp:
+        example: "2015-06-30T21:59:59Z"
         type: string
     type: object
   utils.ErrorResponse:
@@ -1351,6 +1444,38 @@ info:
   title: EVAT eMCS Service
   version: 1.0.0
 paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: HealtCheck
+      operationId: healt-check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.BaseSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: HealtCheck
+      tags:
+      - HEALTHCHECK
   /v1/announcement:
     get:
       consumes:
@@ -2289,12 +2414,11 @@ paths:
         name: assignment_uuid
         required: true
         type: string
-      - description: All params related to teams
-        in: body
-        name: body
+      - description: file document upload
+        in: formData
+        name: document
         required: true
-        schema:
-          $ref: '#/definitions/dtos.SendAssignmentTeamPushDocumentRequestJSON'
+        type: file
       produces:
       - application/json
       responses:
@@ -2486,6 +2610,50 @@ paths:
           schema:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Update Team
+      tags:
+      - TEAMS
+  /v1/teams/:uuid/slip:
+    post:
+      consumes:
+      - multipart/form-data
+      description: API For UpdateTeamSlip
+      operationId: post-team-slip
+      parameters:
+      - description: for authentication
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: uuid of teams
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: image slip
+        in: formData
+        name: slip
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindOneTeamResponseSwagger'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: UpdateTeamSlip
       tags:
       - TEAMS
   /v1/users:
