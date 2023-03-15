@@ -19,7 +19,7 @@ func (r repo) CountScore(ctx context.Context, input *entities.ScoreFilter) (*int
 	filter := medles.NewScoreFilter(input)
 
 	count, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionScore).
+		Collection(constants.Collectionracesteam).
 		CountDocuments(ctx, filter)
 
 	if err != nil {

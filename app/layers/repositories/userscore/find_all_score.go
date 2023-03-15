@@ -35,7 +35,7 @@ func (r repo) FindAllScore(ctx context.Context, input *entities.ScoreFilter) ([]
 	filter := models.NewScoreFilter(input)
 
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionScore).
+		Collection(constants.Collectionracesteam).
 		Find(ctx, filter, findOptions)
 
 	if err != nil {

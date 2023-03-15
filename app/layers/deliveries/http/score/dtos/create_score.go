@@ -12,39 +12,27 @@ import (
 )
 
 type CreateScoreRequestJSON struct {
-	ID             primitive.ObjectID `json:"_id" bson:"_id"`
-	UID            string             `json:"uid" bson:"uid"`
-	NameTeam       string             `json:"nameteam" bson:"nameteam"`
-	FirstTeam      string            `json:"firstteam" bson:"firstteam"`
-	SecondTeam     string            `json:"secondteam" bson:"secondteam"`
-	First_Stadium  string            `json:"firststadium" bson:"firststadium"`
-	Second_Stadium string            `json:"secondstadium" bson:"secondstadium"`
-	Third_Stadium  string            `json:"thirdstadium" bson:"thirdstadium"`
-	Fourth_Stadium string            `json:"fourthstadium" bson:"fourthstadium"`
-	Sum_Score      string            `json:"sumscore" bson:"sumscore"`
-	No             string            `json:"no" bson:"no"`
-	CreateDate     time.Time          `json:"createdate" bson:"createdate"`
-	Lastupdate     time.Time          `json:"lastupdate" bson:"lastupdate"`
-	CreateBy       string             `json:"createby" bson:"createby"`
-	LastUpdateBy   string             `json:"lastupdateby" bson:"lastupdateby"`
+	ID              primitive.ObjectID `json:"_id" bson:"_id"`
+	UUID            string             `json:"uuid" bson:"uuid"`
+	Field_race_uuid string             `json:"field_race_uuid" bson:"field_race_uuid"`
+	Team_uuid       string             `json:"team_uuid" bson:"team_uuid"`
+	Score           float64            `json:"score" bson:"score"`
+	CreateDate      time.Time          `json:"create_at" bson:"create_at"`
+	Lastupdate      time.Time          `json:"update_at" bson:"update_at"`
+	CreateBy        string             `json:"create_by" bson:"create_by"`
+	UpdateBy        string             `json:"update_by" bson:"update_by"`
 }
 
 type CreateScoreResponseJSON struct {
 	// ID             primitive.ObjectID `json:"_id" bson:"_id"`
-	UID            string    `json:"uid" bson:"uid"`
-	NameTeam       string    `json:"nameteam" bson:"nameteam"`
-	FirstTeam      string   `json:"firstteam" bson:"firstteam"`
-	SecondTeam     string   `json:"secondteam" bson:"secondteam"`
-	First_Stadium  string   `json:"firststadium" bson:"firststadium"`
-	Second_Stadium string   `json:"secondstadium" bson:"secondstadium"`
-	Third_Stadium  string   `json:"thirdstadium" bson:"thirdstadium"`
-	Fourth_Stadium string   `json:"fourthstadium" bson:"fourthstadium"`
-	Sum_Score      string   `json:"sumscore" bson:"sumscore"`
-	No             string   `json:"no" bson:"no"`
-	CreateDate     time.Time `json:"createdate" bson:"createdate"`
-	Lastupdate     time.Time `json:"lastupdate" bson:"lastupdate"`
-	CreateBy       string    `json:"createby" bson:"createby"`
-	LastUpdateBy   string    `json:"lastupdateby" bson:"lastupdateby"`
+	UUID            string    `json:"uuid" bson:"uuid"`
+	Field_race_uuid string    `json:"field_race_uuid" bson:"field_race_uuid"`
+	Team_uuid       string    `json:"team_uuid" bson:"team_uuid"`
+	Score           float64   `json:"score" bson:"score"`
+	CreateDate      time.Time `json:"create_at" bson:"create_at"`
+	Lastupdate      time.Time `json:"update_at" bson:"update_at"`
+	CreateBy        string    `json:"create_by" bson:"create_by"`
+	UpdateBy        string    `json:"update_by" bson:"update_by"`
 }
 
 func (req *CreateScoreRequestJSON) Parse(c *gin.Context) (*CreateScoreRequestJSON, error) {
@@ -83,21 +71,14 @@ func (req *CreateScoreRequestJSON) Parse(c *gin.Context) (*CreateScoreRequestJSO
 func (req *CreateScoreRequestJSON) ToEntity() *entities.Score {
 
 	return &entities.Score{
-		// ID: string(primitive.NewObjectID()),
-		// UUID:           req.UID,
-		NameTeam:       req.NameTeam,
-		FirstTeam:      req.FirstTeam,
-		SecondTeam:     req.SecondTeam,
-		First_Stadium:  req.First_Stadium,
-		Second_Stadium: req.Second_Stadium,
-		Third_Stadium:  req.Third_Stadium,
-		Fourth_Stadium: req.Fourth_Stadium,
-		Sum_Score:      req.Sum_Score,
-		No:             req.No,
-		CreateDate:     time.Now(),
-		CreateBy:       req.CreateBy,
-		Lastupdate:     time.Now(),
-		LastUpdateBy:   req.LastUpdateBy,
+		UUID: req.UUID,
+		Field_race_uuid: req.Field_race_uuid,
+		Team_uuid: req.Team_uuid,
+		Score: req.Score,
+		CreateDate: time.Now(),
+		CreateBy:   req.CreateBy,
+		Lastupdate: time.Now(),
+		Updated_by: req.UpdateBy,
 	}
 
 }
@@ -108,19 +89,14 @@ func (m *CreateScoreResponseJSON) Parse(input *entities.Score) *CreateScoreRespo
 
 		// ID: string(primitive.NewObjectID()),
 		// UID:            input.UUID,
-		NameTeam:       input.NameTeam,
-		FirstTeam:      input.FirstTeam,
-		SecondTeam:     input.SecondTeam,
-		First_Stadium:  input.First_Stadium,
-		Second_Stadium: input.Second_Stadium,
-		Third_Stadium:  input.Third_Stadium,
-		Fourth_Stadium: input.Fourth_Stadium,
-		Sum_Score:      input.Sum_Score,
-		No:             input.No,
-		CreateDate:     time.Now(),
-		CreateBy:       input.CreateBy,
-		Lastupdate:     time.Now(),
-		LastUpdateBy:   input.LastUpdateBy,
+		UUID: input.UUID,
+		Field_race_uuid: input.Field_race_uuid,
+		Team_uuid: input.Team_uuid,
+		Score: input.Score,
+		CreateDate: time.Now(),
+		CreateBy:   input.CreateBy,
+		Lastupdate: time.Now(),
+		UpdateBy: input.Updated_by,
 	}
 
 }
