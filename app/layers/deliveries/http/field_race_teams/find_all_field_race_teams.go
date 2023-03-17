@@ -6,7 +6,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/utils"
 )
 
-func (h *Handler) FindAllFindAllField_race_teams(c *gin.Context) {
+func (h *Handler) FindAllFindAllFieldRaceTeams(c *gin.Context) {
 
 	// dtos.FindAllField_race_teamsRequestJSON
 	request, err := new(dtos.FindAllField_race_teamsRequestJSON).Parse(c)

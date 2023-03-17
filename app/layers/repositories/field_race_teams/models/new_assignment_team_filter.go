@@ -16,22 +16,7 @@ func NewFieldRaceTeamFilter(input interface{}) *bson.M {
 			filter["team_uuid"] = val.TeamUUID
 		}
 	}
-	if val, ok := input.(*entities.AssignmentTeamFilter); ok {
-		if val.AssignmentUUID != nil {
-			filter["assignment_uuid"] = val.AssignmentUUID
-		}
-		if val.TeamUUID != nil {
-			filter["team_uuid"] = val.TeamUUID
-		}
-	}
-	if val, ok := input.(*entities.AssignmentTeamPartialUpdate); ok {
-		if val.AssignmentUUID != nil {
-			filter["assignment_uuid"] = val.AssignmentUUID
-		}
-		if val.TeamUUID != nil {
-			filter["team_uuid"] = val.TeamUUID
-		}
-	}
-	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")
+
+	log.WithField("value", filter).Debugln("models.NewFieldRaceTeamFilter")
 	return &filter
 }

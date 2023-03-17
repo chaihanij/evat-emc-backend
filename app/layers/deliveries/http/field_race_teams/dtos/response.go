@@ -1,27 +1,52 @@
 package dtos
 
-import "time"
+import (
+	"time"
+)
 
 type FieldRaceTeam struct {
-	FieldRaceUUID string    `json:"field_race_uuid"`
-	TeamUUID      string    `json:"team_uuid"`
-	Description   string    `json:"description"`
-	Score         float64   `json:"score"`
-	CreatedAt     time.Time `json:"create_at"`
-	UpdatedAt     time.Time `json:"update_at"`
-	CreatedBy     string    `json:"create_by"`
-	UpdatedBy     string    `json:"updat_by"`
+	FieldRaceUUID string      `json:"field_race_uuid"`
+	TeamUUID      string      `json:"team_uuid"`
+	Description   string      `json:"description"`
+	Score         float64     `json:"score"`
+	CreatedAt     time.Time   `json:"create_at"`
+	UpdatedAt     time.Time   `json:"update_at"`
+	CreatedBy     string      `json:"created_by"`
+	UpdatedBy     string      `json:"updated_by"`
+	Name          string      `json:"name"`
+	Code          string      `json:"code"`
+	Type          string      `json:"type"`
+	FieldRaces    []FieldRace `json:"field_races" bson:"field_races"`
+}
+
+type FieldRace struct {
+	// Title       string  `json:"title"`
+	// Description string  `json:"description"`
+	// Image       string  `json:"image"`
+	// File        string  `json:"file"`
+	// Year        string  `json:"year"`
+	// FullScore   float64 `json:"full_score"`
+	Title       string  `json:"title" bson:"title"`
+	Description string  `json:"description" bson:"description" `
+	Image       string  `json:"image" bson:"image"`
+	File        string  `json:"file" bson:"file" `
+	Year        string  `json:"year" bson:"year" `
+	FullScore   float64 `json:"full_score" bson:"full_score"`
 }
 
 type FieldRaceTeamResponse struct {
-	FieldRaceUUID string    `json:"field_race_uuid"`
-	TeamUUID      string    `json:"team_uuid"`
-	Description   string    `json:"description"`
-	Score         float64   `json:"score"`
-	CreatedAt     time.Time `json:"create_at"`
-	UpdatedAt     time.Time `json:"update_at"`
-	CreatedBy     string    `json:"create_by"`
-	UpdatedBy     string    `json:"updat_by"`
+	FieldRaceUUID string      `json:"field_race_uuid"`
+	TeamUUID      string      `json:"team_uuid"`
+	Description   string      `json:"description"`
+	Score         float64     `json:"score"`
+	CreatedAt     time.Time   `json:"create_at"`
+	UpdatedAt     time.Time   `json:"update_at"`
+	CreatedBy     string      `json:"created_by"`
+	UpdatedBy     string      `json:"updated_by"`
+	Name          string      `json:"name"`
+	Code          string      `json:"code"`
+	Type          string      `json:"type"`
+	FieldRaces    []FieldRace `json:"field_races"`
 }
 
 type MetaDataResponse struct {

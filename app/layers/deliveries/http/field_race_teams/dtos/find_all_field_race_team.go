@@ -2,6 +2,7 @@ package dtos
 
 import (
 	"github.com/gin-gonic/gin"
+	// log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
 )
@@ -34,6 +35,22 @@ type FindAllField_race_teamsResponseJSON []FieldRaceTeam
 func (m *FindAllField_race_teamsResponseJSON) Parse(data []entities.FieldRaceTeam) *FindAllField_race_teamsResponseJSON {
 	var field_race_teams FindAllField_race_teamsResponseJSON = FindAllField_race_teamsResponseJSON{}
 	for _, value := range data {
+
+		var fieldRaces []FieldRace
+
+		for _, valueFieldRace := range value.FieldRaces {
+			// log.Debugln("dddd", valueFieldRace)
+			fieldRace := &FieldRace{
+				Title:       valueFieldRace.Title,
+				Description: valueFieldRace.Description,
+				File:        valueFieldRace.File,
+				Image:       valueFieldRace.Image,
+				Year:        valueFieldRace.Year,
+				FullScore:   valueFieldRace.FullScore,
+			}
+			fieldRaces = append(fieldRaces, *fieldRace)
+		}
+
 		field_race_team := &FieldRaceTeam{
 			FieldRaceUUID: value.FieldRaceUUID,
 			TeamUUID:      value.TeamUUID,
@@ -43,6 +60,10 @@ func (m *FindAllField_race_teamsResponseJSON) Parse(data []entities.FieldRaceTea
 			UpdatedAt:     value.UpdatedAt,
 			CreatedBy:     value.CreatedBy,
 			UpdatedBy:     value.UpdatedBy,
+			Name:          value.Name,
+			Code:          value.Code,
+			Type:          value.Type,
+			FieldRaces:    fieldRaces,
 		}
 		field_race_teams = append(field_race_teams, *field_race_team)
 	}

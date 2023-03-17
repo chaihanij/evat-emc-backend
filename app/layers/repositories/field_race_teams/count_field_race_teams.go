@@ -12,7 +12,7 @@ import (
 )
 
 func (r repo) CountFieldRaceTeamFilter(ctx context.Context, input *entities.FieldRaceTeamFilter) (*int64, error) {
-	log.Debugln("DB FieldRaceTeams")
+	log.Debugln("DB FieldRaceTeams func Count")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 

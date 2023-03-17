@@ -16,18 +16,18 @@ import (
 
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
+	_fildracteamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_race_teams"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
-	_scoreRepo "gitlab.com/chaihanij/evat/app/layers/repositories/userscore"
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
 	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
+	_fildracteamsUseCas "gitlab.com/chaihanij/evat/app/layers/usecase/field_race_teams"
 	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
-	_userScore "gitlab.com/chaihanij/evat/app/layers/usecase/score"
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 
@@ -38,9 +38,10 @@ import (
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
-	_score "gitlab.com/chaihanij/evat/app/layers/deliveries/http/score"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
+
+	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 )
@@ -86,7 +87,7 @@ func main() {
 	userRepo := _userRepo.InitRepo(db)
 	assignmentTeamsRepo := _assignmentTeamsRepo.InitRepo(db)
 	announcementsTeamsRepo := _announcementsTeamsRepo.InitRepo(db)
-	scoreRepo := _scoreRepo.InitRepo(db)
+	fildracteamsRepo := _fildracteamsRepo.InitRepo(db)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -95,7 +96,7 @@ func main() {
 	userRepo.Config()
 	assignmentTeamsRepo.Config()
 	announcementsTeamsRepo.Config()
-	scoreRepo.Config()
+	fildracteamsRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -104,7 +105,7 @@ func main() {
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
-	scores := _userScore.InitUseCase(scoreRepo, userRepo, membersRepo, filesRepo)
+	fildracteamsUseCas := _fildracteamsUseCas.InitUseCase(fildracteamsRepo)
 
 	//
 	ginEngine := gin.New()
@@ -125,7 +126,7 @@ func main() {
 	_membersHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, memberUseCase)
 	_filesHttp.NewEndpointHttpHandler(ginEngine, filesUseCase)
 	_announcementsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, announcementsUseCase)
-	_score.NewEndpointHttpHandler(ginEngine, authMiddleware, scores)
+	__fildracteamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fildracteamsUseCas)
 
 	port := os.Getenv("PORT")
 	if port == "" {

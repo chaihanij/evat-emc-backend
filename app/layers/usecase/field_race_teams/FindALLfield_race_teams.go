@@ -30,18 +30,18 @@ func (u useCase) findAllFieldraceteam(wg *sync.WaitGroup, ctx context.Context, i
 
 func (u useCase) FindAllFieldraceteam(ctx context.Context, input *entities.FieldRaceTeamFilter) (*int64, []entities.FieldRaceTeam, error) {
 	count := make(chan *int64, 1)
-	teams := make(chan []entities.FieldRaceTeam, 1)
+	fieldraceteams := make(chan []entities.FieldRaceTeam, 1)
 	errors := make(chan error, 2)
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go u.countFieldraceteam(&wg, ctx, input, count, errors)
 	wg.Add(1)
-	go u.findAllFieldraceteam(&wg, ctx, input, teams, errors)
+	go u.findAllFieldraceteam(&wg, ctx, input, fieldraceteams, errors)
 
 	go func() {
 		wg.Wait()
 		close(count)
-		close(teams)
+		close(fieldraceteams)
 		close(errors)
 	}()
 
@@ -49,6 +49,6 @@ func (u useCase) FindAllFieldraceteam(ctx context.Context, input *entities.Field
 		return nil, nil, err
 	}
 
-	totalRecords, result, err := <-count, <-teams, <-errors
+	totalRecords, result, err := <-count, <-fieldraceteams, <-errors
 	return totalRecords, result, err
 }

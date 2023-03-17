@@ -13,5 +13,4 @@ const (
 	CollectionFieldRaceTeams    string = "field_race_teams"
 	CollectionAnnouncements     string = "announcements"
 	CollectionAnnouncementTeams string = "announcementTeams"
-	Collectionracesteam             string = "racesteam"
 )
