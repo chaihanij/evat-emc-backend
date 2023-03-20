@@ -22,9 +22,7 @@ type CreateFieldRaceTeamRequestJSON struct {
 	UpdatedAt     time.Time          `json:"updated_at" bson:"updated_at"`
 	CreatedBy     string             `json:"created_by" bson:"created_by"`
 	UpdatedBy     string             `json:"updated_by" bson:"updated_by"`
-	// Name          string             `json:"name" bson:"name"`
-	// Code          string             `json:"code" bson:"code" `
-	// Type          string             `json:"type" bson:"type" `
+
 }
 
 type CreateFieldRaceTeamResponsJSON struct {

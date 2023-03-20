@@ -19,19 +19,19 @@ type FieldRaceTeam struct {
 	FieldRaces    []FieldRaces
 }
 
-type CreateFildRaceTeam struct {
-	ID            string
-	UUID          string
-	FieldRaceUUID string
-	TeamUUID      string
-	Description   string
-	Score         float64
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	CreatedBy     string
-	UpdatedBy     string
-	FieldRaces    []FieldRaces
-}
+// type CreateFildRaceTeam struct {
+// 	ID            string
+// 	UUID          string
+// 	FieldRaceUUID string
+// 	TeamUUID      string
+// 	Description   string
+// 	Score         float64
+// 	CreatedAt     time.Time
+// 	UpdatedAt     time.Time
+// 	CreatedBy     string
+// 	UpdatedBy     string
+// 	FieldRaces    []FieldRaces
+// }
 
 type FieldRaces struct {
 	Title       string
