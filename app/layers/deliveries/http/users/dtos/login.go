@@ -64,6 +64,7 @@ func (req *LoginRequestJSON) ToEntity() *entities.Login {
 
 func (m *LoginResponseJSON) Parse(data *entities.User) *LoginResponseJSON {
 	_ = copier.Copy(&m, data)
+	m.TeamUID = data.TeamUUID
 	m.LastLogin = &data.LastLogin
 	return m
 }
