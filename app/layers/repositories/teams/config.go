@@ -25,6 +25,10 @@ func (r repo) Config() ([]string, error) {
 				Keys:    bson.D{{Key: "code", Value: 1}},
 				Options: options.Index().SetUnique(true),
 			},
+			{
+				Keys:    bson.D{{Key: "name", Value: 1}, {Key: "year", Value: 1}},
+				Options: options.Index().SetUnique(true),
+			},
 		},
 	)
 }

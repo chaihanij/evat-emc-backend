@@ -21,7 +21,9 @@ func (r repo) CreateTeam(ctx context.Context, input *entities.Team) (*entities.T
 		Collection(constants.CollectionTeams).
 		InsertOne(ctx, team)
 	if err != nil {
-		log.WithError(err).Errorln("DB CreateTeam Error")
+		log.WithError(err).WithFields(log.Fields{
+			"is_duplicate_key_error": mongo.IsDuplicateKeyError(err),
+		}).Errorln("DB CreateTeam Error")
 		if mongo.IsDuplicateKeyError(err) {
 			return nil, errors.DuplicateKeyError{Message: err.Error()}
 		}
