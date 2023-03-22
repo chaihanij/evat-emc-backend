@@ -11,6 +11,7 @@ import (
 type Assignment struct {
 	ID          primitive.ObjectID `bson:"id"`
 	UUID        string             `bson:"uuid"`
+	TeamUUID    string             `bson:"team_uuid"`
 	No          int                `bson:"no"`
 	Title       string             `bson:"title"`
 	Description string             `bson:"description"`

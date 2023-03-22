@@ -21,6 +21,7 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 	return &Assignment{
 		ID:          primitive.NewObjectID(),
 		UUID:        uuid.NewString(),
+		TeamUUID:    input.TeamUUID,
 		No:          input.No,
 		Title:       input.Title,
 		Description: input.Description,
