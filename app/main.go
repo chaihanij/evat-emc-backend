@@ -21,6 +21,8 @@ import (
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
+	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
+	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
@@ -30,18 +32,25 @@ import (
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
+	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
+	_fieldracesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/field_races"
+
+
+
+
 
 	// Deliveries
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
-
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
-
 	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
+	_considerationHttp  "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
+	_fieldracesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_races"
+
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 )
@@ -88,6 +97,9 @@ func main() {
 	assignmentTeamsRepo := _assignmentTeamsRepo.InitRepo(db)
 	announcementsTeamsRepo := _announcementsTeamsRepo.InitRepo(db)
 	fildracteamsRepo := _fildracteamsRepo.InitRepo(db)
+	considerationRepo := _considerationRepo.InitRepo(db)
+	fieldraces := _fieldracesRepo.InitRepo(db)
+
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -97,6 +109,8 @@ func main() {
 	assignmentTeamsRepo.Config()
 	announcementsTeamsRepo.Config()
 	fildracteamsRepo.Config()
+	considerationRepo.Config()
+	fieldraces.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -106,6 +120,8 @@ func main() {
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
 	fildracteamsUseCas := _fildracteamsUseCas.InitUseCase(fildracteamsRepo)
+	considerationUseCase := _considerationUseCase.InitUseCase(considerationRepo)
+	fieldracesUseCase := _fieldracesUseCase.InitUseCase(fieldraces)
 
 	//
 	ginEngine := gin.New()
@@ -127,7 +143,8 @@ func main() {
 	_filesHttp.NewEndpointHttpHandler(ginEngine, filesUseCase)
 	_announcementsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, announcementsUseCase)
 	__fildracteamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fildracteamsUseCas)
-
+	_considerationHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, considerationUseCase)
+	_fieldracesHttp.NewEndpointHttpHandler(ginEngine,authMiddleware,fieldracesUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
