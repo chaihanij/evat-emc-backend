@@ -16,7 +16,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 	}
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
-		v1Auth.GET("/consideration/:consideration_uuid", handler.FindOneConsideration)
+		v1Auth.GET("/consideration/:team_uuid", handler.FindOneConsideration)
 
 	}
 }

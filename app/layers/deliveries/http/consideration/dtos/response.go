@@ -3,11 +3,18 @@ package dtos
 import "time"
 
 type ConsiderationResponse struct {
-	ID        string    `json:"_id"`
-	Score     float64   `json:"score"`
-	UpdatedAt time.Time `json:"update_at"`
-	No        int       `json:"no"`
+	ID             string           `json:"_id"`
+	TotalScore     float64          `json:"total_score"`
+	UpdatedAt      time.Time        `json:"update_at"`
+	No             int              `json:"no"`
+	IndivdualScore []IndivdualScore `json:"indivdual_score"`
 }
+
+type IndivdualScore struct {
+	Title  string  `json:"title"`
+	Score float64 `json:"score"`
+}
+
 type MetaDataResponse struct {
 	TotalRecords uint `json:"totalRecords" example:"10"`
 	Page         uint `json:"page" example:"1"`

@@ -2,6 +2,7 @@ package consideration
 
 import (
 	"context"
+	"encoding/json"
 
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
@@ -25,17 +26,26 @@ func (r repo) FindOneConsideration(ctx context.Context, input *entities.Consider
 			},
 		},
 
+		// {
+		// 	"$group": bson.M{
+		// 		"_id":             "$team_uuid",
+		// 		"indivdual_score": bson.M{"$push": bson.M{"desc": "$desc", "score": "$score"}},
+		// 		"update_at":       bson.M{"$last": "$updated_at"},
+		// 		"total_score":     bson.M{"$sum": "$score"},
+		// 	},
+		// },
 		{
 			"$group": bson.M{
-				"_id":        "$team_uuid",
-				"updated_at": bson.M{"$last": "$updated_at"},
-				"score":      bson.M{"$sum": "$score"},
+				"_id":             "$team_uuid",
+				"indivdual_score":bson.M{"$push": bson.M{"title": "$title", "score": "$full_score"}},
+				"update_at":       bson.M{"$last": "$updated_at"},
+				"total_score":     bson.M{"$sum": "$full_score"},
 			},
 		},
 	}
 
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionFieldRaceTeams).
+		Collection(constants.CollectionAssignments).
 		Aggregate(ctx, state)
 
 	if err != nil {
@@ -49,9 +59,21 @@ func (r repo) FindOneConsideration(ctx context.Context, input *entities.Consider
 		log.WithError(err).Errorln("Consideration Error")
 		return nil, err
 	}
+	var structData []models.Consideration
+	jsonData, _ := json.Marshal(res)
 
-	considerations.ID = res[0]["_id"].(string)
-	considerations.Score = res[0]["score"].(float64)
+	json.Unmarshal(jsonData, &structData)
+
+	considerations.ID = structData[0].ID
+	considerations.TotalScore = structData[0].TotalScore
+	considerations.No = structData[0].No
+	considerations.IndivdualScore = structData[0].IndivdualScore
+	considerations.UpdatedAt = structData[0].UpdatedAt
+
+	//fmt.Println("data ", res)
+
+	// considerations.ID = res[0]["_id"].(string)
+	// considerations.Score = res[0]["score"].(float64)
 	// considerations.UpdatedAt = res[0]["updated_at"].(time.Time)
 	// log.Debug(considerations)
 
