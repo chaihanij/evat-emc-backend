@@ -5,6 +5,7 @@ import "time"
 type Assignment struct {
 	ID          string
 	UUID        string
+	TeamUUID    string
 	No          int
 	Title       string
 	Description string

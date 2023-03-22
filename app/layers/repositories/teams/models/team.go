@@ -44,3 +44,31 @@ func (tList Teams) ToEntity() []entities.Team {
 	}
 	return teams
 }
+
+type TeamSearch struct {
+	ID       primitive.ObjectID `bson:"_id"`
+	UUID     string             `bson:"uuid"`
+	Code     string             `bson:"code"`
+	Name     string             `bson:"name"`
+	TeamType string             `bson:"team_type"`
+	Academy  string             `bson:"academy"`
+	Tel      string             `bson:"tel"`
+	Contact  string             `bson:"contact"`
+}
+
+func (t *TeamSearch) ToEntityTeamSearch() (*entities.TeamSearch, error) {
+	var TeamSearch entities.TeamSearch
+	err := copier.Copy(&TeamSearch, t)
+	return &TeamSearch, err
+}
+
+type TeamsSearch []TeamSearch
+
+func (ts TeamsSearch) ToEntityTeamSearch() []entities.TeamSearch {
+	var teamsSearch []entities.TeamSearch
+	for _, v := range ts {
+		teamssSearch, _ := v.ToEntityTeamSearch()
+		teamsSearch = append(teamsSearch, *teamssSearch)
+	}
+	return teamsSearch
+}

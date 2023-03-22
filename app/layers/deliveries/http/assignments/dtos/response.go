@@ -27,6 +27,7 @@ type FilesResponse []FileResponse
 
 type AssignmentResponse struct {
 	UUID        string        `json:"uuid"`
+	TeamUUID    string        `json:"team_uuid"`
 	No          int           `json:"no"`
 	Title       string        `json:"title"`
 	Description string        `json:"description"`

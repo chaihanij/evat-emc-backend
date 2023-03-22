@@ -48,3 +48,14 @@ type TeamFilter struct {
 	Page     *int64
 	PageSize *int64
 }
+
+type TeamSearch struct {
+	ID       string
+	UUID     string
+	Code     string
+	Name     string
+	Academy  string
+	Tel      string
+	Contact  string
+	TeamType string
+}

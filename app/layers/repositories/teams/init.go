@@ -20,6 +20,7 @@ type Repo interface {
 	FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*entities.Team, error)
 	PartialUpdateTeam(ctx context.Context, input *entities.TeamPartialUpdate) (*entities.Team, error)
 	UpdateTeam(ctx context.Context, input *entities.Team) (*entities.Team, error)
+	FindAllSearchTeam(ctx context.Context, input *entities.TeamFilter) ([]entities.TeamSearch, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {
