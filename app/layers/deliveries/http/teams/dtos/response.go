@@ -70,6 +70,16 @@ type TeamResponse struct {
 	UpdatedBy string           `json:"updatedBy"`
 }
 
+type TeamSearchResponse struct {
+	UUID     string `json:"uuid"`
+	Code     string `json:"code"`
+	Name     string `json:"name"`
+	TeamType string `json:"team_type"`
+	Academy  string `json:"academy"`
+	Tel      string `json:"tel"`
+	Contact  string `json:"contact"`
+}
+
 type MetaDataResponse struct {
 	TotalRecords uint `json:"totalRecords" example:"10"`
 	Page         uint `json:"page" example:"1"`
