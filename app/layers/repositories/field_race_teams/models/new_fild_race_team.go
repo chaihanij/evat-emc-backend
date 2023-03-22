@@ -31,15 +31,10 @@ func NewFieldRaceTeam(input *entities.FieldRaceTeam) *FieldRaceTeam {
 		UpdatedAt:     time.Now(),
 		CreatedBy:     input.CreatedBy,
 		UpdatedBy:     input.UpdatedBy,
-		Name:          input.Name,
-		Code:          input.Code,
-		Type:          input.Type,
 		// FieldRaces:    fieldRaces,
 	}
 
 }
-
-
 
 func NewFieldRaces(input *entities.FieldRaces) *FieldRaces {
 	var fieldRaces []FieldRaces

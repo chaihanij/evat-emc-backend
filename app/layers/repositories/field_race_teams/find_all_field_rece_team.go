@@ -30,7 +30,6 @@ func (r repo) FindAllFieldRaceTeams(ctx context.Context, input *entities.FieldRa
 	defer cancel()
 
 	state := []bson.M{
-
 		{
 			"$lookup": bson.M{
 				"from":         "field_races",
@@ -69,6 +68,11 @@ func (r repo) FindAllFieldRaceTeams(ctx context.Context, input *entities.FieldRa
 				"name":                    "$teams.name",
 				"code":                    "$teams.code",
 				"type":                    "$teams.team_type",
+			},
+		},
+		{
+			"$sort": bson.M{
+				"_id": -1,
 			},
 		},
 	}

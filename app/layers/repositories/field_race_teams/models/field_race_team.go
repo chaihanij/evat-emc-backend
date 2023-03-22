@@ -24,6 +24,22 @@ type FieldRaceTeam struct {
 	FieldRaces    []FieldRaces       `json:"field_races" bson:"field_races"`
 }
 
+type CreateFieldRaceTeam struct {
+	ID            primitive.ObjectID `json:"_id" bson:"_id"`
+	UUID          string             `json:"uuid" bson:"uuid"`
+	FieldRaceUUID string             `json:"field_race_uuid" bson:"field_race_uuid"`
+	TeamUUID      string             `json:"team_uuid" bson:"team_uuid"`
+	Score         float64            `score:"score" bson:"score"`
+	CreatedAt     time.Time          `hson:"created_at" bson:"created_at"`
+	UpdatedAt     time.Time          `json:"updated_at" bson:"updated_at"`
+	CreatedBy     string             `json:"created_by" bson:"created_by"`
+	UpdatedBy     string             `json:"updated_by" bson:"updated_by"`
+	Name          string             `json:"name" bson:"name"`
+	Code          string             `json:"code" bson:"code" `
+	Type          string             `json:"type" bson:"type" `
+	FieldRaces    []FieldRaces       `json:"field_races" bson:"field_races"`
+}
+
 type CreateFildRaceTeam struct {
 	ID            primitive.ObjectID `json:"_id" bson:"_id"`
 	FieldRaceUUID string             `json:"field_race_uuid" bson:"field_race_uuid"`

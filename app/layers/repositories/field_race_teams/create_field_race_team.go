@@ -17,7 +17,6 @@ func (r repo) CreateFieldRaceTeam(ctx context.Context, input *entities.FieldRace
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-
 	fieldRaceTeam := models.NewFieldRaceTeam(input)
 	result, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionFieldRaceTeams).
@@ -32,9 +31,8 @@ func (r repo) CreateFieldRaceTeam(ctx context.Context, input *entities.FieldRace
 	if result.InsertedID == 0 {
 		return nil, err
 	}
-	
-	// fieldRace := models.FieldRaceTeam(input)
 
+	// fieldRace := models.FieldRaceTeam(input)
 
 	log.WithField("value", fieldRaceTeam).Debugln("DB FieldRaceTeams")
 	return fieldRaceTeam.ToEntity()
