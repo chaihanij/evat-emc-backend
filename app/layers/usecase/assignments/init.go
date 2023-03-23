@@ -22,6 +22,8 @@ type UseCase interface {
 
 	UpdateAssignmentImage(ctx context.Context, assignmentUUID string, file *entities.File) (*entities.File, error)
 	UpdateAssignmentDocument(ctx context.Context, assignmentUUID string, file *entities.File) (*entities.File, error)
+
+	FindAllTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, []entities.TeamAssignment, error)
 }
 
 func InitUseCase(assignmentsRepo assignments.Repo, filesRepo files.Repo) UseCase {

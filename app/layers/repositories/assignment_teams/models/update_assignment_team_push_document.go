@@ -6,9 +6,10 @@ import (
 )
 
 func UpdateAssignmentTeamPushDocument(documentUUID string) *bson.M {
+	doc := []string{"documents"}
 	update := bson.M{
 		"$addToSet": bson.M{
-			"documents": bson.M{"$each": "documents"},
+			"documents": bson.M{"$each": doc},
 		},
 	}
 	log.WithField("value", update).Debugln("models.UpdateAssignmentTeamPushDocument")

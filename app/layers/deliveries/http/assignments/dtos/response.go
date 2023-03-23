@@ -43,6 +43,13 @@ type AssignmentResponse struct {
 	UpdatedBy   string        `json:"updatedBy"`
 }
 
+type TeamAssignmentResponse struct {
+	UUID      string  `json:"uuid"`
+	TeamUUID  string  `json:"team_uuid"`
+	Title     string  `json:"title"`
+	FullScore float64 `json:"fullScore"`
+}
+
 type MetaDataResponse struct {
 	TotalRecords uint `json:"totalRecords" example:"10"`
 	Page         uint `json:"page" example:"1"`

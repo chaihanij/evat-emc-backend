@@ -21,6 +21,15 @@ type Assignment struct {
 	UpdatedBy   string
 }
 
+type TeamAssignment struct {
+	ID        string
+	UUID      string
+	TeamUUID  string
+	Title     string
+	FullScore float64
+	CreatedAt time.Time
+}
+
 type Assignments []Assignment
 
 type AssignmentPartialUpdate struct {
@@ -41,6 +50,7 @@ type AssignmentPartialUpdate struct {
 type AssignmentFilter struct {
 	ID       *string
 	UUID     *string
+	TeamUUID *string
 	No       *int
 	Title    *string
 	Year     *string
