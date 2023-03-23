@@ -2,7 +2,6 @@ package dtos
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
 )
@@ -17,8 +16,10 @@ type FindTeamAssignmentRequestJSON struct {
 func (req *FindTeamAssignmentRequestJSON) Parse(c *gin.Context) (*FindTeamAssignmentRequestJSON, error) {
 
 	err := c.ShouldBindQuery(req)
-	logrus.Debugln("team_id", req.TeamUUID)
 	if err != nil {
+		return nil, errors.ParameterError{Message: err.Error()}
+	}
+	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
 	return req, nil
