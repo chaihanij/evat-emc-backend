@@ -55,6 +55,23 @@ func (m *FindAllAssignmentResponseJSON) Parse(data []entities.Assignment) *FindA
 	return &assignments
 }
 
+// type FindTeamAssignmentResponseJSON []TeamAssignmentResponse
+
+// func (a *FindTeamAssignmentResponseJSON) Parse(data []entities.TeamAssignment) *FindTeamAssignmentResponseJSON {
+// 	var teamAssignments FindTeamAssignmentResponseJSON = FindTeamAssignmentResponseJSON{}
+// 	for _, value := range data {
+// 		teamAssignment := &TeamAssignmentResponse{
+// 			UUID:      value.UUID,
+// 			TeamUUID:  value.TeamUUID,
+// 			Title:     value.Title,
+// 			FullScore: value.FullScore,
+// 		}
+// 		teamAssignments = append(teamAssignments, *teamAssignment)
+// 	}
+// 	return &teamAssignments
+
+// }
+
 type FindAllAssignmentResponseSwagger struct {
 	StatusCode    int                           `json:"statusCode" example:"1000"`
 	StatusMessage string                        `json:"statusMessage" example:"Success"`

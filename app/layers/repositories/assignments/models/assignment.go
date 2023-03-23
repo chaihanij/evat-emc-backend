@@ -43,3 +43,27 @@ func (as Assignments) ToEntity() []entities.Assignment {
 	}
 	return assignments
 }
+
+type TeamAssignment struct {
+	ID        primitive.ObjectID `bson:"id"`
+	TeamUUID  string             `bson:"team_uuid"`
+	UUID      string             `bson:"uuid"`
+	Title     string             `bson:"title"`
+	FullScore float64            `bson:"full_score"`
+}
+type TeamAssignments []TeamAssignment
+
+func (am *TeamAssignment) ToEntity() (*entities.TeamAssignment, error) {
+	var teamassignment entities.TeamAssignment
+	err := copier.Copy(&teamassignment, am)
+	return &teamassignment, err
+}
+
+func (as TeamAssignments) ToEntity() []entities.TeamAssignment {
+	var teamassignments []entities.TeamAssignment
+	for _, v := range as {
+		teamassignment, _ := v.ToEntity()
+		teamassignments = append(teamassignments, *teamassignment)
+	}
+	return teamassignments
+}

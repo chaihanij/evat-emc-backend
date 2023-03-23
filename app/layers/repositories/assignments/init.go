@@ -20,6 +20,8 @@ type Repo interface {
 	FindOneAssignment(ctx context.Context, input *entities.AssignmentFilter) (*entities.Assignment, error)
 	PartialUpdateAssignment(ctx context.Context, input *entities.AssignmentPartialUpdate) (*entities.Assignment, error)
 	UpdateAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
+	CountTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, error)
+	FindTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) ([]entities.TeamAssignment, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

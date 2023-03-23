@@ -27,5 +27,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		// assignments
 		v1Auth.POST("/assignments/:assignment_uuid/image", handler.UpdateAssignmentImage)
 		v1Auth.POST("/assignments/:assignment_uuid/document", handler.UpdateAssignmentDocument)
+
+		v1Auth.GET("/assignment/team/:team_uuid", handler.FindTeamAssignment)
 	}
 }
