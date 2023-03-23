@@ -18,7 +18,8 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 	}
 
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
-	{
+	{	
+		v1Auth.GET("/field_races_team/:team_uuid", handler.FindAllFieldRacesTeam)
 		v1Auth.GET("/field_race_teams", handler.FindAllFindAllFieldRaceTeams)
 		v1Auth.POST("/fild_race_team/update", handler.CreateFieldRaceTeam)
 	}

@@ -38,3 +38,26 @@ func (aTeams AssignmentTeams) ToEntity() []entities.AssignmentTeam {
 	}
 	return assignmentTeams
 }
+
+
+type AssignmentTeamScore struct {
+	Title string `bson:"title"`
+	Score string `bson:"full_score"`
+}
+
+func (at *AssignmentTeamScore) ToEntity() (*entities.AssignmentTeamScore, error) {
+	var assignmentTeamScore entities.AssignmentTeamScore
+	err := copier.Copy(&assignmentTeamScore, at)
+	return &assignmentTeamScore, err
+}
+
+type AssignmentTeamScores []AssignmentTeamScore
+
+func (aTeams AssignmentTeamScores) ToEntity() []entities.AssignmentTeamScore {
+	var assignmentTeamScores []entities.AssignmentTeamScore
+	for _, v := range aTeams {
+		assignmentTeam, _ := v.ToEntity()
+		assignmentTeamScores = append(assignmentTeamScores, *assignmentTeam)
+	}
+	return assignmentTeamScores
+}

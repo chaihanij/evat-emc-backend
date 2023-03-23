@@ -34,3 +34,8 @@ type AssignmentTeamFilter struct {
 	Page           *int64
 	PageSize       *int64
 }
+
+type AssignmentTeamScore struct {
+	Title string
+	Score float64
+}
