@@ -36,18 +36,18 @@ func NewFieldRaceTeam(input *entities.FieldRaceTeam) *FieldRaceTeam {
 
 }
 
-func NewFieldRaces(input *entities.FieldRaces) *FieldRaces {
-	var fieldRaces []FieldRaces
-	for _, valueFieldRace := range fieldRaces {
-		fieldRace := &FieldRaces{
-			Title:       valueFieldRace.Title,
-			Description: valueFieldRace.Description,
-			File:        valueFieldRace.File,
-			Image:       valueFieldRace.Image,
-			Year:        valueFieldRace.Year,
-			FullScore:   valueFieldRace.FullScore,
-		}
-		fieldRaces = append(fieldRaces, *fieldRace)
-	}
-	return &FieldRaces{}
-}
+// func NewFieldRaces(input *entities.FieldRaces) *FieldRaces {
+// 	var fieldRaces []FieldRaces
+// 	for _, valueFieldRace := range fieldRaces {
+// 		fieldRace := &FieldRaces{
+// 			Title:       valueFieldRace.Title,
+// 			Description: valueFieldRace.Description,
+// 			File:        valueFieldRace.File,
+// 			Image:       valueFieldRace.Image,
+// 			Year:        valueFieldRace.Year,
+// 			FullScore:   valueFieldRace.FullScore,
+// 		}
+// 		fieldRaces = append(fieldRaces, *fieldRace)
+// 	}
+// 	return &FieldRaces{}
+// }

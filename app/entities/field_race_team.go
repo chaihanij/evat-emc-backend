@@ -16,7 +16,7 @@ type FieldRaceTeam struct {
 	Name          string
 	Code          string
 	Type          string
-	FieldRaces    []FieldRaces
+	FieldRaces    *interface{}
 }
 
 // type CreateFildRaceTeam struct {

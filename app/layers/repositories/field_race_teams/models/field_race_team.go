@@ -21,7 +21,7 @@ type FieldRaceTeam struct {
 	Name          string             `json:"name" bson:"name"`
 	Code          string             `json:"code" bson:"code" `
 	Type          string             `json:"type" bson:"type" `
-	FieldRaces    []FieldRaces       `json:"field_races" bson:"field_races"`
+	// FieldRaces    []FieldRaces       `json:"field_races" bson:"field_races"`
 }
 
 type CreateFieldRaceTeam struct {
