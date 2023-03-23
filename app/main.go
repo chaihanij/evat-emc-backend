@@ -23,6 +23,7 @@ import (
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
 	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
+	
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
@@ -34,7 +35,7 @@ import (
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
 	_fieldracesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/field_races"
-
+	_assignmentTeamUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignment_teams"
 
 
 
@@ -50,7 +51,7 @@ import (
 	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
 	_considerationHttp  "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
 	_fieldracesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_races"
-
+	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 )
@@ -122,6 +123,7 @@ func main() {
 	fildracteamsUseCas := _fildracteamsUseCas.InitUseCase(fildracteamsRepo)
 	considerationUseCase := _considerationUseCase.InitUseCase(considerationRepo)
 	fieldracesUseCase := _fieldracesUseCase.InitUseCase(fieldraces)
+	assignmentTeamUseCase := _assignmentTeamUseCase.InitUseCase(assignmentTeamsRepo)
 
 	//
 	ginEngine := gin.New()
@@ -145,6 +147,7 @@ func main() {
 	__fildracteamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fildracteamsUseCas)
 	_considerationHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, considerationUseCase)
 	_fieldracesHttp.NewEndpointHttpHandler(ginEngine,authMiddleware,fieldracesUseCase)
+	_assignmentTeamHttp.NewEndpointHttpHandler(ginEngine, authMiddleware , assignmentTeamUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

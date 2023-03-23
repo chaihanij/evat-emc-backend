@@ -23,6 +23,9 @@ type Repo interface {
 
 	UpdateAssignmentTeamPushDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) (*entities.AssignmentTeam, error)
 	UpdateAssignmentTeamPullDocument(ctx context.Context, input *entities.AssignmentTeamPartialUpdate, documentUUID string) (*entities.AssignmentTeam, error)
+
+	//mos dev
+	FindAllscoreAssignmentTeam(ctx context.Context, input *entities.AssignmentTeamFilter) ([]entities.AssignmentTeamScore, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {
