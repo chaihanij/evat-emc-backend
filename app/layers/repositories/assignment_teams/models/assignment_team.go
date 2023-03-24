@@ -12,7 +12,7 @@ type AssignmentTeam struct {
 	ID             primitive.ObjectID `bson:"_id"`
 	AssignmentUUID string             `bson:"assignment_uuid"`
 	TeamUUID       string             `bson:"team_uuid"`
-	Description    string             `bson:"uuid"`
+	Description    string             `bson:"description"`
 	Documents      []string           `bson:"documents"`
 	IsConfirmed    bool               `bson:"is_confirmed"`
 	Score          float64            `bson:"score"`
