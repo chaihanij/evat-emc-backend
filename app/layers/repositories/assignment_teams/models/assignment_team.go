@@ -39,10 +39,9 @@ func (aTeams AssignmentTeams) ToEntity() []entities.AssignmentTeam {
 	return assignmentTeams
 }
 
-
 type AssignmentTeamScore struct {
-	Title string `bson:"title"`
-	Score string `bson:"full_score"`
+	Title string  `bson:"title"`
+	Score float64 `bson:"full_score"`
 }
 
 func (at *AssignmentTeamScore) ToEntity() (*entities.AssignmentTeamScore, error) {
