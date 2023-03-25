@@ -9,6 +9,7 @@ type Team struct {
 	Name          string
 	TeamType      string
 	Academy       string
+	Major         string
 	Detail        string
 	Members       interface{} // of []string or member type
 	Year          string
@@ -29,6 +30,7 @@ type TeamPartialUpdate struct {
 	Name          *string
 	TeamType      *string
 	Academy       *string
+	Major         *string
 	Detail        *string
 	Members       interface{}
 	Slip          *string

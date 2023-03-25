@@ -15,6 +15,7 @@ type Team struct {
 	Name          string             `bson:"name"`
 	TeamType      string             `bson:"team_type"`
 	Academy       string             `bson:"academy"`
+	Major         string             `bson:"major"`
 	Detail        string             `bson:"detail"`
 	Members       []string           `bson:"members"`
 	Year          string             `bson:"year"`

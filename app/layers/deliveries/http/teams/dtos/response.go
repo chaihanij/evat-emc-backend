@@ -42,6 +42,7 @@ type MemberResponse struct {
 	Email        string         `json:"email"`
 	Tel          string         `json:"tel"`
 	Academy      string         `json:"academy"`
+	Major        string         `json:"major"`
 	Image        *FileResponse  `json:"image"`
 	Year         string         `json:"year"`
 	MemberType   string         `json:"memberType"`
@@ -61,6 +62,7 @@ type TeamResponse struct {
 	Name          string           `json:"name"`
 	TeamType      string           `json:"teamType"`
 	Academy       string           `json:"academy"`
+	Major         string           `json:"major"`
 	Detail        string           `json:"detail"`
 	Year          string           `json:"year"`
 	Slip          *FileResponse    `json:"slip,omitempty"`

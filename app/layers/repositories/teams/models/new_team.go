@@ -24,6 +24,7 @@ func NewTeam(input *entities.Team) *Team {
 		Name:      input.Name,
 		TeamType:  input.TeamType,
 		Academy:   input.Academy,
+		Major:     input.Major,
 		Detail:    input.Detail,
 		Year:      input.Year,
 		Slip:      slip,

@@ -16,6 +16,7 @@ type UpdateTeamRequestJSON struct {
 	Name      string `json:"name" validate:"required"`
 	TeamType  string `json:"teamType" validate:"required,teamType"`
 	Academy   string `json:"academy" validate:""`
+	Major     string `json:"major"`
 	Detail    string `json:"detail" validate:""`
 	Year      string `json:"year" validate:"required"`
 	UpdatedBy string `json:"-" swaggerignore:"true"`

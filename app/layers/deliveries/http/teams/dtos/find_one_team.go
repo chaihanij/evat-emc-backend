@@ -35,6 +35,7 @@ func (m *FindOneTeamResponseJSON) Parse(c *gin.Context, input *entities.Team) *F
 		Name:      input.Name,
 		TeamType:  input.TeamType,
 		Academy:   input.Academy,
+		Major:     input.Major,
 		Detail:    input.Detail,
 		Year:      input.Year,
 		CreatedAt: input.CreatedAt,

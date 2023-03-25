@@ -24,6 +24,9 @@ func PartialUpdateTeam(input *entities.TeamPartialUpdate) *bson.D {
 	if input.Academy != nil {
 		updateFields = append(updateFields, bson.E{Key: "academy", Value: input.Academy})
 	}
+	if input.Major != nil {
+		updateFields = append(updateFields, bson.E{Key: "major", Value: input.Major})
+	}
 	if input.Detail != nil {
 		updateFields = append(updateFields, bson.E{Key: "detail", Value: input.Detail})
 	}
@@ -42,6 +45,7 @@ func PartialUpdateTeam(input *entities.TeamPartialUpdate) *bson.D {
 	if val, ok := input.Members.(*[]string); ok {
 		updateFields = append(updateFields, bson.E{Key: "members", Value: val})
 	}
+
 	if input.UpdatedBy != nil {
 		updateFields = append(updateFields, bson.E{Key: "updated_by", Value: input.UpdatedBy})
 	}
