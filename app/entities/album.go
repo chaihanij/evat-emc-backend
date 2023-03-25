@@ -13,7 +13,7 @@ type Album struct {
 	CreatedBy string
 	UpdatedBy string
 }
-
+ 
 type AlbumPartialUpdate struct {
 	ID        *string
 	UUID      *string
