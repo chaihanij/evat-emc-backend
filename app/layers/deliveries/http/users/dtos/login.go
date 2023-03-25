@@ -24,7 +24,7 @@ type LoginResponseJSON struct {
 	Email       string     `json:"email"`
 	FirstName   string     `json:"firstname"`
 	LastName    string     `json:"lastname"`
-	Username    string     `json:"username"`
+	// Username    string     `json:"username"`
 	Role        string     `json:"role"`
 	TeamUID     string     `json:"teamUID"`
 	LastLogin   *time.Time `json:"lastLogin"`
