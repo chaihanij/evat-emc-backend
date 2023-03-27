@@ -6,7 +6,8 @@ import (
 )
 
 func UpdateAssignmentTeamPushDocument(documentUUID string) *bson.M {
-	doc := []string{"documents"}
+	doc := []string{}
+	doc = append(doc, documentUUID)
 	update := bson.M{
 		"$addToSet": bson.M{
 			"documents": bson.M{"$each": doc},
