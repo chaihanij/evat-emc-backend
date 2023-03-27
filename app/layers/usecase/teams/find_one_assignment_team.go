@@ -15,11 +15,13 @@ func (u useCase) FindOneAssignmentTeam(ctx context.Context, input *entities.Assi
 	}
 	if val, ok := assignmentTeam.Documents.([]string); ok {
 		log.WithField("value", val).Debugln("FindOneMember documents")
-		documents, err := u.FilesRepo.FindAllFile(ctx, &entities.FileFilter{UUIDs: val})
-		if err != nil && mongo.ErrNoDocuments != err {
-			return nil, err
+		if len(val) > 0 {
+			documents, err := u.FilesRepo.FindAllFile(ctx, &entities.FileFilter{UUIDs: val})
+			if err != nil && mongo.ErrNoDocuments != err {
+				return nil, err
+			}
+			assignmentTeam.Documents = documents
 		}
-		assignmentTeam.Documents = documents
 	}
 	return assignmentTeam, nil
 }
