@@ -18,9 +18,6 @@ func (req *FindOneAssignmentTeamRequestJSON) Parse(c *gin.Context) (*FindOneAssi
 	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
-	if err := c.ShouldBindJSON(req); err != nil {
-		return nil, errors.ParameterError{Message: err.Error()}
-	}
 	return req, nil
 }
 
