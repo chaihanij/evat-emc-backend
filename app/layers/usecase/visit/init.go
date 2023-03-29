@@ -15,6 +15,7 @@ type useCase struct {
 
 type UseCase interface {
 	FindVisit(ctx context.Context) (*entities.Visited, error)
+	CreateVisit(ctx context.Context, data *entities.UpdateVisit) (*entities.UpdateVisit, error)
 }
 
 func InitUseCase(VisitRepo visit.Repo) UseCase {

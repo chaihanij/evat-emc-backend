@@ -23,14 +23,14 @@ func (r repo) FindOneVisited(ctx context.Context) (*entities.Visited, error) {
 	timeend_date := time.Date(t.Year(), t.Month(), t.Day(), 17, 59, 59, 59, time.UTC)
 
 	filter := bson.M{
-		"created_at": bson.M{
+		"create_at": bson.M{
 			"$gte": timestart_date,
 			"$lt":  timeend_date,
 		},
 	}
 	filterTotal := bson.M{}
 
-	connect := r.MongoDBClient.Database(env.MongoDBName).Collection(constants.Collectionvistion)
+	connect := r.MongoDBClient.Database(env.MongoDBName).Collection(constants.Collectionvisit)
 
 	todayVisit, err := connect.CountDocuments(ctx, filter)
 	if err != nil {

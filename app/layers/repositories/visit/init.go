@@ -14,6 +14,7 @@ type repo struct {
 type Repo interface {
 	Config() ([]string, error)
 	FindOneVisited(ctx context.Context) (*entities.Visited, error)
+	CreateVisit(ctx context.Context, input *entities.UpdateVisit) (*entities.UpdateVisit, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

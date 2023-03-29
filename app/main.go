@@ -16,42 +16,41 @@ import (
 
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
+	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
 	_fildracteamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_race_teams"
+	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
-	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
-	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
-	
+	_visitRepo "gitlab.com/chaihanij/evat/app/layers/repositories/visit"
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
+	_assignmentTeamUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignment_teams"
 	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
+	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
 	_fildracteamsUseCas "gitlab.com/chaihanij/evat/app/layers/usecase/field_race_teams"
+	_fieldracesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/field_races"
 	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
 	_memberUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/members"
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
-	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
-	_fieldracesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/field_races"
-	_assignmentTeamUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignment_teams"
-
-
-
+	_visitUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/visit"
 
 	// Deliveries
-	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
+	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
+	_considerationHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
+	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
+	_fieldracesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_races"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
+	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
-	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
-	_considerationHttp  "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
-	_fieldracesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_races"
-	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
+	_visitHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/visit"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 
@@ -107,6 +106,7 @@ func main() {
 	fildracteamsRepo := _fildracteamsRepo.InitRepo(db)
 	considerationRepo := _considerationRepo.InitRepo(db)
 	fieldraces := _fieldracesRepo.InitRepo(db)
+	visitRepo := _visitRepo.InitRepo(db)
 
 	// config repo
 	assignmentsRepo.Config()
@@ -119,6 +119,7 @@ func main() {
 	fildracteamsRepo.Config()
 	considerationRepo.Config()
 	fieldraces.Config()
+	visitRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -131,6 +132,7 @@ func main() {
 	considerationUseCase := _considerationUseCase.InitUseCase(considerationRepo)
 	fieldracesUseCase := _fieldracesUseCase.InitUseCase(fieldraces)
 	assignmentTeamUseCase := _assignmentTeamUseCase.InitUseCase(assignmentTeamsRepo)
+	visitUseCase := _visitUseCase.InitUseCase(visitRepo)
 
 	//
 	ginEngine := gin.New()
@@ -157,8 +159,9 @@ func main() {
 	_announcementsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, announcementsUseCase)
 	__fildracteamsHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fildracteamsUseCas)
 	_considerationHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, considerationUseCase)
-	_fieldracesHttp.NewEndpointHttpHandler(ginEngine,authMiddleware,fieldracesUseCase)
-	_assignmentTeamHttp.NewEndpointHttpHandler(ginEngine, authMiddleware , assignmentTeamUseCase)
+	_fieldracesHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fieldracesUseCase)
+	_assignmentTeamHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, assignmentTeamUseCase)
+	_visitHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, visitUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

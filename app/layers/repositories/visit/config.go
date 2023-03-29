@@ -14,7 +14,7 @@ import (
 func (r repo) Config() ([]string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), env.MongoDBRequestTimeout)
 	defer cancel()
-	coll := r.MongoDBClient.Database(env.MongoDBName).Collection(constants.Collectionvistion)
+	coll := r.MongoDBClient.Database(env.MongoDBName).Collection(constants.Collectionvisit)
 	return coll.Indexes().CreateMany(
 		ctx,
 		[]mongo.IndexModel{
