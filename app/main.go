@@ -24,6 +24,7 @@ import (
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 	_visitRepo "gitlab.com/chaihanij/evat/app/layers/repositories/visit"
+	_emailRepo "gitlab.com/chaihanij/evat/app/layers/repositories/email"
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
@@ -37,6 +38,7 @@ import (
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 	_visitUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/visit"
+	_emailUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/email"
 
 	// Deliveries
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
@@ -51,6 +53,7 @@ import (
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 	_visitHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/visit"
+	_emailHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/email"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 
@@ -107,6 +110,7 @@ func main() {
 	considerationRepo := _considerationRepo.InitRepo(db)
 	fieldraces := _fieldracesRepo.InitRepo(db)
 	visitRepo := _visitRepo.InitRepo(db)
+	emailRepo := _emailRepo.InitRepo(db)
 
 	// config repo
 	assignmentsRepo.Config()
@@ -120,6 +124,7 @@ func main() {
 	considerationRepo.Config()
 	fieldraces.Config()
 	visitRepo.Config()
+	emailRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -133,6 +138,7 @@ func main() {
 	fieldracesUseCase := _fieldracesUseCase.InitUseCase(fieldraces)
 	assignmentTeamUseCase := _assignmentTeamUseCase.InitUseCase(assignmentTeamsRepo)
 	visitUseCase := _visitUseCase.InitUseCase(visitRepo)
+	emailUseCase := _emailUseCase.InitUseCase(emailRepo)
 
 	//
 	ginEngine := gin.New()
@@ -162,6 +168,7 @@ func main() {
 	_fieldracesHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, fieldracesUseCase)
 	_assignmentTeamHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, assignmentTeamUseCase)
 	_visitHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, visitUseCase)
+	_emailHttp.NewEndpointHttpHandler(ginEngine, emailUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
