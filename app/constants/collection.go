@@ -14,5 +14,5 @@ const (
 	CollectionAnnouncements     string = "announcements"
 	CollectionAnnouncementTeams string = "announcementTeams"
 	Collectionvisit             string = "visited"
-	COllectionEmail             string = "email"
+	CollectionEmail             string = "email"
 )
