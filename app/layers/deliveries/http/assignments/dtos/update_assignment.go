@@ -72,7 +72,7 @@ func (req *UpdateAssignmentRequestJSON) ToEntity() *entities.AssignmentPartialUp
 		IsActive:    &req.IsActive,
 		DueDate:     &req.DueDate,
 		Year:        &req.Year,
-		SendDoc:     req.SendDoc,
+		SendDoc:     &req.SendDoc,
 		UpdatedBy:   req.UpdatedBy,
 	}
 }

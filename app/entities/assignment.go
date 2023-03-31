@@ -46,7 +46,7 @@ type AssignmentPartialUpdate struct {
 	DueDate     *time.Time
 	Year        *string
 	UpdatedBy   string
-	SendDoc     bool
+	SendDoc     *bool
 
 }
 
