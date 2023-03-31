@@ -17,6 +17,8 @@ import (
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
 	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
+	_emailRepo "gitlab.com/chaihanij/evat/app/layers/repositories/email"
+	_emailcontact "gitlab.com/chaihanij/evat/app/layers/repositories/emailcontact"
 	_fildracteamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_race_teams"
 	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
@@ -24,13 +26,14 @@ import (
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
 	_visitRepo "gitlab.com/chaihanij/evat/app/layers/repositories/visit"
-	_emailRepo "gitlab.com/chaihanij/evat/app/layers/repositories/email"
 
 	// use case
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
 	_assignmentTeamUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignment_teams"
 	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
 	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
+	_emailUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/email"
+	_emailcontactUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/emailcontact"
 	_fildracteamsUseCas "gitlab.com/chaihanij/evat/app/layers/usecase/field_race_teams"
 	_fieldracesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/field_races"
 	_filesUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/files"
@@ -38,13 +41,14 @@ import (
 	_teamsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/teams"
 	_usersUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/users"
 	_visitUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/visit"
-	_emailUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/email"
 
 	// Deliveries
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
 	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
 	_considerationHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
+	_emailHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/email"
+	_emailcontactHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/emailcontact"
 	__fildracteamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_race_teams"
 	_fieldracesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/field_races"
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
@@ -53,7 +57,6 @@ import (
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 	_visitHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/visit"
-	_emailHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/email"
 
 	middlewares "gitlab.com/chaihanij/evat/app/layers/deliveries/http/middlewares"
 
@@ -111,6 +114,7 @@ func main() {
 	fieldraces := _fieldracesRepo.InitRepo(db)
 	visitRepo := _visitRepo.InitRepo(db)
 	emailRepo := _emailRepo.InitRepo(db)
+	emailcontactRepo := _emailcontact.InitRepo(db)
 
 	// config repo
 	assignmentsRepo.Config()
@@ -125,6 +129,7 @@ func main() {
 	fieldraces.Config()
 	visitRepo.Config()
 	emailRepo.Config()
+	emailcontactRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -139,6 +144,7 @@ func main() {
 	assignmentTeamUseCase := _assignmentTeamUseCase.InitUseCase(assignmentTeamsRepo)
 	visitUseCase := _visitUseCase.InitUseCase(visitRepo)
 	emailUseCase := _emailUseCase.InitUseCase(emailRepo)
+	emailcontactUseCase := _emailcontactUseCase.InitUseCase(emailcontactRepo)
 
 	//
 	ginEngine := gin.New()
@@ -169,6 +175,8 @@ func main() {
 	_assignmentTeamHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, assignmentTeamUseCase)
 	_visitHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, visitUseCase)
 	_emailHttp.NewEndpointHttpHandler(ginEngine, emailUseCase)
+	_emailcontactHttp.NewEndpointHttpHandler(ginEngine, emailcontactUseCase)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
