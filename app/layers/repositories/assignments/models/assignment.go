@@ -25,6 +25,7 @@ type Assignment struct {
 	UpdatedAt   time.Time          `bson:"updated_at"`
 	CreatedBy   string             `bson:"created_by"`
 	UpdatedBy   string             `bson:"updated_by"`
+	SendDoc     bool               `bson:"senddoc"`
 }
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {

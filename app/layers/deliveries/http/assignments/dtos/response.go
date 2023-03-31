@@ -41,6 +41,7 @@ type AssignmentResponse struct {
 	UpdatedAt   time.Time     `json:"updatedAt"`
 	CreatedBy   string        `json:"createdBy"`
 	UpdatedBy   string        `json:"updatedBy"`
+	SendDoc     bool          `json:"senddoc"`
 }
 
 type TeamAssignmentResponse struct {

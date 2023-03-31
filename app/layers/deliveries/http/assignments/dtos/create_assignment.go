@@ -20,6 +20,7 @@ type CreateAssignmentRequestJSON struct {
 	Year        string    `json:"year" validate:"required"  binding:"required"`
 	CreatedBy   string    `json:"-" swaggerignore:"true"`
 	TeamUUID    string    `json:"team_uuid"`
+	SendDoc     bool      `json:"senddoc"`
 }
 
 func (req *CreateAssignmentRequestJSON) Parse(c *gin.Context) (*CreateAssignmentRequestJSON, error) {
@@ -67,6 +68,7 @@ func (req *CreateAssignmentRequestJSON) ToEntity() *entities.Assignment {
 		Year:        req.Year,
 		CreatedBy:   req.CreatedBy,
 		TeamUUID:    req.TeamUUID,
+		SendDoc:     req.SendDoc,
 	}
 }
 
@@ -87,6 +89,7 @@ func (m *CreateAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Ass
 		CreatedBy:   input.CreatedBy,
 		UpdatedBy:   input.UpdatedBy,
 		TeamUUID:    input.TeamUUID,
+		SendDoc:     input.SendDoc,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)

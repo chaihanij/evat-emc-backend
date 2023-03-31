@@ -19,6 +19,7 @@ type UpdateAssignmentRequestJSON struct {
 	IsActive    bool      `json:"isActive"`
 	DueDate     time.Time `json:"dueDate" validate:"required"`
 	Year        string    `json:"year" validate:"required"`
+	SendDoc     bool      `json:"senddoc"`
 	UpdatedBy   string    `json:"-" swaggerignore:"true"`
 }
 
@@ -71,6 +72,7 @@ func (req *UpdateAssignmentRequestJSON) ToEntity() *entities.AssignmentPartialUp
 		IsActive:    &req.IsActive,
 		DueDate:     &req.DueDate,
 		Year:        &req.Year,
+		SendDoc:     req.SendDoc,
 		UpdatedBy:   req.UpdatedBy,
 	}
 }
@@ -90,6 +92,7 @@ func (m *UpdateAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Ass
 		CreatedAt:   input.CreatedAt,
 		UpdatedAt:   input.UpdatedAt,
 		CreatedBy:   input.CreatedBy,
+		SendDoc:     input.SendDoc,
 		UpdatedBy:   input.UpdatedBy,
 	}
 	if val, ok := input.Document.(entities.File); ok {

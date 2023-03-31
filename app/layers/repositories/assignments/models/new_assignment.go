@@ -35,5 +35,6 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 		UpdatedAt:   now,
 		CreatedBy:   input.CreatedBy,
 		UpdatedBy:   input.UpdatedBy,
+		SendDoc:     input.SendDoc,
 	}
 }

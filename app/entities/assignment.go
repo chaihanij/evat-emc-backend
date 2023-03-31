@@ -19,6 +19,7 @@ type Assignment struct {
 	UpdatedAt   time.Time
 	CreatedBy   string
 	UpdatedBy   string
+	SendDoc     bool
 }
 
 type TeamAssignment struct {
@@ -45,6 +46,8 @@ type AssignmentPartialUpdate struct {
 	DueDate     *time.Time
 	Year        *string
 	UpdatedBy   string
+	SendDoc     bool
+
 }
 
 type AssignmentFilter struct {
