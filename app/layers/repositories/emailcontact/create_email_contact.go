@@ -13,7 +13,7 @@ func (r repo) CreateEmailContact(ctx context.Context, input *entities.CreateCont
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 	emailContact := models.NewEmailContact(input)
-	models.SendEmail(input)
+	// models.SendEmail(input)
 	_, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionEmailContact).
 		InsertOne(ctx, emailContact)
