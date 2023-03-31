@@ -15,7 +15,7 @@ func (r repo) CreateEmail(ctx context.Context, input *entities.Email) (*entities
 
 	email := models.NewEmail(input)
 
-	_, err := r.MongoDBClient.Database((env.MongoDBName)).
+	_, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionEmail).
 		InsertOne(ctx, email)
 
