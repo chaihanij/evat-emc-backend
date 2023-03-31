@@ -1,0 +1,27 @@
+package emailcontact
+
+import (
+	"github.com/gin-gonic/gin"
+	"gitlab.com/chaihanij/evat/app/layers/deliveries/http/emailcontact/dtos"
+	"gitlab.com/chaihanij/evat/app/utils"
+)
+
+func (h *Handler) CreateEmailContact(c *gin.Context) {
+
+	request, err := new(dtos.CreateEmailContactRequestJSON).Parse(c)
+	if err != nil {
+		utils.JSONErrorResponse(c, err)
+		return
+	}
+
+	res, err := h.EmailContact.CraeteEmailContact(c.Request.Context(), request.ToEntity())
+	if err != nil {
+		utils.JSONErrorResponse(c, err)
+		return
+	}
+
+	responseData := new(dtos.CreateEmailContactResponseJSON).Parse(res)
+
+	utils.JSONSuccessResponse(c, responseData)
+
+}

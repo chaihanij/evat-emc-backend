@@ -15,4 +15,5 @@ const (
 	CollectionAnnouncementTeams string = "announcementTeams"
 	Collectionvisit             string = "visited"
 	CollectionEmail             string = "email"
+	CollectionEmailContact      string = "email_contact"
 )
