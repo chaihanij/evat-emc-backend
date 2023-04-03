@@ -33,6 +33,6 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 
 		v1Auth.GET("/profiles", handler.FindOneUserProfile)
 		v1Auth.PUT("/profiles/:uid", handler.UpdateUserProfile)
-
+		v1Auth.POST("/change-password", handler.ChangePassword)
 	}
 }
