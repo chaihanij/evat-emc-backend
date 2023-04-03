@@ -1,0 +1,9 @@
+@startuml
+actor USER as USER
+USER -> API : /v1/register-teams
+API -> OMISE: Create omise.Source
+OMISE -> API: Return omise.Source
+API -> OMISE: Create omise.Charge With metadata {team_uuid, email, tel}
+OMISE -> API: Return omise.Source
+API -> USER: Return teams object and qrcode payment,
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+actor USER as USER
+USER -> WEB : Pay with scan qrocde
+OMISE -> API: /v1/omise/webhoot
+API -> API: Update is_paid = true
+@enduml

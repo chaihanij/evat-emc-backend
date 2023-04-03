@@ -3,8 +3,11 @@ package dtos
 import (
 	"time"
 
+	"github.com/AlekSi/pointer"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
+	"github.com/omise/omise-go"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
 	"gitlab.com/chaihanij/evat/app/types"
@@ -57,6 +60,33 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			Year:      req.Year,
 			Role:      string(types.UserRoleUSER),
 		}
+}
+
+type FindOneUserResponseJSON UserResponse
+
+func (m *FindOneUserResponseJSON) Parse(data *entities.User) *FindOneUserResponseJSON {
+
+	copier.Copy(m, data)
+	if !data.LastLogin.IsZero() {
+		m.LastLogin = pointer.ToTime(data.LastLogin)
+	} else {
+		m.LastLogin = nil
+	}
+	return m
+}
+
+type RegisterTeamResponseJSON struct {
+	Team          *FindOneTeamResponseJSON `json:"team"`
+	User          *FindOneUserResponseJSON `json:"user"`
+	ScannableCode *omise.ScannableCode     `json:"scannable_code"`
+}
+
+func (registerTeamResponseJSON *RegisterTeamResponseJSON) Parse(c *gin.Context, team *entities.Team, user *entities.User, charge *entities.OmiseCharge) *RegisterTeamResponseJSON {
+	return &RegisterTeamResponseJSON{
+		Team:          new(FindOneTeamResponseJSON).Parse(c, team),
+		User:          new(FindOneUserResponseJSON).Parse(user),
+		ScannableCode: charge.Source.ScannableCode,
+	}
 }
 
 type RegisterTeamResponseSwagger struct {

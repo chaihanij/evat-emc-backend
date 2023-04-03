@@ -26,6 +26,8 @@ var (
 	RetryAttempts         int
 	DataPath              string
 	LogPath               string
+	OMISEPublicKey        string
+	OMISEPrivateKey       string
 )
 
 func Init() {
@@ -96,5 +98,6 @@ func Init() {
 		current, _ := os.Getwd()
 		LogPath = filepath.Join(current, "logs")
 	}
-
+	OMISEPublicKey = os.Getenv("OMISE_PUBLIC_KEY")
+	OMISEPrivateKey = os.Getenv("OMISE_PRIVATE_KEY")
 }

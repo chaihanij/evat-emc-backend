@@ -13,6 +13,7 @@ import (
 
 	// repo
 	_announcementsTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/announcements"
+	_omiseRepo "gitlab.com/chaihanij/evat/app/layers/repositories/omise"
 
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
@@ -115,7 +116,7 @@ func main() {
 	visitRepo := _visitRepo.InitRepo(db)
 	emailRepo := _emailRepo.InitRepo(db)
 	emailcontactRepo := _emailcontact.InitRepo(db)
-
+	omiseRepo := _omiseRepo.InitRepo(env.OMISEPublicKey, env.OMISEPrivateKey)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -134,7 +135,7 @@ func main() {
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
-	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo)
+	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo, omiseRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
@@ -190,22 +191,4 @@ func main() {
 	if err != http.ErrServerClosed {
 		log.Fatal("error :", err)
 	}
-
-	// timeOut, err := strconv.Atoi(os.Getenv("GRACEFUL_TIMEOUT"))
-	// if err != nil {
-	// 	timeOut = 30 // second
-	// }
-
-	// graceful := &finish.Finisher{Timeout: time.Duration(timeOut) * time.Second}
-	// graceful.Add(srv)
-
-	// go func() {
-	// 	err := srv.ListenAndServe()
-	// 	if err != http.ErrServerClosed {
-	// 		log.Fatal(err)
-	// 	}
-	// }()
-
-	// graceful.Wait()
-
 }

@@ -7,6 +7,7 @@ import (
 	assignmentTeams "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/members"
+	"gitlab.com/chaihanij/evat/app/layers/repositories/omise"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/users"
 )
@@ -17,6 +18,7 @@ type useCase struct {
 	MembersRepo         members.Repo
 	FilesRepo           files.Repo
 	AssignmentTeamsRepo assignmentTeams.Repo
+	OmiseRepo           omise.Repo
 }
 
 type UseCase interface {
@@ -33,15 +35,20 @@ type UseCase interface {
 
 	FindAllSearchTeam(ctx context.Context, input *entities.TeamFilter) (*int64, []entities.TeamSearch, error)
 
-	RegisterTeam(ctx context.Context, team *entities.Team, user *entities.User) (*entities.Team, *entities.User, error)
+	RegisterTeam(ctx context.Context, team *entities.Team, user *entities.User) (*entities.Team, *entities.User, *entities.OmiseCharge, error)
 }
 
-func InitUseCase(teamsRepo teams.Repo, usersRepo users.Repo, membersRepo members.Repo, filesRepo files.Repo, assignmentTeamsRepo assignmentTeams.Repo) UseCase {
+func InitUseCase(teamsRepo teams.Repo,
+	usersRepo users.Repo, membersRepo members.Repo,
+	filesRepo files.Repo,
+	assignmentTeamsRepo assignmentTeams.Repo,
+	omiseRepo omise.Repo) UseCase {
 	return &useCase{
 		TeamsRepo:           teamsRepo,
 		UsersRepo:           usersRepo,
 		MembersRepo:         membersRepo,
 		FilesRepo:           filesRepo,
 		AssignmentTeamsRepo: assignmentTeamsRepo,
+		OmiseRepo:           omiseRepo,
 	}
 }

@@ -1,2 +1,7 @@
 logs
 volumes
+docker-compose-evat-emc-*.yaml
+*.puml
+*.dbml
+vendor
+scripts

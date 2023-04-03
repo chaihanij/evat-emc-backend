@@ -64,6 +64,8 @@ services:
         L1eEq87g2daQwh4BFfUi9D2l64LQ1S7XPJADKQkyWDRFA5RGpNfEnHjZW+e+Gm9r
         IiGZkw/zYuPNaOc/+bWhNGQ=
         -----END PRIVATE KEY-----
+      OMISE_PUBLIC_KEY: pkey_test_5v4l5xt6uc3ke9d5kjm
+      OMISE_PRIVATE_KEY: skey_test_5v4l5xvlwf5lbxkaxvx
 
   emc-database-production:
     image: mongo:6

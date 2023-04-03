@@ -13,6 +13,7 @@ type useCase struct {
 
 type UseCase interface {
 	Login(ctx context.Context, input *entities.Login) (*entities.User, error)
+	ChangePassword(ctx context.Context, input *entities.ResetPassword) (*entities.User, error)
 	//
 	CreateUser(ctx context.Context, input *entities.User) (*entities.User, error)
 	DeleteUser(ctx context.Context, input *entities.UserFilter) error

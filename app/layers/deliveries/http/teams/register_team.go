@@ -13,10 +13,11 @@ func (h *Handler) RegisterTeam(c *gin.Context) {
 		return
 	}
 	team, user := request.ToEntity()
-	_, _, err = h.TeamsUseCase.RegisterTeam(c.Request.Context(), team, user)
+	team, user, charge, err := h.TeamsUseCase.RegisterTeam(c.Request.Context(), team, user)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	utils.JSONSuccessResponse(c, nil)
+	res := new(dtos.RegisterTeamResponseJSON).Parse(c, team, user, charge)
+	utils.JSONSuccessResponse(c, res)
 }
