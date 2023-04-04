@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -27,6 +28,12 @@ type UploadScoreAssingment struct {
 	FileFullPath     string                `swaggerignore:"true"`
 	FilePath         string                `swaggerignore:"true"`
 	UpdatedBy        string                `swaggerignore:"true"`
+}
+
+type MyRow struct {
+	ColumnA string
+	ColumnB string
+	ColumnC string
 }
 
 func (req *UploadScoreAssingment) Parse(c *gin.Context) (*UploadScoreAssingment, error) {
@@ -51,18 +58,78 @@ func (req *UploadScoreAssingment) Parse(c *gin.Context) (*UploadScoreAssingment,
 		log.WithError(err).Debugln("UpdateMemberImageRequest Parse Error")
 		return nil, errors.InternalError{Message: err.Error()}
 	}
-	fmt.Println("fileExt :", filepath.Ext(document.Filename))
+	fmt.Println("fileExt :", fileExt)
 	fmt.Println("dtr", dir)
 	fmt.Println("dst", dst)
 	fmt.Println("document :", document.Size)
 	fmt.Println("originalFileName :", originalFileName)
 
+	f, err := excelize.OpenFile(dst)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
+
+	// c1 := f.GetCellValue("Sheet", "A1")
+	// fmt.Println("c1", c1)
+	// c2 := f.GetSheetIndex("Sheet")
+	// fmt.Println("c2", c2)
+	// c3 := f.GetSheetName(1)
+	// fmt.Println("c3 :", c3)
+	// c4 := f.GetColWidth("Sheet", "A1")
+	// fmt.Println("c4", c4)
+	// c5 := f.GetRowHeight("Sheet", 1)
+	// fmt.Println("C5", c5)
+
+	rows := f.GetRows("Sheet")
+
+	// for _, row := range c6 {
+	// 	// 	fmt.Println("i", i)
+	// 	for _, colCell := rangerow {
+
+	// 		fmt.Println("key", colCell)
+	// 	}
+	// }
+	var myRows []MyRow
+
+	for i, row := range rows {
+		if i == 0 {
+			continue
+		}
+		myRow := MyRow{
+			ColumnA: row[0],
+			ColumnB: row[1],
+			ColumnC: row[2],
+		}
+		myRows = append(myRows, myRow)
+
+	}
+	fmt.Println("my - - - -", myRows[0])
+
+	formula := f.GetCellFormula("Sheet1", "A1")
+
+	// column := f.GetCellFormula("Sheet1", "C2")
+	fmt.Println("column :", formula)
+
+	c11 := f.GetColVisible("Sheet", "Reference")
+	fmt.Println("c11", c11)
+	c12 := f.GetCellValue("Sheet", "1")
+	fmt.Println("c12", c12)
+	// }
+	// for _, colCell := range c6[0] {
+	// 	fmt.Println("colCell", colCell)
+	// }
+
+	// c7 := f.SearchSheet("Sheet", "63d9492f8e2054ee2be350fb", true)
+	// fmt.Println("c7", c7)
+	// c8 := f.GetSheetName(1)
+	// fmt.Println("c8", c8)
+
 	req.OriginalFileName = originalFileName
 	req.FileName = filename
 	req.FileExtension = fileExt
-	//req.FilePath = filepath.Join(dir, filename)
-	//req.FileFullPath = dst
-	// log.WithField("value", req).Debugln("SendAssignmentDocumentRequestJSON")
+	req.FilePath = filepath.Join(dir, filename)
+	req.FileFullPath = dst
+	log.WithField("value", req).Debugln("SendAssignmentDocumentRequestJSON")
 
 	jwtRawData, ok := c.Get(constants.JWTDataKey)
 	if !ok {
