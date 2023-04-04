@@ -17,64 +17,99 @@ func (r repo) SendEmailRegister(data string) error {
 	var (
 		email = entities.SendEmail{}
 		html  = `<!DOCTYPE html>
-		<html lang="en">
-		
-		<head>
-		  <meta charset="UTF-8">
-		  <title>Verify Email</title>
-		</head>
-		
-		<body>
-		  <div class="cov-form" style='width: 800px; margin: 0 auto;'>
-			<div class="header-email">
-			  <div class="img-logo"
-				style='background-image: url("https://evspms.pttor.com/ptt_image/other/Rectangle_10@2x.png"); background-size: 100% 100%; background-repeat: no-repeat;'>
-				<img src="https://evspms.pttor.com/ptt_image/logo/evlogo1.jpg" alt="" style='width: 150px;'>
-			  </div>
-			</div>
-			<div class="body-email" style='min-height: 750px;'>
-			  <div class="cov-header" style='text-align: right'>
-				<div class="txt-detail" style='margin-top: 30px'>
-				  <p class="txt" style="font-size: 16px; text-align: left; color: rgba(144,144,144,1);">
-					สวัสดีคุณ  ` + nameUser + ` 
-				  </p>
-				</div>
-				  <div class="txt-detail" style='margin-top: 30px'>
-				  <p class="txt" style="font-size: 16px; text-align: left; color: rgba(144,144,144,1);">
-				  ขอต้อนรับสู่บริการชาร์จไฟฟ้าสำหรับรถยนต์ไฟฟ้าด้วยแอปพลิเคชัน อีวี สเตชั่น พลัส
-				  <br/><br/>
-		
-				  คุณได้ลงทะเบียนสมัครใช้งานผ่านช่องทางออนไลน์เรียบร้อยแล้ว ขั้นตอนต่อไป กรุณากดปุ่มด้านล่างเพื่อตั้งรหัสผ่านใหม่ 
-				  พร้อมยืนยันการสมัครใช้บริการของคุณอีกครั้ง ทั้งนี้ บริษัทจะใช้อีเมลนี้ในการส่งเอกสารใบกำกับภาษี / ใบเสร็จรับเงินในรูปแบบอิเล็กทรอนิกส์
-				  สำหรับค่าบริการ อีวี สเตชั่น พลัส ที่คุณได้รับในโอกาสถัดไป
-				  </p>
-				</div>
-				<div class="txt-detail" style='margin-top: 30px'>
-				  <p class="txt" style="font-size: 16px; text-align: left; color: rgba(144,144,144,1);">
-				  หากคุณไม่ได้เป็นผู้สมัครบริการนี้ ไม่ต้องทำการใดๆ หรือตอบกลับอีเมลเพื่อแจ้งให้เราทราบ
-				  </p>
-				</div>
-			  </div>
-			  <div class="txt-detail" style='margin-top: 30px'>
-				<p class="txt" style="font-size: 16px; text-align: left; color: rgba(144,144,144,1);">
-				  ด้วยความเคารพ <br />
-				  ศูนย์ปฏิบัติการ อีวี สเตชั่น พลัส <br/>
-				  บริษัท​ ปตท.​ น้ำมันและการค้าปลีก​ จำกัด​ (มหาชน) <br/>
-				  โทร 02-061-9519
-				</p>
-			  </div>
-              <hr />
-               <hr />
-			</div>
-		  </div>
-		</body>
-		
-		</html>`
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    body {
+        background-color: powderblue;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .continner {
+        width: 80%;
+    }
+    .txt-decs {
+        /* Layout Properties */
+        /* UI Properties */
+
+        text-align: left;
+        color: #417630;
+    }
+    .setting-password {
+        cursor: pointer;
+    }
+    .txt-customer {
+        text-align: left;
+    }
+    .txt-a {
+        text-align: left;
+    }
+    .txt-footer {
+        text-align: left;
+        color: #202527;
+    }
+    .contact {
+        text-align: left;
+        color: #202527;
+
+    }
+    
+</style>
+<body>
+
+    <div class="continner">
+
+        <div class="head-img">
+            <img src="./logo.png" alt="logo">
+        </div>
+        <div class="desc">
+            <p>โครงการแข่งขันรถจักรยานยนต์ไฟฟ้าดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
+        </div>
+        <div>
+            <img src="./desc.png" alt="">
+        </div>
+
+        <div class="txt-customer">
+            <p>สวัสดีคุณ ` + nameUser + `  </p>
+        </div>
+        
+        <div class="txt-decs">
+            <p>การสมัครโครงการได้รับการอนุมัติแล้ว</p>
+        </div>
+        <div class="txt-a">
+            <p>เพื่อดำเนินการให้เสร็จสมบูรณ์ กรุณาตั้งค่ารหัสผ่านโดยกดที่ปุ่มหรือ</p>
+            <p>กดลิงก์ด้านล่างนี้ ขอบพระคุณครับ</p>
+        </div>
+        <div class="setting-password" >
+            <img src="https://cdn-icons-png.flaticon.com/512/59/59408.png" alt="verify">
+        </div>
+        <div class="txt-footer">
+            <p>ด้วยความเคารพ</p>
+            <p>สมาคมโครงการแข่งขันรถจักรยานยนต์ไฟฟ้า</p>
+            <p>ดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
+        </div>
+        <div class="contact">
+            <p>อาคารเคเอกซ์ ชั้น 12เลขที่ 110/1 ถนนกรุงธนบุรี</p>
+            <p>แขวงบางลำภูล่าง เขตคลองสาน กรุงเทพมหานคร 10600</p>
+            <p>อีเมล: contact@evat.or.th. โทร: 086-390-3339</p>
+        </div>
+
+    </div>
+
+</body>
+</html>`
 	)
 
 	m := gomail.NewMessage()
 
-	subject := "topic"
+	subject := "ยืนยันการสมัครเข้าแข่งขัน"
 	content := html
 	receiver := data
 	cc := ""
