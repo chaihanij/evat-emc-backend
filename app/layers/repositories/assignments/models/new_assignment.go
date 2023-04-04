@@ -17,24 +17,35 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 	if val, ok := input.Document.(string); ok {
 		document = val
 	}
+	var ConsiderationAssignments []ConsiderationAssignment
+
+	for _, value := range input.Consideration {
+		considerationAssignment := ConsiderationAssignment{
+			Name:  value.Name,
+			Score: value.Score,
+		}
+		ConsiderationAssignments = append(ConsiderationAssignments, considerationAssignment)
+	}
+
 	now := time.Now()
 	return &Assignment{
-		ID:          primitive.NewObjectID(),
-		UUID:        uuid.NewString(),
-		TeamUUID:    input.TeamUUID,
-		No:          input.No,
-		Title:       input.Title,
-		Description: input.Description,
-		Image:       image,
-		Document:    document,
-		FullScore:   input.FullScore,
-		IsActive:    input.IsActive,
-		DueDate:     input.DueDate,
-		Year:        input.Year,
-		CreatedAt:   now,
-		UpdatedAt:   now,
-		CreatedBy:   input.CreatedBy,
-		UpdatedBy:   input.UpdatedBy,
-		SendDoc:     input.SendDoc,
+		ID:            primitive.NewObjectID(),
+		UUID:          uuid.NewString(),
+		TeamUUID:      input.TeamUUID,
+		No:            input.No,
+		Title:         input.Title,
+		Description:   input.Description,
+		Image:         image,
+		Document:      document,
+		FullScore:     input.FullScore,
+		IsActive:      input.IsActive,
+		DueDate:       input.DueDate,
+		Year:          input.Year,
+		CreatedAt:     now,
+		UpdatedAt:     now,
+		CreatedBy:     input.CreatedBy,
+		UpdatedBy:     input.UpdatedBy,
+		SendDoc:       input.SendDoc,
+		Consideration: ConsiderationAssignments,
 	}
 }
