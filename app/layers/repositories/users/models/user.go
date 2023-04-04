@@ -19,6 +19,8 @@ type User struct {
 	LastName      string             `bson:"last_name"`
 	Address       string             `bson:"address"`
 	Tel           string             `bson:"tel"`
+	Occupation    string             `bson:"occupation"`
+	Academy       string             `bson:"academy"`
 	Role          string             `bson:"role"`
 	Password      string             `bson:"password"`
 	Year          string             `bson:"year"`

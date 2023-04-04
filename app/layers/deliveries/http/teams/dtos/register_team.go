@@ -14,15 +14,16 @@ import (
 )
 
 type RegisterTeamRequestJSON struct {
-	TeamName  string `json:"teamName" validate:"required" `
-	TeamType  string `json:"teamType" validate:"required,teamType"`
-	FirstName string `json:"firstname" validate:"required"`
-	LastName  string `json:"lastname" validate:"required"`
-	Email     string `json:"email" validate:"required,email"`
-	Tel       string `json:"tel" validate:"required"`
-	Year      string `json:"year" validate:"required"`
-	Password  string `json:"password" validate:"required,passwordComplexity"`
-	IsConsent bool   `json:"isConsent" validate:"required"`
+	TeamName   string `json:"teamName" validate:"required" `
+	TeamType   string `json:"teamType" validate:"required,teamType"`
+	FirstName  string `json:"firstname" validate:"required"`
+	LastName   string `json:"lastname" validate:"required"`
+	Email      string `json:"email" validate:"required,email"`
+	Tel        string `json:"tel" validate:"required"`
+	Year       string `json:"year" validate:"required"`
+	Academy    string `json:"academy"`
+	Occupation string `json:"occupation"`
+	IsConsent  bool   `json:"isConsent" validate:"required"`
 }
 
 func (req *RegisterTeamRequestJSON) Parse(c *gin.Context) (*RegisterTeamRequestJSON, error) {
@@ -49,16 +50,18 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			Name:     req.TeamName,
 			TeamType: req.TeamType,
 			Year:     req.Year,
+			Academy:  req.Academy,
 		},
 		&entities.User{
-			Username:  uuid.NewString(),
-			FirstName: req.FirstName,
-			LastName:  req.LastName,
-			Email:     req.Email,
-			Password:  req.Password,
-			Tel:       req.Tel,
-			Year:      req.Year,
-			Role:      string(types.UserRoleUSER),
+			Username:   uuid.NewString(),
+			FirstName:  req.FirstName,
+			LastName:   req.LastName,
+			Email:      req.Email,
+			Academy:    req.Academy,
+			Occupation: req.Occupation,
+			Tel:        req.Tel,
+			Year:       req.Year,
+			Role:       string(types.UserRoleUSER),
 		}
 }
 

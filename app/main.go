@@ -55,6 +55,7 @@ import (
 	_filesHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/files"
 	_healthCheck "gitlab.com/chaihanij/evat/app/layers/deliveries/http/health_check"
 	_membersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/members"
+	_omiseHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/omise"
 	_teamsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/teams"
 	_usersHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/users"
 	_visitHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/visit"
@@ -177,7 +178,7 @@ func main() {
 	_visitHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, visitUseCase)
 	_emailHttp.NewEndpointHttpHandler(ginEngine, emailUseCase)
 	_emailcontactHttp.NewEndpointHttpHandler(ginEngine, emailcontactUseCase)
-
+	_omiseHttp.NewEndpointHttpHandler(ginEngine, teamsUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

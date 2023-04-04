@@ -16,6 +16,8 @@ func UpdateUser(input *entities.User) *bson.D {
 		bson.E{Key: "last_name", Value: input.LastName},
 		bson.E{Key: "address", Value: input.Address},
 		bson.E{Key: "tel", Value: input.Tel},
+		bson.E{Key: "academy", Value: input.Academy},
+		bson.E{Key: "occupation", Value: input.Occupation},
 		bson.E{Key: "role", Value: input.Role},
 		bson.E{Key: "password", Value: input.Password},
 		bson.E{Key: "Year", Value: input.Year},

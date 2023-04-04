@@ -23,6 +23,8 @@ func NewUser(input *entities.User) *User {
 		LastName:      input.LastName,
 		Address:       input.Address,
 		Tel:           input.Tel,
+		Academy:       input.Academy,
+		Occupation:    input.Occupation,
 		Role:          input.Role,
 		Password:      password,
 		Year:          input.Year,

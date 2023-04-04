@@ -36,6 +36,7 @@ type UseCase interface {
 	FindAllSearchTeam(ctx context.Context, input *entities.TeamFilter) (*int64, []entities.TeamSearch, error)
 
 	RegisterTeam(ctx context.Context, team *entities.Team, user *entities.User) (*entities.Team, *entities.User, *entities.OmiseCharge, error)
+	WebHooks(ctx context.Context, input *entities.OmiseEvent) error
 }
 
 func InitUseCase(teamsRepo teams.Repo,

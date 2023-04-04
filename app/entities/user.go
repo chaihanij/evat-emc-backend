@@ -13,6 +13,8 @@ type User struct {
 	LastName      string
 	Address       string
 	Tel           string
+	Occupation    string
+	Academy       string
 	Role          string
 	Password      string
 	Year          string
@@ -43,6 +45,8 @@ type UserPartialUpdate struct {
 	LastName      *string
 	Address       *string
 	Tel           *string
+	Occupation    *string
+	Academy       *string
 	Role          *string
 	Password      *string
 	Year          *string
@@ -70,6 +74,8 @@ type UserFilter struct {
 
 type ResetPassword struct {
 	UID             string
+	TeamUUID        string
+	ActivateCode    string
 	Email           string
 	Otp             string
 	OldPassword     string

@@ -32,6 +32,12 @@ func PartialUpdateUser(input *entities.UserPartialUpdate) *bson.D {
 	if input.Tel != nil {
 		updateFields = append(updateFields, bson.E{Key: "tel", Value: input.Tel})
 	}
+	if input.Academy != nil {
+		updateFields = append(updateFields, bson.E{Key: "academy", Value: input.Academy})
+	}
+	if input.Occupation != nil {
+		updateFields = append(updateFields, bson.E{Key: "occupation", Value: input.Occupation})
+	}
 	if input.Role != nil {
 		updateFields = append(updateFields, bson.E{Key: "role", Value: input.Role})
 	}

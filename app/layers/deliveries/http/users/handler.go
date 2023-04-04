@@ -20,6 +20,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1.POST("/login", handler.Login)
 		v1.POST("/forget-password", handler.ForgetPassword)
 		v1.POST("/reset-password-by-otp", handler.ResetPasswordByOTP)
+		v1.POST("/reset-password", handler.ResetPassword)
 		v1.POST("/superadmin", handler.CreateSuperAdmin)
 	}
 
