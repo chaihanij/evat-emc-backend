@@ -21,7 +21,7 @@ type Assignment struct {
 	UpdatedBy     string
 	SendDoc       bool
 	Consideration []ConsiderationAssignment
-	OverDue      time.Time 
+	// OverDue      time.Time 
 	DeliveryTime time.Time 
 }
 
@@ -56,6 +56,8 @@ type AssignmentPartialUpdate struct {
 	UpdatedBy     string
 	SendDoc       *bool
 	Consideration *[]interface{}
+	DeliveryTime *time.Time 
+
 }
 
 type AssignmentFilter struct {

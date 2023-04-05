@@ -48,6 +48,6 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 		SendDoc:       input.SendDoc,
 		Consideration: ConsiderationAssignments,
 		DeliveryTime:  input.DeliveryTime,
-		OverDue:       input.OverDue,
+		// OverDue:       input.OverDue,
 	}
 }

@@ -22,7 +22,7 @@ func (r repo) UpdateAssignmentTeamPushDocument(ctx context.Context, input *entit
 
 	var dliveryTime models.DliveryTime
 	filterOverDue := bson.M{
-		"uuid": "f8575bde-0369-46cb-9d4b-3d95ad159c4a",
+		"uuid": input.AssignmentUUID,
 	}
 	errOverdue := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionAssignments).
@@ -34,9 +34,9 @@ func (r repo) UpdateAssignmentTeamPushDocument(ctx context.Context, input *entit
 	}
 
 	dliveryTime.TimeNow = time.Now()
-
+	log.Debugln("dliveryTime", dliveryTime)
 	dlivery := dliveryTime.DliveryTime.Unix()
-	overdue := dliveryTime.Overdue.Unix()
+	overdue := dliveryTime.DueDate.Unix()
 	timeNow := dliveryTime.TimeNow.Unix()
 
 	if dlivery >= timeNow {
@@ -46,7 +46,6 @@ func (r repo) UpdateAssignmentTeamPushDocument(ctx context.Context, input *entit
 	if overdue <= timeNow {
 		return nil, fmt.Errorf("เกินกำหนดเวลาส่งงาน")
 	}
-
 
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After).SetUpsert(true)
 	filter := models.NewAssignmentTeamFilter(input)

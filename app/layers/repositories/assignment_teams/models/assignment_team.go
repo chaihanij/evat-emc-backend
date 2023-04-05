@@ -24,7 +24,7 @@ type AssignmentTeam struct {
 
 type DliveryTime struct {
 	DliveryTime time.Time `json:"delivery_time" bson:"delivery_time"`
-	Overdue     time.Time `json:"overdue" bson:"overdue"`
+	DueDate     time.Time `json:"due_date" bson:"due_date"`
 	TimeNow     time.Time
 }
 
