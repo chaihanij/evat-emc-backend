@@ -27,6 +27,8 @@ type Assignment struct {
 	UpdatedBy     string                    `bson:"updated_by"`
 	SendDoc       bool                      `bson:"senddoc"`
 	Consideration []ConsiderationAssignment `bson:"consideration"`
+	OverDue       time.Time                 `bson:"overdue"`
+	DeliveryTime  time.Time                 `bson:"delivery_time"`
 }
 
 type ConsiderationAssignment struct {

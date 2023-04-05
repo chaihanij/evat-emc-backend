@@ -47,5 +47,7 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 		UpdatedBy:     input.UpdatedBy,
 		SendDoc:       input.SendDoc,
 		Consideration: ConsiderationAssignments,
+		DeliveryTime:  input.DeliveryTime,
+		OverDue:       input.OverDue,
 	}
 }

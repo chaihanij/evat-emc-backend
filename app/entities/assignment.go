@@ -21,6 +21,8 @@ type Assignment struct {
 	UpdatedBy     string
 	SendDoc       bool
 	Consideration []ConsiderationAssignment
+	OverDue      time.Time 
+	DeliveryTime time.Time 
 }
 
 type ConsiderationAssignment struct {
