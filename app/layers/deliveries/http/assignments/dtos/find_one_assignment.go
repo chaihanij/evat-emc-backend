@@ -29,19 +29,21 @@ type FindOneAssignmentResponseJSON AssignmentResponse
 
 func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *FindOneAssignmentResponseJSON {
 	assignment := &FindOneAssignmentResponseJSON{
-		UUID:        input.UUID,
-		No:          input.No,
-		Title:       input.Title,
-		Description: input.Description,
-		FullScore:   input.FullScore,
-		IsActive:    input.IsActive,
-		DueDate:     input.DueDate,
-		Year:        input.Year,
-		CreatedAt:   input.CreatedAt,
-		UpdatedAt:   input.UpdatedAt,
-		CreatedBy:   input.CreatedBy,
-		UpdatedBy:   input.UpdatedBy,
-		SendDoc:     input.SendDoc,
+		UUID:         input.UUID,
+		No:           input.No,
+		Title:        input.Title,
+		Description:  input.Description,
+		FullScore:    input.FullScore,
+		IsActive:     input.IsActive,
+		DueDate:      input.DueDate,
+		Year:         input.Year,
+		CreatedAt:    input.CreatedAt,
+		UpdatedAt:    input.UpdatedAt,
+		CreatedBy:    input.CreatedBy,
+		UpdatedBy:    input.UpdatedBy,
+		SendDoc:      input.SendDoc,
+		OverDue:      input.OverDue,
+		DeliveryTime: input.DeliveryTime,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)

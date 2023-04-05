@@ -21,6 +21,8 @@ type Repo interface {
 	PartialUpdateTeam(ctx context.Context, input *entities.TeamPartialUpdate) (*entities.Team, error)
 	UpdateTeam(ctx context.Context, input *entities.Team) (*entities.Team, error)
 	FindAllSearchTeam(ctx context.Context, input *entities.TeamFilter) ([]entities.TeamSearch, error)
+
+	SendEmailRegister(data string) ( error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

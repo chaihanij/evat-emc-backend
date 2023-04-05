@@ -9,23 +9,31 @@ import (
 )
 
 type Assignment struct {
-	ID          primitive.ObjectID `bson:"id"`
-	UUID        string             `bson:"uuid"`
-	TeamUUID    string             `bson:"team_uuid"`
-	No          int                `bson:"no"`
-	Title       string             `bson:"title"`
-	Description string             `bson:"description"`
-	Image       string             `bson:"image"`
-	Document    string             `bson:"document"`
-	FullScore   float64            `bson:"full_score"`
-	IsActive    bool               `bson:"is_active"`
-	DueDate     time.Time          `bson:"due_date"`
-	Year        string             `bson:"year"`
-	CreatedAt   time.Time          `bson:"created_at"`
-	UpdatedAt   time.Time          `bson:"updated_at"`
-	CreatedBy   string             `bson:"created_by"`
-	UpdatedBy   string             `bson:"updated_by"`
-	SendDoc     bool               `bson:"senddoc"`
+	ID            primitive.ObjectID        `bson:"id"`
+	UUID          string                    `bson:"uuid"`
+	TeamUUID      string                    `bson:"team_uuid"`
+	No            int                       `bson:"no"`
+	Title         string                    `bson:"title"`
+	Description   string                    `bson:"description"`
+	Image         string                    `bson:"image"`
+	Document      string                    `bson:"document"`
+	FullScore     float64                   `bson:"full_score"`
+	IsActive      bool                      `bson:"is_active"`
+	DueDate       time.Time                 `bson:"due_date"`
+	Year          string                    `bson:"year"`
+	CreatedAt     time.Time                 `bson:"created_at"`
+	UpdatedAt     time.Time                 `bson:"updated_at"`
+	CreatedBy     string                    `bson:"created_by"`
+	UpdatedBy     string                    `bson:"updated_by"`
+	SendDoc       bool                      `bson:"senddoc"`
+	Consideration []ConsiderationAssignment `bson:"consideration"`
+	OverDue       time.Time                 `bson:"overdue"`
+	DeliveryTime  time.Time                 `bson:"delivery_time"`
+}
+
+type ConsiderationAssignment struct {
+	Name  string  `bson:"name"`
+	Score float64 `bson:"score"`
 }
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {
