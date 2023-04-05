@@ -2,6 +2,7 @@ package teams
 
 import (
 	"context"
+
 	// "fmt"
 
 	// "github.com/sirupsen/logrus"
@@ -13,7 +14,6 @@ func (u useCase) RegisterTeam(ctx context.Context, team *entities.Team, user *en
 	if err != nil {
 		return nil, nil, nil, err
 	}
-
 	user.TeamUUID = team.UUID
 	user, err = u.UsersRepo.CreateUser(ctx, user)
 	if err != nil {
@@ -43,7 +43,6 @@ func (u useCase) RegisterTeam(ctx context.Context, team *entities.Team, user *en
 	// 	fmt.Println("error", err)
 	// 	return nil, nil, nil, err
 	// }
-
 
 	return team, user, charge, nil
 }

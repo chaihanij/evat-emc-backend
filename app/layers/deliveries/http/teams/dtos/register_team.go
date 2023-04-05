@@ -23,6 +23,7 @@ type RegisterTeamRequestJSON struct {
 	Year      string `json:"year" validate:"required"`
 	Password  string `json:"password" validate:"required,passwordComplexity"`
 	IsConsent bool   `json:"isConsent" validate:"required"`
+	Username  string `json:"username"`
 }
 
 func (req *RegisterTeamRequestJSON) Parse(c *gin.Context) (*RegisterTeamRequestJSON, error) {
@@ -51,7 +52,7 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			Year:     req.Year,
 		},
 		&entities.User{
-			Username:  uuid.NewString(),
+			Username:  req.Username,
 			FirstName: req.FirstName,
 			LastName:  req.LastName,
 			Email:     req.Email,

@@ -37,18 +37,19 @@ func (m *FindAllAssignmentResponseJSON) Parse(data []entities.Assignment) *FindA
 	var assignments FindAllAssignmentResponseJSON = FindAllAssignmentResponseJSON{}
 	for _, value := range data {
 		assignment := &AssignmentResponse{
-			UUID:        value.UUID,
-			No:          value.No,
-			Title:       value.Title,
-			Description: value.Description,
-			FullScore:   value.FullScore,
-			IsActive:    value.IsActive,
-			DueDate:     value.DueDate,
-			Year:        value.Year,
-			CreatedAt:   value.CreatedAt,
-			UpdatedAt:   value.UpdatedAt,
-			CreatedBy:   value.CreatedBy,
-			UpdatedBy:   value.UpdatedBy,
+			UUID:         value.UUID,
+			No:           value.No,
+			Title:        value.Title,
+			Description:  value.Description,
+			FullScore:    value.FullScore,
+			IsActive:     value.IsActive,
+			DueDate:      value.DueDate,
+			Year:         value.Year,
+			CreatedAt:    value.CreatedAt,
+			UpdatedAt:    value.UpdatedAt,
+			CreatedBy:    value.CreatedBy,
+			UpdatedBy:    value.UpdatedBy,
+			DeliveryTime: value.DeliveryTime,
 		}
 		assignments = append(assignments, *assignment)
 	}
