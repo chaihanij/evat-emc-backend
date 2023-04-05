@@ -22,6 +22,12 @@ type AssignmentTeam struct {
 	UpdatedBy      string             `bson:"update_by"`
 }
 
+type DliveryTime struct {
+	DliveryTime time.Time `json:"delivery_time" bson:"delivery_time"`
+	Overdue     time.Time `json:"overdue" bson:"overdue"`
+	TimeNow     time.Time
+}
+
 func (at *AssignmentTeam) ToEntity() (*entities.AssignmentTeam, error) {
 	var assignmentTeam entities.AssignmentTeam
 	err := copier.Copy(&assignmentTeam, at)
