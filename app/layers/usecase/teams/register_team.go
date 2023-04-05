@@ -2,9 +2,9 @@ package teams
 
 import (
 	"context"
-	"fmt"
+	// "fmt"
 
-	"github.com/sirupsen/logrus"
+	// "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 )
 
@@ -34,15 +34,15 @@ func (u useCase) RegisterTeam(ctx context.Context, team *entities.Team, user *en
 		return nil, nil, nil, err
 	}
 
-	email := user.Email
+	// email := user.Email
 
-	logrus.Debugln("email", email)
+	// logrus.Debugln("email", email)
 
-	err = u.TeamsRepo.SendEmailRegister(email)
-	if err != nil {
-		fmt.Println("error", err)
-		return nil, nil, nil, err
-	}
+	// err = u.TeamsRepo.SendEmailRegister(email)
+	// if err != nil {
+	// 	fmt.Println("error", err)
+	// 	return nil, nil, nil, err
+	// }
 
 
 	return team, user, charge, nil
