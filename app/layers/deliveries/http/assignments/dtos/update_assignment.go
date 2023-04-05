@@ -11,16 +11,17 @@ import (
 )
 
 type UpdateAssignmentRequestJSON struct {
-	UUID        string    `json:"-" uri:"assignment_uuid" validate:"required"`
-	No          int       `json:"no" validate:"required"`
-	Title       string    `json:"title" validate:"required"`
-	Description string    `json:"description"`
-	FullScore   float64   `json:"fullScore"`
-	IsActive    bool      `json:"isActive"`
-	DueDate     time.Time `json:"dueDate" validate:"required"`
-	Year        string    `json:"year" validate:"required"`
-	SendDoc     bool      `json:"senddoc"`
-	UpdatedBy   string    `json:"-" swaggerignore:"true"`
+	UUID         string    `json:"-" uri:"assignment_uuid" validate:"required"`
+	No           int       `json:"no" validate:"required"`
+	Title        string    `json:"title" validate:"required"`
+	Description  string    `json:"description"`
+	FullScore    float64   `json:"fullScore"`
+	IsActive     bool      `json:"isActive"`
+	DueDate      time.Time `json:"dueDate" validate:"required"`
+	Year         string    `json:"year" validate:"required"`
+	SendDoc      bool      `json:"senddoc"`
+	UpdatedBy    string    `json:"-" swaggerignore:"true"`
+	DeliveryTime time.Time `json:"delivery_time"`
 }
 
 func (req *UpdateAssignmentRequestJSON) Parse(c *gin.Context) (*UpdateAssignmentRequestJSON, error) {
@@ -65,15 +66,16 @@ func (req *UpdateAssignmentRequestJSON) Parse(c *gin.Context) (*UpdateAssignment
 
 func (req *UpdateAssignmentRequestJSON) ToEntity() *entities.AssignmentPartialUpdate {
 	return &entities.AssignmentPartialUpdate{
-		UUID:        req.UUID,
-		Title:       &req.Title,
-		Description: &req.Description,
-		FullScore:   &req.FullScore,
-		IsActive:    &req.IsActive,
-		DueDate:     &req.DueDate,
-		Year:        &req.Year,
-		SendDoc:     &req.SendDoc,
-		UpdatedBy:   req.UpdatedBy,
+		UUID:         req.UUID,
+		Title:        &req.Title,
+		Description:  &req.Description,
+		FullScore:    &req.FullScore,
+		IsActive:     &req.IsActive,
+		DueDate:      &req.DueDate,
+		Year:         &req.Year,
+		SendDoc:      &req.SendDoc,
+		UpdatedBy:    req.UpdatedBy,
+		DeliveryTime: &req.DeliveryTime,
 	}
 }
 
@@ -81,19 +83,20 @@ type UpdateAssignmentResponseJSON AssignmentResponse
 
 func (m *UpdateAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *UpdateAssignmentResponseJSON {
 	assignment := &UpdateAssignmentResponseJSON{
-		UUID:        input.UUID,
-		No:          input.No,
-		Title:       input.Title,
-		Description: input.Description,
-		FullScore:   input.FullScore,
-		IsActive:    input.IsActive,
-		DueDate:     input.DueDate,
-		Year:        input.Year,
-		CreatedAt:   input.CreatedAt,
-		UpdatedAt:   input.UpdatedAt,
-		CreatedBy:   input.CreatedBy,
-		SendDoc:     input.SendDoc,
-		UpdatedBy:   input.UpdatedBy,
+		UUID:         input.UUID,
+		No:           input.No,
+		Title:        input.Title,
+		Description:  input.Description,
+		FullScore:    input.FullScore,
+		IsActive:     input.IsActive,
+		DueDate:      input.DueDate,
+		Year:         input.Year,
+		CreatedAt:    input.CreatedAt,
+		UpdatedAt:    input.UpdatedAt,
+		CreatedBy:    input.CreatedBy,
+		SendDoc:      input.SendDoc,
+		UpdatedBy:    input.UpdatedBy,
+		DeliveryTime: input.DeliveryTime,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)
