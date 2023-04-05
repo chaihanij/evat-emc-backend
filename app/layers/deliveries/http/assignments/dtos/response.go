@@ -42,7 +42,7 @@ type AssignmentResponse struct {
 	CreatedBy    string        `json:"createdBy"`
 	UpdatedBy    string        `json:"updatedBy"`
 	SendDoc      bool          `json:"senddoc"`
-	OverDue      time.Time     `json:"overdue"`
+	//OverDue      time.Time     `json:"overdue"`
 	DeliveryTime time.Time     `json:"delivery_time"`
 }
 

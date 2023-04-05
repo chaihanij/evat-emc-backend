@@ -21,7 +21,7 @@ func (r repo) PartialUpdateAssignmentTeam(ctx context.Context, input *entities.A
 
 	var dliveryTime models.DliveryTime
 	filterOverDue := bson.M{
-		"uuid": "f8575bde-0369-46cb-9d4b-3d95ad159c4a",
+		"uuid": input.AssignmentUUID,
 	}
 	errOverdue := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionAssignments).
@@ -35,7 +35,7 @@ func (r repo) PartialUpdateAssignmentTeam(ctx context.Context, input *entities.A
 	dliveryTime.TimeNow = time.Now()
 
 	dlivery := dliveryTime.DliveryTime.Unix()
-	overdue := dliveryTime.Overdue.Unix()
+	overdue := dliveryTime.DueDate.Unix()
 	timeNow := dliveryTime.TimeNow.Unix()
 
 	if dlivery >= timeNow {

@@ -41,7 +41,10 @@ func PartialUpdateAssignment(input *entities.AssignmentPartialUpdate) *bson.D {
 		updateFields = append(updateFields, bson.E{Key: "document", Value: val})
 	}
 	if input.SendDoc != nil {
-		updateFields = append(updateFields, bson.E{Key: "senddoc", Value: input.SendDoc })
+		updateFields = append(updateFields, bson.E{Key: "senddoc", Value: input.SendDoc})
+	}
+	if input.DeliveryTime != nil {
+		updateFields = append(updateFields, bson.E{Key: "delivery_time", Value: input.DeliveryTime})
 	}
 	update := bson.D{{Key: "$set", Value: updateFields}}
 	log.WithField("value", update).Debugln("models.PartialUpdateAssignment")

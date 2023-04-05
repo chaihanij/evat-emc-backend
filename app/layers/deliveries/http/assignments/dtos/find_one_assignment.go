@@ -42,7 +42,7 @@ func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.As
 		CreatedBy:    input.CreatedBy,
 		UpdatedBy:    input.UpdatedBy,
 		SendDoc:      input.SendDoc,
-		OverDue:      input.OverDue,
+		// OverDue:      input.OverDue,
 		DeliveryTime: input.DeliveryTime,
 	}
 	if val, ok := input.Document.(entities.File); ok {

@@ -21,7 +21,7 @@ type CreateAssignmentRequestJSON struct {
 	CreatedBy    string    `json:"-" swaggerignore:"true"`
 	TeamUUID     string    `json:"team_uuid"`
 	SendDoc      bool      `json:"senddoc"`
-	OverDue      time.Time `json:"overdue" bson:"overdue"`
+	//OverDue      time.Time `json:"overdue" bson:"overdue"`
 	DeliveryTime time.Time `json:"delivery_time" bson:"delivery_time" `
 
 	// Consideration []ConsiderationAssignment `json:"consideration"`
@@ -91,7 +91,7 @@ func (req *CreateAssignmentRequestJSON) ToEntity() *entities.Assignment {
 		CreatedBy:    req.CreatedBy,
 		TeamUUID:     req.TeamUUID,
 		SendDoc:      req.SendDoc,
-		OverDue:      req.OverDue,
+		// OverDue:      req.OverDue,
 		DeliveryTime: req.DeliveryTime,
 		// Consideration: ConsiderationAssignments,
 	}
@@ -115,7 +115,7 @@ func (m *CreateAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Ass
 		UpdatedBy:    input.UpdatedBy,
 		TeamUUID:     input.TeamUUID,
 		SendDoc:      input.SendDoc,
-		OverDue:      input.OverDue,
+		// OverDue:      input.OverDue,
 		DeliveryTime: input.DeliveryTime,
 	}
 	if val, ok := input.Document.(entities.File); ok {
