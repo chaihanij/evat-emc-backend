@@ -20,6 +20,8 @@ type Repo interface {
 	FindAllUser(ctx context.Context, input *entities.UserFilter) ([]entities.User, error)
 	PartialUpdateUser(ctx context.Context, input *entities.UserPartialUpdate) (*entities.User, error)
 	UpdateUser(ctx context.Context, userFilter, input *entities.User) (*entities.User, error)
+	
+	FindOneUserLogin(ctx context.Context, input *entities.UserFilter) (*entities.User, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

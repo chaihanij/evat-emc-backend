@@ -17,7 +17,7 @@ import (
 func (u useCase) Login(ctx context.Context, input *entities.Login) (*entities.User, error) {
 
 	filter := entities.UserFilter{Email: pointer.ToString(input.Email)}
-	user, err := u.UsersRepo.FindOneUser(ctx, &filter)
+	user, err := u.UsersRepo.FindOneUserLogin(ctx, &filter)
 	if err != nil {
 		if mongo.ErrNoDocuments == err {
 			return nil, errors.RecordNotFoundError{Message: constants.DataNotFound}
