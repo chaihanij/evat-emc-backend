@@ -17,7 +17,7 @@ func (h *Handler) FindOneConsideration(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.FindOneConsiderationResponseJSON).Parse(c, consideration)
+	responseData := new(dtos.FindOneConsiderationsResponseJSON).Parse(c, consideration)
 	utils.JSONSuccessResponse(c, responseData)
 
 }

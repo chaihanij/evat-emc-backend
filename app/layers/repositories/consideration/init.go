@@ -14,7 +14,7 @@ type repo struct {
 type Repo interface {
 	Config() ([]string, error)
 	CountConsideration(ctx context.Context, input *entities.Consideration) (*int64, error)
-	FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) (*entities.Consideration, error)
+	FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) ([]entities.AssignmentScore, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

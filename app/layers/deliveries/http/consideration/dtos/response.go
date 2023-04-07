@@ -1,18 +1,20 @@
 package dtos
 
-import "time"
-
 type ConsiderationResponse struct {
-	ID             string           `json:"_id"`
-	TotalScore     float64          `json:"total_score"`
-	UpdatedAt      time.Time        `json:"update_at"`
-	No             int              `json:"no"`
-	IndivdualScore []IndivdualScore `json:"indivdual_score"`
+	// ID             string          `json:"_id"`
+	Total          float64         `json:"total"`
+	Considerations []Consideration `json:"considerations"`
 }
 
-type IndivdualScore struct {
-	Title  string  `json:"title"`
-	Score float64 `json:"score"`
+// type Considerations struct {
+// 	Consideration Consideration `json:"consideration"`
+// }
+
+type Consideration struct {
+	ID       string  `json:"id"`
+	Title    string  `json:"title"`
+	TeamName string  `json:"nameteam"`
+	Score    float64 `json:"score"`
 }
 
 type MetaDataResponse struct {

@@ -7,7 +7,8 @@ import (
 )
 
 type FindOneConsiderationRequestJSON struct {
-	UUID string `uri:"team_uuid"`
+	UUID string `uri:"assignment_UUID"`
+	ID   string `uri:"id"`
 }
 
 func (req *FindOneConsiderationRequestJSON) Parse(c *gin.Context) (*FindOneConsiderationRequestJSON, error) {
@@ -20,34 +21,44 @@ func (req *FindOneConsiderationRequestJSON) Parse(c *gin.Context) (*FindOneConsi
 
 func (req *FindOneConsiderationRequestJSON) ToEntity() *entities.ConsiderationFilter {
 	return &entities.ConsiderationFilter{
-		TeamUUID: &req.UUID,
+		AssignmentUUID: &req.UUID,
+		ID:             &req.ID,
 	}
 }
 
-type FindOneConsiderationResponseJSON ConsiderationResponse
+// type FindOneConsiderationResponseJSON ConsiderationResponse
 
-func (m *FindOneConsiderationResponseJSON) Parse(c *gin.Context, input *entities.Consideration) *FindOneConsiderationResponseJSON {
-	
-	var indivdualScores []IndivdualScore
+type FindOneConsiderationsResponseJSON []ConsiderationResponse
 
-	for _, data := range input.IndivdualScore {
+func (m *FindOneConsiderationsResponseJSON) Parse(c *gin.Context, data []entities.AssignmentScore) *FindOneConsiderationsResponseJSON {
 
-		indivdualScore := IndivdualScore{
-			Title:  data.Title,
-			Score: data.Score,
+	var assignmentsScores FindOneConsiderationsResponseJSON = FindOneConsiderationsResponseJSON{}
+	for _, value := range data {
+
+		var considerations []Consideration
+
+		for _, valueConsideration := range value.Considerations {
+
+			consideration := &Consideration{
+				ID:       valueConsideration.ID,
+				TeamName: valueConsideration.TeamName,
+				Score:    valueConsideration.Score,
+				Title:    valueConsideration.Title,
+			}
+
+			considerations = append(considerations, *consideration)
+
 		}
 
-		indivdualScores = append(indivdualScores, indivdualScore)
+		assignmentsScore := &ConsiderationResponse{
+			// ID:             value.ID,
+			Total:          value.Total,
+			Considerations: considerations,
+		}
+
+		assignmentsScores = append(assignmentsScores, *assignmentsScore)
 
 	}
 
-	consideration := &FindOneConsiderationResponseJSON{
-		ID:             input.ID,
-		TotalScore:     input.TotalScore,
-		No:             input.No,
-		UpdatedAt:      input.UpdatedAt,
-		IndivdualScore: indivdualScores,
-	}
-
-	return consideration
+	return &assignmentsScores
 }

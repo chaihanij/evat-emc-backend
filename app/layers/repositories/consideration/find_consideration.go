@@ -2,7 +2,7 @@ package consideration
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
@@ -13,33 +13,56 @@ import (
 	"gitlab.com/chaihanij/evat/app/layers/repositories/consideration/models"
 )
 
-func (r repo) FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) (*entities.Consideration, error) {
+func (r repo) FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) ([]entities.AssignmentScore, error) {
 	log.Debugln("Consideration")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	var res []bson.M
+	// fmt.Println("id ::", *input.ID)
+	// var res []bson.M
 	state := []bson.M{
 
-		{
-			"$match": bson.M{
-				"team_uuid": *input.TeamUUID,
-			},
-		},
-
+		// {
+		// 	"$match": bson.M{
+		// 		"team_uuid": *input.TeamUUID,
+		// 	},
+		// },
 		// {
 		// 	"$group": bson.M{
 		// 		"_id":             "$team_uuid",
-		// 		"indivdual_score": bson.M{"$push": bson.M{"desc": "$desc", "score": "$score"}},
+		// 		"indivdual_score":bson.M{"$push": bson.M{"title": "$title", "score": "$full_score"}},
 		// 		"update_at":       bson.M{"$last": "$updated_at"},
-		// 		"total_score":     bson.M{"$sum": "$score"},
+		// 		"total_score":     bson.M{"$sum": "$full_score"},
 		// 	},
 		// },
 		{
+			"$match": bson.M{
+				"uuid": *input.AssignmentUUID,
+			},
+		},
+		{
+			"$unwind": "$consideration",
+		},
+		{
+			"$match": bson.M{
+				"consideration.id": *input.ID,
+			},
+		},
+		{
+			"$project": bson.M{
+				"_id":           1,
+				"consideration": 1,
+			},
+		},
+		{
 			"$group": bson.M{
-				"_id":             "$team_uuid",
-				"indivdual_score":bson.M{"$push": bson.M{"title": "$title", "score": "$full_score"}},
-				"update_at":       bson.M{"$last": "$updated_at"},
-				"total_score":     bson.M{"$sum": "$full_score"},
+				"_id": nil,
+				"considerations": bson.M{"$push": bson.M{
+					"id":       "$consideration.id",
+					"nameteam": "$consideration.nameteam",
+					"title":"$consideration.title",
+					"score":    "$consideration.score",
+				}},
+				"total": bson.M{"$sum": "$consideration.score"},
 			},
 		},
 	}
@@ -53,30 +76,20 @@ func (r repo) FindOneConsideration(ctx context.Context, input *entities.Consider
 		return nil, err
 	}
 
-	var considerations models.Consideration
-	err = cursor.All(ctx, &res)
+	var considerations models.AssignmentScores
+	// var structData []models.AssignmentScore
+
+	err = cursor.All(ctx, &considerations)
+
 	if err != nil {
 		log.WithError(err).Errorln("Consideration Error")
 		return nil, err
 	}
-	var structData []models.Consideration
-	jsonData, _ := json.Marshal(res)
+	fmt.Println("considerations :", considerations)
+	// jsonData, _ := json.Marshal(res)
 
-	json.Unmarshal(jsonData, &structData)
-
-	considerations.ID = structData[0].ID
-	considerations.TotalScore = structData[0].TotalScore
-	considerations.No = structData[0].No
-	considerations.IndivdualScore = structData[0].IndivdualScore
-	considerations.UpdatedAt = structData[0].UpdatedAt
-
-	//fmt.Println("data ", res)
-
-	// considerations.ID = res[0]["_id"].(string)
-	// considerations.Score = res[0]["score"].(float64)
-	// considerations.UpdatedAt = res[0]["updated_at"].(time.Time)
-	// log.Debug(considerations)
+	// json.Unmarshal(jsonData, &structData)
 
 	log.WithField("value", considerations).Debugln("Consideration")
-	return considerations.ToEntity()
+	return considerations.ToEntity(), nil
 }

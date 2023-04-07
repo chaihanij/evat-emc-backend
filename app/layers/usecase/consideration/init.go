@@ -12,7 +12,7 @@ type useCase struct {
 }
 
 type UseCase interface {
-	FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) (*entities.Consideration, error)
+	FindOneConsideration(ctx context.Context, input *entities.ConsiderationFilter) ([]entities.AssignmentScore, error)
 }
 
 func InitUseCase(ConsiderationRepo consideration.Repo) UseCase {
