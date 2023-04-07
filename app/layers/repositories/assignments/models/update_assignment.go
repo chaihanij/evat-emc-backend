@@ -19,6 +19,7 @@ func UpdateAssignment(input *entities.Assignment) *bson.D {
 		bson.E{Key: "due_date", Value: input.DueDate},
 		bson.E{Key: "updated_at", Value: time.Now()},
 		bson.E{Key: "updated_by", Value: input.UpdatedBy},
+		bson.E{Key: "isShowMenu", Value: input.IsShowMenu},
 	}
 
 	if val, ok := input.Image.(string); ok {

@@ -22,6 +22,7 @@ type UpdateAssignmentRequestJSON struct {
 	SendDoc      bool      `json:"senddoc"`
 	UpdatedBy    string    `json:"-" swaggerignore:"true"`
 	DeliveryTime time.Time `json:"delivery_time"`
+	IsShowMenu   bool      `json:"isShowMenu"`
 }
 
 func (req *UpdateAssignmentRequestJSON) Parse(c *gin.Context) (*UpdateAssignmentRequestJSON, error) {
@@ -76,6 +77,7 @@ func (req *UpdateAssignmentRequestJSON) ToEntity() *entities.AssignmentPartialUp
 		SendDoc:      &req.SendDoc,
 		UpdatedBy:    req.UpdatedBy,
 		DeliveryTime: &req.DeliveryTime,
+		IsShowMenu:   &req.IsShowMenu,
 	}
 }
 

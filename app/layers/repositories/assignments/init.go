@@ -22,6 +22,8 @@ type Repo interface {
 	UpdateAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
 	CountTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, error)
 	FindTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) ([]entities.TeamAssignment, error)
+
+	UploadScoreAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

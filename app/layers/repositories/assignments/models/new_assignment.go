@@ -21,8 +21,11 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 
 	for _, value := range input.Consideration {
 		considerationAssignment := ConsiderationAssignment{
-			Name:  value.Name,
-			Score: value.Score,
+			// Name:  value.NameTeam,
+			ID:       value.ID,
+			Title:    value.Title,
+			Nameteam: value.NameTeam,
+			Score:    value.Score,
 		}
 		ConsiderationAssignments = append(ConsiderationAssignments, considerationAssignment)
 	}
@@ -48,6 +51,7 @@ func NewAssignment(input *entities.Assignment) *Assignment {
 		SendDoc:       input.SendDoc,
 		Consideration: ConsiderationAssignments,
 		DeliveryTime:  input.DeliveryTime,
+		IsShowMenu:    true,
 		// OverDue:       input.OverDue,
 	}
 }

@@ -27,13 +27,15 @@ type Assignment struct {
 	UpdatedBy     string                    `bson:"updated_by"`
 	SendDoc       bool                      `bson:"senddoc"`
 	Consideration []ConsiderationAssignment `bson:"consideration"`
-	//OverDue       time.Time                 `bson:"overdue"`
 	DeliveryTime  time.Time                 `bson:"delivery_time"`
+	IsShowMenu    bool                      `bson:"isShowMenu"`
 }
 
 type ConsiderationAssignment struct {
-	Name  string  `bson:"name"`
-	Score float64 `bson:"score"`
+	ID       string  `bson:"id"`
+	Title    string  `bson:"title"`
+	Nameteam string  `bson:"nameteam"`
+	Score    float64 `bson:"score"`
 }
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {

@@ -26,24 +26,26 @@ func (file *FileResponse) Parse(c *gin.Context, data *entities.File) *FileRespon
 type FilesResponse []FileResponse
 
 type AssignmentResponse struct {
-	UUID         string        `json:"uuid"`
-	TeamUUID     string        `json:"team_uuid"`
-	No           int           `json:"no"`
-	Title        string        `json:"title"`
-	Description  string        `json:"description"`
-	Image        *FileResponse `json:"image,omitempty"`
-	Document     *FileResponse `json:"document,omitempty"`
-	FullScore    float64       `json:"fullScore"`
-	IsActive     bool          `json:"isActive"`
-	DueDate      time.Time     `json:"dueDate"`
-	Year         string        `json:"year"`
-	CreatedAt    time.Time     `json:"createdAt"`
-	UpdatedAt    time.Time     `json:"updatedAt"`
-	CreatedBy    string        `json:"createdBy"`
-	UpdatedBy    string        `json:"updatedBy"`
-	SendDoc      bool          `json:"senddoc"`
+	UUID        string        `json:"uuid"`
+	TeamUUID    string        `json:"team_uuid"`
+	No          int           `json:"no"`
+	Title       string        `json:"title"`
+	Description string        `json:"description"`
+	Image       *FileResponse `json:"image,omitempty"`
+	Document    *FileResponse `json:"document,omitempty"`
+	FullScore   float64       `json:"fullScore"`
+	IsActive    bool          `json:"isActive"`
+	DueDate     time.Time     `json:"dueDate"`
+	Year        string        `json:"year"`
+	CreatedAt   time.Time     `json:"createdAt"`
+	UpdatedAt   time.Time     `json:"updatedAt"`
+	CreatedBy   string        `json:"createdBy"`
+	UpdatedBy   string        `json:"updatedBy"`
+	SendDoc     bool          `json:"senddoc"`
 	//OverDue      time.Time     `json:"overdue"`
-	DeliveryTime time.Time     `json:"delivery_time"`
+	DeliveryTime  time.Time                 `json:"delivery_time"`
+	Consideration []ConsiderationAssignment `json:"consideration"`
+	IsShowMenu    bool                      `json:"isShowMenu"`
 }
 
 type TeamAssignmentResponse struct {

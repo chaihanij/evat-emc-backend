@@ -5,6 +5,7 @@ import "time"
 type Assignment struct {
 	ID            string
 	UUID          string
+	IsShowMenu    bool
 	TeamUUID      string
 	No            int
 	Title         string
@@ -21,13 +22,15 @@ type Assignment struct {
 	UpdatedBy     string
 	SendDoc       bool
 	Consideration []ConsiderationAssignment
-	// OverDue      time.Time 
-	DeliveryTime time.Time 
+	// OverDue      time.Time
+	DeliveryTime time.Time
 }
 
 type ConsiderationAssignment struct {
-	Name  string
-	Score float64
+	ID       string
+	Title    string
+	NameTeam string
+	Score    float64
 }
 
 type TeamAssignment struct {
@@ -56,8 +59,8 @@ type AssignmentPartialUpdate struct {
 	UpdatedBy     string
 	SendDoc       *bool
 	Consideration *[]interface{}
-	DeliveryTime *time.Time 
-
+	DeliveryTime  *time.Time
+	IsShowMenu *bool
 }
 
 type AssignmentFilter struct {

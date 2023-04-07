@@ -50,6 +50,7 @@ func (m *FindAllAssignmentResponseJSON) Parse(data []entities.Assignment) *FindA
 			CreatedBy:    value.CreatedBy,
 			UpdatedBy:    value.UpdatedBy,
 			DeliveryTime: value.DeliveryTime,
+			IsShowMenu:   value.IsShowMenu,
 		}
 		assignments = append(assignments, *assignment)
 	}
