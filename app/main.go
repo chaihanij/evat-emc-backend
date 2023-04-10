@@ -17,6 +17,7 @@ import (
 
 	_assignmentTeamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	_assignmentsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
+	_configRepo "gitlab.com/chaihanij/evat/app/layers/repositories/config"
 	_considerationRepo "gitlab.com/chaihanij/evat/app/layers/repositories/consideration"
 	_emailRepo "gitlab.com/chaihanij/evat/app/layers/repositories/email"
 	_emailcontact "gitlab.com/chaihanij/evat/app/layers/repositories/emailcontact"
@@ -32,6 +33,7 @@ import (
 	_announcementsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/announcements"
 	_assignmentTeamUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignment_teams"
 	_assignmentsUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/assignments"
+	_configUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/config"
 	_considerationUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/consideration"
 	_emailUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/email"
 	_emailcontactUseCase "gitlab.com/chaihanij/evat/app/layers/usecase/emailcontact"
@@ -47,6 +49,7 @@ import (
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
 	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
+	_configHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/config"
 	_considerationHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
 	_emailHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/email"
 	_emailcontactHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/emailcontact"
@@ -118,6 +121,7 @@ func main() {
 	emailRepo := _emailRepo.InitRepo(db)
 	emailcontactRepo := _emailcontact.InitRepo(db)
 	omiseRepo := _omiseRepo.InitRepo(env.OMISEPublicKey, env.OMISEPrivateKey)
+	configRepo := _configRepo.InitRepo(db)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -132,6 +136,7 @@ func main() {
 	visitRepo.Config()
 	emailRepo.Config()
 	emailcontactRepo.Config()
+	configRepo.Config()
 
 	// usecase
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
@@ -147,6 +152,7 @@ func main() {
 	visitUseCase := _visitUseCase.InitUseCase(visitRepo)
 	emailUseCase := _emailUseCase.InitUseCase(emailRepo)
 	emailcontactUseCase := _emailcontactUseCase.InitUseCase(emailcontactRepo)
+	configUseCase := _configUseCase.InitUseCase(configRepo)
 
 	//
 	ginEngine := gin.New()
@@ -179,6 +185,7 @@ func main() {
 	_emailHttp.NewEndpointHttpHandler(ginEngine, emailUseCase)
 	_emailcontactHttp.NewEndpointHttpHandler(ginEngine, emailcontactUseCase)
 	_omiseHttp.NewEndpointHttpHandler(ginEngine, teamsUseCase)
+	_configHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, configUseCase)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
