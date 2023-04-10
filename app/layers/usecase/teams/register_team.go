@@ -6,6 +6,7 @@ import (
 	// "fmt"
 
 	// "github.com/sirupsen/logrus"
+
 	"gitlab.com/chaihanij/evat/app/entities"
 )
 
@@ -36,11 +37,8 @@ func (u useCase) RegisterTeam(ctx context.Context, team *entities.Team, user *en
 
 	// email := user.Email
 
-	// logrus.Debugln("email", email)
-
 	// err = u.TeamsRepo.SendEmailRegister(email)
 	// if err != nil {
-	// 	fmt.Println("error", err)
 	// 	return nil, nil, nil, err
 	// }
 

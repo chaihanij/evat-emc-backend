@@ -17,94 +17,163 @@ func (r repo) SendEmailRegister(data string) error {
 	var (
 		email = entities.SendEmail{}
 		html  = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-
-    body {
-        background-color: powderblue;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-    }
-    .continner {
-        width: 80%;
-    }
-    .txt-decs {
-        /* Layout Properties */
-        /* UI Properties */
-
-        text-align: left;
-        color: #417630;
-    }
-    .setting-password {
-        cursor: pointer;
-    }
-    .txt-customer {
-        text-align: left;
-    }
-    .txt-a {
-        text-align: left;
-    }
-    .txt-footer {
-        text-align: left;
-        color: #202527;
-    }
-    .contact {
-        text-align: left;
-        color: #202527;
-
-    }
-    
-</style>
-<body>
-
-    <div class="continner">
-
-        <div class="head-img">
-            <img src="./logo.png" alt="logo">
-        </div>
-        <div class="desc">
-            <p>โครงการแข่งขันรถจักรยานยนต์ไฟฟ้าดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
-        </div>
-        <div>
-            <img src="./desc.png" alt="">
-        </div>
-
-        <div class="txt-customer">
-            <p>สวัสดีคุณ ` + nameUser + `  </p>
-        </div>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+            <title>Document</title>
+        </head>
+        <style>
         
-        <div class="txt-decs">
-            <p>การสมัครโครงการได้รับการอนุมัติแล้ว</p>
-        </div>
-        <div class="txt-a">
-            <p>เพื่อดำเนินการให้เสร็จสมบูรณ์ กรุณาตั้งค่ารหัสผ่านโดยกดที่ปุ่มหรือ</p>
-            <p>กดลิงก์ด้านล่างนี้ ขอบพระคุณครับ</p>
-        </div>
-        <div class="setting-password" >
-            <img src="https://cdn-icons-png.flaticon.com/512/59/59408.png" alt="verify">
-        </div>
-        <div class="txt-footer">
-            <p>ด้วยความเคารพ</p>
-            <p>สมาคมโครงการแข่งขันรถจักรยานยนต์ไฟฟ้า</p>
-            <p>ดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
-        </div>
-        <div class="contact">
-            <p>อาคารเคเอกซ์ ชั้น 12เลขที่ 110/1 ถนนกรุงธนบุรี</p>
-            <p>แขวงบางลำภูล่าง เขตคลองสาน กรุงเทพมหานคร 10600</p>
-            <p>อีเมล: contact@evat.or.th. โทร: 086-390-3339</p>
-        </div>
-
-    </div>
-
-</body>
-</html>`
+            body {
+                background-size: cover;
+                background-position: center;
+                position: relative;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                font-family: 'Prompt', sans-serif;
+            }
+            .head-img img {
+                padding-top: 60px;
+            }
+            .txt-bb {
+                padding-bottom: 20px;
+                cursor:pointer;
+            }
+            .txt-button {
+        
+            padding: 15px;
+            align-items: center;
+            color: white;
+            width: 35%;
+            border-radius: 30px;
+            background-color: #417630;
+            font-size: 17px;
+            border: none;
+            transform: translateY(-260px);
+            }
+            .head-main {
+                background-color: white;
+            }
+            .head2-img {
+                width: 100%;
+                transform: translateY(-270px);
+            }
+            .txt-link {
+                padding-bottom: 20px;
+                transform: translateY(-240px);
+            }
+            .txt-link span{
+                font-size: 17px;
+                color: #417630;;
+            }
+            .head2-img img {
+                padding-top: 80px;
+            }
+            .continner {
+                background-color: #F8FDF8;
+                height: 800px;
+                padding: 30px;
+                border-radius: 20px;
+                margin-top: 200px;
+            }
+            .txt-decs p {
+                font-size: 40px;
+                color: #417630;
+                transform: translateY(-240px);
+            }
+            .setting-password {
+                cursor: pointer;
+            }
+            .txt-customer p {
+                font-family: 'font-awesome';
+                padding-right: 28rem;
+                transform: translateY(-220px);
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .txt-a p {
+                padding-top: 3px;
+                padding-bottom: 30px;
+                text-align: left;
+                transform: translateY(-270px);
+            }
+            .txt-footer {
+                text-align: left;
+                font-weight: 100;
+                padding-bottom: 9px;
+                line-height: 10px;
+                transform: translateY(-220px);
+            }
+            .contact {
+                font-weight: 100;
+                text-align: left;
+                color: #202527;
+        
+            }
+            
+        </style>
+        <body>
+            <div class="head-main">
+                <div class="head-second">
+                    <div class="head-img">
+                        <img src="http://127.0.0.1:8080/v1/files/1ec1f201-b758-4754-8880-ecad82a0c56a" alt="logo">
+                    </div>
+                    <div class="desc">
+                        <p>โครงการแข่งขันรถจักรยานยนต์ไฟฟ้าดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
+                    </div>
+                    <div class="continner">
+                        <div class="head2-img">
+                            <img src="./hero.svg" alt="logo">
+                        </div>
+                        <!-- <div>
+                            <img src="./desc.png" alt="">
+                        </div> -->
+        
+                        <div class="txt-customer">
+                            <p>สวัสดีคุณ ` + nameUser + `</p>
+                        </div>
+                        
+                        <div class="txt-decs">
+                            <p>การสมัครโครงการได้รับการอนุมัติแล้ว</p>
+                        </div>
+                        <div class="txt-a">
+                            <p>เพื่อดำเนินการให้เสร็จสมบูรณ์ กรุณาตั้งค่ารหัสผ่านโดยกดที่ปุ่มหรือ<br/>กดลิงก์ด้านล่างนี้ ขอบพระคุณครับ</p>
+                        </div>
+                        <div class="txt-bb">
+                            <button class="txt-button">ตั้งค่ารหัสผ่าน</button>
+                        </div>
+                        <div class="txt-link">
+                            <p>หรือกดลิงก์:&nbsp;<span>http://evat.com/123445</span></p>
+                        </div>
+                        <div class="txt-footer">
+                            
+                            <!-- <div class="txt-button">
+                                <img src="./Group 107.svg" alt="">
+                            </div> -->
+                            <p>ด้วยความเคารพ</p>
+                            <p>สมาคมโครงการแข่งขันรถจักรยานยนต์ไฟฟ้า</p>
+                            <p>ดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
+                            <br/>
+                            <p>อาคารเคเอกซ์ ชั้น 12เลขที่ 110/1 ถนนกรุงธนบุรี</p>
+                            <p>แขวงบางลำภูล่าง เขตคลองสาน กรุงเทพมหานคร 10600</p>
+                            <p>อีเมล: contact@evat.or.th. โทร: 086-390-3339</p>
+                        </div>
+                        <div class="contact">
+                            
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        
+        </body>
+        </html>`
 	)
 
 	m := gomail.NewMessage()

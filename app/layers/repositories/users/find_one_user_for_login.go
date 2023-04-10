@@ -16,15 +16,8 @@ import (
 func (r repo) FindOneUserLogin(ctx context.Context, input *entities.UserFilter) (*entities.User, error) {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-
 	Email := strings.ToLower(*input.Email)
-
-	fmt.Println("email :", Email)
-
 	EmailUser := fmt.Sprintf("^%v$", Email)
-
-	fmt.Println("EmailUser", EmailUser)
-
 	filter := bson.M{
 		"email": bson.M{
 			"$regex":   EmailUser,
@@ -32,7 +25,6 @@ func (r repo) FindOneUserLogin(ctx context.Context, input *entities.UserFilter) 
 		},
 		"is_active": true,
 	}
-
 	var user models.User
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionUsers).
