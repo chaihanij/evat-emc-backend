@@ -18,23 +18,6 @@ type Consideration struct {
 	Score    float64 `json:"score" bson:"score"`
 }
 
-// func (at *AssignmentScore) ToEntity() (*entities.AssignmentScore, error) {
-// 	var assignmentScore entities.AssignmentScore
-// 	err := copier.Copy(&assignmentScore, at)
-// 	return &assignmentScore, err
-// }
-
-// type AssignmentScores []AssignmentScore
-
-// func (fTeams AssignmentScores) ToEntity() []entities.AssignmentScore {
-// 	var considerations []entities.AssignmentScore
-// 	for _, v := range fTeams {
-// 		fieldRaceTeam, _ := v.ToEntity()
-// 		considerations = append(considerations, *fieldRaceTeam)
-// 	}
-// 	return considerations
-// }
-
 type AssignmentScores []AssignmentScore
 
 func (am *AssignmentScore) ToEntity() (*entities.AssignmentScore, error) {

@@ -1,10 +1,6 @@
 package entities
 
 type AssignmentScore struct {
-	// ID string
-	// UpdatedAt     time.Time
-	// No            int
-	// TotalScore    float64
 	Total          float64
 	Considerations []Consideration
 }
@@ -18,4 +14,21 @@ type Consideration struct {
 type ConsiderationFilter struct {
 	AssignmentUUID *string
 	ID             *string
+}
+
+type FieldRaceTeamScore struct {
+	Total          float64
+	Considerations []Consideration
+}
+
+type AllScore struct {
+	ID                string
+	Name              string
+	Allconsiderations []Allconsiderations
+}
+
+type Allconsiderations struct {
+	Title string
+	Score float64
+	Type  string
 }

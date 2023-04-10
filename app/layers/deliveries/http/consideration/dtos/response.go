@@ -10,6 +10,12 @@ type ConsiderationResponse struct {
 // 	Consideration Consideration `json:"consideration"`
 // }
 
+type ConsiderationFieldRaceTeamResponse struct {
+	// ID             string          `json:"_id"`
+	Total          float64         `json:"total"`
+	Considerations []Consideration `json:"considerations"`
+}
+
 type Consideration struct {
 	ID       string  `json:"id"`
 	Title    string  `json:"title"`
