@@ -1,8 +1,6 @@
 package dtos
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -12,14 +10,7 @@ import (
 )
 
 type UploadScoreAssingment struct {
-	AssignmentUUID string `uri:"assignment_uuid"`
-	// Document         *multipart.FileHeader `swaggerignore:"true" form:"document"`
-	// OriginalFileName string                `swaggerignore:"true"`
-	// FileName         string                `swaggerignore:"true"`
-	// FileExtension    string                `swaggerignore:"true"`
-	// FileFullPath     string                `swaggerignore:"true"`
-	// FilePath         string                `swaggerignore:"true"`
-	// UpdatedBy        string                `swaggerignore:"true"`
+	AssignmentUUID          string                    `uri:"assignment_uuid"`
 	ConsiderationAssignment []ConsiderationAssignment `json:"consideration" bson:"consideration"`
 }
 
@@ -83,9 +74,6 @@ func (req *UploadScoreAssingment) ToEntity() *entities.Assignment {
 type UploadScoreAssignmentResponseJSON UploadScoreAssingment
 
 func (m *UploadScoreAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *UploadScoreAssignmentResponseJSON {
-
-	// aa := new(UploadScoreAssingment)
-	fmt.Println("input :", input)
 
 	var scoreAssignments []ConsiderationAssignment
 
