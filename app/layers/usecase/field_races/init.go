@@ -13,6 +13,7 @@ type useCase struct {
 
 type UseCase interface {
 	FindAllTeamFieldRace(ctx context.Context, input *entities.FieldRaceFilter) (*int64, []entities.FieldRace, error)
+	UploadScoreFieldRace(ctx context.Context, input *entities.FieldRace) (*entities.FieldRace, error)
 }
 
 func InitUseCase(teamfieldracesrepoRepo field_races.Repo) UseCase {

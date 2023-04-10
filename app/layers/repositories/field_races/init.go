@@ -16,6 +16,8 @@ type Repo interface {
 	CountFieldRaces(ctx context.Context, input *entities.FieldRaceFilter) (*int64, error)
 	FindOneFieldRace(ctx context.Context, input *entities.FieldRaceFilter) (*entities.FieldRace, error)
 	FindTeamAllFieldRace(ctx context.Context, input *entities.FieldRaceFilter) ([]entities.FieldRace, error)
+
+	UploadScoreFieldRace(ctx context.Context, input *entities.FieldRace) (*entities.FieldRace, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

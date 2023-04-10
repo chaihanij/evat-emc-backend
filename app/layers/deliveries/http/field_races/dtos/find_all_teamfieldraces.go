@@ -32,33 +32,6 @@ func (req *FindAllTeamFieldRacestRequestJSON) ToEntity() *entities.FieldRaceFilt
 	}
 }
 
-// type FindOneConsiderationResponseJSON FieldRaces
-
-// func (m *FindAllTeamFieldRacestRequestJSON) ParseFieldRaceTeam(c *gin.Context, input *entities.FieldRace) *FindOneConsiderationResponseJSON {
-// 	consideration := &FindOneConsiderationResponseJSON{
-// 		UUID: input.UUID,
-// 	}
-
-// 	return consideration
-// }
-
-// type FindAllTeamFieldRacestRequestJSON struct {
-// 	UUID string `uri:"announcement_uuid"`
-// }
-
-// func (req *FindAllTeamFieldRacestRequestJSON) Parse(c *gin.Context) (*FindAllTeamFieldRacestRequestJSON, error) {
-// 	if err := c.ShouldBindUri(req); err != nil {
-// 		return nil, errors.ParameterError{Message: err.Error()}
-// 	}
-// 	return req, nil
-// }
-
-// func (req *FindAllTeamFieldRacestRequestJSON) ToEntity() *entities.FieldRaceFilter {
-// 	return &entities.FieldRaceFilter{
-// 		UUID: &req.UUID,
-// 	}
-// }
-
 type FindAllTeamFieldRecestResponseJSON []FieldRaces
 
 func (m *FindAllTeamFieldRecestResponseJSON) Parse(data []entities.FieldRace) *FindAllTeamFieldRecestResponseJSON {
