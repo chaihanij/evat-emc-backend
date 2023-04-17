@@ -24,7 +24,7 @@ type FieldRaceTeamScore struct {
 type AllScore struct {
 	ID                string
 	Name              string
-	Allconsiderations []Allconsiderations
+	Allconsiderations []Consideration
 }
 
 type Allconsiderations struct {
