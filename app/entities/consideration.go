@@ -32,3 +32,7 @@ type Allconsiderations struct {
 	Score float64
 	Type  string
 }
+
+type AllScoreFilter struct {
+	Name string
+}
