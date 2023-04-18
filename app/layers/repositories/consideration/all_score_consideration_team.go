@@ -79,27 +79,51 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 
 	stateAssignment := []bson.M{
 
+		// {
+		// 	"$unwind": "$consideration",
+		// },
+		// {
+		// 	"$group": bson.M{
+		// 		"_id": "$consideration.id",
+		// 		"name": bson.M{
+		// 			"$first": "$consideration.nameteam",
+		// 		},
+		// 		"total": bson.M{
+		// 			"$sum": "$consideration.score",
+		// 		},
+		// 		"considerations": bson.M{
+		// 			"$push": bson.M{
+		// 				"title": "$consideration.title",
+		// 				"score": "$consideration.score",
+		// 				"type":  "assignment",
+		// 			}},
+		// 	},
+		// },
+		// filter,
+
 		{
 			"$unwind": "$consideration",
 		},
 		{
-			"$group": bson.M{
-				"_id": "$consideration.id",
-				"name": bson.M{
-					"$first": "$consideration.nameteam",
-				},
-				"total": bson.M{
-					"$sum": "$consideration.score",
-				},
-				"considerations": bson.M{
-					"$push": bson.M{
-						"title": "$consideration.title",
-						"score": "$consideration.score",
-						"type":  "assignment",
-					}},
+			"$project": bson.M{
+				"_id":           1,
+				"consideration": 1,
+				"title":         1,
 			},
 		},
-		// filter,
+		{
+			"$group": bson.M{
+				"_id":   "$consideration.nameteam",
+				"title": bson.M{"$first": "$title"},
+				"considerations": bson.M{"$push": bson.M{
+					"id":       "$consideration.id",
+					"nameteam": "$consideration.nameteam",
+					"title":    "$consideration.title",
+					"score":    "$consideration.score",
+				}},
+				"total": bson.M{"$sum": "$consideration.score"},
+			},
+		},
 	}
 
 	var assignments models.AllScoreConsiderations

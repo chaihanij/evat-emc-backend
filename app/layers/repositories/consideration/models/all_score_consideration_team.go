@@ -8,8 +8,8 @@ import (
 )
 
 type AllScoreConsideration struct {
-	ID                string              `json:"_id" bson:"id"`
-	Name              string              `json:"name" bson:"name"`
+	ID                string              `json:"_id" bson:"_id"`
+	Title             string              `json:"title" bson:"title" `
 	Total             float64             `json:"total" bson:"total"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
@@ -17,7 +17,6 @@ type AllScoreConsideration struct {
 type AllConsiderations struct {
 	Title string  `json:"title" bson:"title" `
 	Score float64 `json:"score" bson:"score" `
-	Type  string  `json:"type" bson:"type"`
 }
 
 func (a *AllScoreConsideration) ToEntity() (*entities.AllScore, error) {
@@ -40,14 +39,13 @@ func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 			allScoreconsideration := entities.AllConsideration{
 				Title: vl.Title,
 				Score: vl.Score,
-				Type:  vl.Type,
 			}
 			allScoresconsiderations = append(allScoresconsiderations, allScoreconsideration)
 		}
 
 		alsc := entities.AllScore{
 			ID:                value.ID,
-			Name:              value.Name,
+			Title:             value.Title,
 			Total:             value.Total,
 			Allconsiderations: allScoresconsiderations,
 		}
