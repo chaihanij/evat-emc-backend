@@ -60,7 +60,7 @@ type AssignmentPartialUpdate struct {
 	SendDoc       *bool
 	Consideration *[]interface{}
 	DeliveryTime  *time.Time
-	IsShowMenu *bool
+	IsShowMenu    *bool
 }
 
 type AssignmentFilter struct {
@@ -72,4 +72,8 @@ type AssignmentFilter struct {
 	Year     *string
 	Page     *int64
 	PageSize *int64
+}
+
+type ExportAssignmentTopic struct {
+	Topic []string
 }

@@ -30,6 +30,9 @@ func NewAssignmentFilter(input interface{}) *bson.M {
 		if val.Year != nil {
 			filter["year"] = val.Year
 		}
+		if val.UUID != nil {
+			filter["uuid"] = val.UUID
+		}
 	}
 	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")
 	return &filter

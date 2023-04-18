@@ -17,6 +17,9 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
 		v1Auth.GET("/assignments", handler.FindAllAssignment)
+
+		v1Auth.GET("/assignment/topic/:assignment_uuid", handler.FindTopic)
+
 		v1Auth.POST("/assignments", handler.CreateAssignment)
 
 		//
@@ -33,5 +36,6 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/assignment/:assignment_uuid/doc", handler.UploadScoreAssignment)
 
 		v1Auth.PUT("/assignment/:assignment_uuid/updatescors", handler.UploadScoreAssignment)
+
 	}
 }
