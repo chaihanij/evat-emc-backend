@@ -34,14 +34,13 @@ func (req *AllScoreRequestJSON) ToEntity() *entities.AllScoreFilter {
 
 type AllScoreResponseJSON struct {
 	ID                string              `json:"_id" bson:"id"`
-	Name              string              `json:"name" bson:"name"`
+	Title             string              `json:"title" bson:"title"`
 	Total             float64             `json:"total" bson:"total"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 type AllConsiderations struct {
 	Title string  `json:"title" bson:"title" `
 	Score float64 `json:"score" bson:"score" `
-	Type  string  `json:"type" bson:"type"`
 }
 
 type AllScoresResponseJSON []AllScoreResponseJSON
@@ -60,7 +59,6 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 		for _, vl := range value.Allconsiderations {
 
 			allScore := &AllConsiderations{
-				Type:  vl.Type,
 				Title: vl.Title,
 				Score: vl.Score,
 			}
@@ -71,8 +69,8 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 
 		allScore := &AllScoreResponseJSON{
 			ID:                value.ID,
+			Title:             value.Title,
 			Total:             value.Total,
-			Name:              value.Name,
 			AllConsiderations: allConsideration,
 		}
 
