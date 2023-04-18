@@ -1,6 +1,8 @@
 package dtos
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
@@ -10,9 +12,9 @@ type AllScoreRequestJSON struct {
 	Name string `json:"name"`
 }
 
-type AllScoreResponseJSON struct {
-	Considerations []Consideration `json:"considerations"`
-}
+// type AllScoreResponseJSON struct {
+// 	Considerations []Consideration `json:"considerations"`
+// }
 
 func (req *AllScoreRequestJSON) Parse(c *gin.Context) (*AllScoreRequestJSON, error) {
 
@@ -26,8 +28,20 @@ func (req *AllScoreRequestJSON) Parse(c *gin.Context) (*AllScoreRequestJSON, err
 
 func (req *AllScoreRequestJSON) ToEntity() *entities.AllScoreFilter {
 	return &entities.AllScoreFilter{
-		Name: req.Name,
+		// Name: req.Name,
 	}
+}
+
+type AllScoreResponseJSON struct {
+	ID                string              `json:"_id" bson:"id"`
+	Name              string              `json:"name" bson:"name"`
+	Total             float64             `json:"total" bson:"total"`
+	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
+}
+type AllConsiderations struct {
+	Title string  `json:"title" bson:"title" `
+	Score float64 `json:"score" bson:"score" `
+	Type  string  `json:"type" bson:"type"`
 }
 
 type AllScoresResponseJSON []AllScoreResponseJSON
@@ -36,16 +50,19 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 
 	var allScores AllScoresResponseJSON = AllScoresResponseJSON{}
 
+	fmt.Println("-data :", data)
+
 	for _, value := range data {
 
-		var allConsideration []Consideration
+		// fmt.Println("data", value.Allconsiderations)
+
+		var allConsideration []AllConsiderations
 		for _, vl := range value.Allconsiderations {
 
-			allScore := &Consideration{
-				ID:       vl.ID,
-				TeamName: vl.TeamName,
-				Title:    vl.Title,
-				Score:    vl.Score,
+			allScore := &AllConsiderations{
+				Type:  vl.Type,
+				Title: vl.Title,
+				Score: vl.Score,
 			}
 
 			allConsideration = append(allConsideration, *allScore)
@@ -53,7 +70,10 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 		}
 
 		allScore := &AllScoreResponseJSON{
-			Considerations: allConsideration,
+			ID:                value.ID,
+			Total:             value.Total,
+			Name:              value.Name,
+			AllConsiderations: allConsideration,
 		}
 
 		allScores = append(allScores, *allScore)

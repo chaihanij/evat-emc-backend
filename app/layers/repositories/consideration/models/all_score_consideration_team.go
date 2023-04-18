@@ -1,13 +1,16 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
 )
 
 type AllScoreConsideration struct {
-	ID                string              `json:"_id" bson:"name"`
+	ID                string              `json:"_id" bson:"id"`
 	Name              string              `json:"name" bson:"name"`
+	Total             float64             `json:"total" bson:"total"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 
@@ -25,11 +28,35 @@ func (a *AllScoreConsideration) ToEntity() (*entities.AllScore, error) {
 
 type AllScoreConsiderations []AllScoreConsideration
 
-func(as AllScoreConsiderations) ToEntity() []entities.AllScore {
+func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 	var allScoreConsiderations []entities.AllScore
+
+	fmt.Println("as", as)
 	for _, value := range as {
-		allScore, _ := value.ToEntity()
-		allScoreConsiderations = append(allScoreConsiderations, *allScore)
+
+		var allScoresconsiderations []entities.AllConsideration
+
+		for _, vl := range value.AllConsiderations {
+			allScoreconsideration := entities.AllConsideration{
+				Title: vl.Title,
+				Score: vl.Score,
+				Type:  vl.Type,
+			}
+			allScoresconsiderations = append(allScoresconsiderations, allScoreconsideration)
+		}
+
+		alsc := entities.AllScore{
+			ID:                value.ID,
+			Name:              value.Name,
+			Total:             value.Total,
+			Allconsiderations: allScoresconsiderations,
+		}
+
+		fmt.Println("alsc ;", alsc)
+
+		// allScore, _ := value.ToEntity()
+		allScoreConsiderations = append(allScoreConsiderations, alsc)
 	}
+	fmt.Println("allScoreConsiderations :", allScoreConsiderations)
 	return allScoreConsiderations
 }

@@ -13,7 +13,6 @@ func (h *Handler) AllScoreConsideration(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-
 	response, err := h.ConsiderationUseCase.AllScore(c.Request.Context(), request.ToEntity())
 	if err != nil {
 		utils.JSONErrorResponse(c, err)

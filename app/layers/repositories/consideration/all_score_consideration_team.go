@@ -17,43 +17,65 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-	filter := models.AllScoreFilter(input)
-	statefieldRaces := []bson.M{
+	// filter := models.AllScoreFilter(input)
+	// statefieldRaces := []bson.M{
 
-		{
-			"$unwind": "$consideration",
-		},
-		{
-			"$group": bson.M{
-				"_id": "$consideration.id",
-				"name": bson.M{
-					"$first": "$consideration.nameteam",
-				},
-				"considerations": bson.M{
-					"$push": bson.M{
-						"title": "$consideration.title",
-						"score": "$consideration.score",
-						"type":  "field_races",
-					}},
-			},
-		},
-		filter,
-	}
+	// 	// {
+	// 	// 	"$unwind": "$consideration",
+	// 	// },
+	// 	// {
+	// 	// 	"$group": bson.M{
+	// 	// 		"_id": "$consideration.id",
+	// 	// 		"name": bson.M{
+	// 	// 			"$first": "$consideration.nameteam",
+	// 	// 		},
+	// 	// 		"considerations": bson.M{
+	// 	// 			"$push": bson.M{
+	// 	// 				"title": "$consideration.title",
+	// 	// 				"score": "$consideration.score",
+	// 	// 				"type":  "field_races",
+	// 	// 			}},
+	// 	// 	},
+	// 	// },
 
-	var fieldRaces models.AllScoreConsiderations
-	FieldRace, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionFieldRaces).
-		Aggregate(ctx, statefieldRaces)
-	if err != nil {
-		log.WithError(err).Errorln("FieldRace Error")
-		return nil, err
-	}
-	err = FieldRace.All(ctx, &fieldRaces)
+	// 	{
+	// 		"$unwind": "$consideration",
+	// 	},
+	// 	{
+	// 		"$group": bson.M{
+	// 			"_id": "$consideration.id",
+	// 			"name": bson.M{
+	// 				"$first": "$consideration.nameteam",
+	// 			},
+	// 			"total":bson.M{
+	// 				"$sum":"$consideration.score",
+	// 			 },
+	// 			"considerations": bson.M{
+	// 				"$push": bson.M{
+	// 					"title": "$consideration.title",
+	// 					"score": "$consideration.score",
+	// 					"type":  "field_races",
+	// 				}},
+	// 		},
+	// 	},
 
-	if err != nil {
-		log.WithError(err).Errorln("FieldRace Error")
-		return nil, err
-	}
+	// 	// filter,
+	// }
+
+	// var fieldRaces models.AllScoreConsiderations
+	// FieldRace, err := r.MongoDBClient.Database(env.MongoDBName).
+	// 	Collection(constants.CollectionFieldRaces).
+	// 	Aggregate(ctx, statefieldRaces)
+	// if err != nil {
+	// 	log.WithError(err).Errorln("FieldRace Error")
+	// 	return nil, err
+	// }
+	// err = FieldRace.All(ctx, &fieldRaces)
+
+	// if err != nil {
+	// 	log.WithError(err).Errorln("FieldRace-Error")
+	// 	return nil, err
+	// }
 
 	stateAssignment := []bson.M{
 
@@ -66,6 +88,9 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"name": bson.M{
 					"$first": "$consideration.nameteam",
 				},
+				"total": bson.M{
+					"$sum": "$consideration.score",
+				},
 				"considerations": bson.M{
 					"$push": bson.M{
 						"title": "$consideration.title",
@@ -74,7 +99,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 					}},
 			},
 		},
-		filter,
+		// filter,
 	}
 
 	var assignments models.AllScoreConsiderations
@@ -94,9 +119,9 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 
 	var AllScore models.AllScoreConsiderations
 
-	for _, value := range fieldRaces {
-		AllScore = append(AllScore, value)
-	}
+	// for _, value := range fieldRaces {
+	// 	AllScore = append(AllScore, value)
+	// }
 	for _, value := range assignments {
 		AllScore = append(AllScore, value)
 	}
