@@ -13,7 +13,7 @@ import (
 )
 
 func (r repo) getFindOptions(input *entities.TeamFilter) *options.FindOptions {
-	findOptions := options.Find().SetSort(bson.D{{Key: "created_at", Value: -1}})
+	findOptions := options.Find().SetSort(bson.D{{Key: "code", Value: -1}})
 	if input.PageSize != nil && input.Page != nil {
 		pageSize := *input.PageSize
 		page := *input.Page
