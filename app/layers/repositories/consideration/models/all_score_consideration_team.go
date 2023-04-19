@@ -8,7 +8,7 @@ import (
 )
 
 type AllScoreConsideration struct {
-	ID                string              `json:"_id" bson:"_id"`
+	ID                string              `json:"team" bson:"team"`
 	Title             string              `json:"title" bson:"title" `
 	Total             float64             `json:"total" bson:"total"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
@@ -16,7 +16,7 @@ type AllScoreConsideration struct {
 
 type AllConsiderations struct {
 	Title string  `json:"title" bson:"title" `
-	Score float64 `json:"score" bson:"score" `
+	Score float64 `json:"total" bson:"total" `
 }
 
 func (a *AllScoreConsideration) ToEntity() (*entities.AllScore, error) {
