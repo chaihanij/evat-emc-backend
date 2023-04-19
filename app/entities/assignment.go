@@ -75,5 +75,14 @@ type AssignmentFilter struct {
 }
 
 type ExportAssignmentTopic struct {
-	Topic []string
+	Title           string
+	Topic           []string
+	Path            string
+	ExportTeamTopic []ExportTeamTopic
+}
+
+type ExportTeamTopic struct {
+	Code      string
+	Name      string
+	Team_type string
 }

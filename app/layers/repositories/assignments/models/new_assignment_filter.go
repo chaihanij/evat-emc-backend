@@ -37,3 +37,10 @@ func NewAssignmentFilter(input interface{}) *bson.M {
 	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")
 	return &filter
 }
+
+func NewTeamFilter(input interface{}) *bson.M {
+	var filter bson.M = bson.M{}
+
+	log.WithField("value", filter).Debugln("models.NewTeamFilter")
+	return &filter
+}

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"gitlab.com/chaihanij/evat/app/entities"
@@ -9,7 +8,6 @@ import (
 )
 
 func UploadScoreAssignment(input *entities.Assignment) *bson.M {
-	fmt.Println("input", input)
 	updateFields := bson.M{
 		"$set": bson.M{
 			"consideration": input.Consideration,

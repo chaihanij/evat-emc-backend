@@ -6,7 +6,15 @@ import (
 )
 
 type ExportAssignmentTopic struct {
-	Topic []string `json:"topic" bson:"topic" `
+	Title           string   `json:"title" bson:"title"`
+	Topic           []string `json:"topic" bson:"topic" `
+	ExportTeamTopic []ExportTeamTopic
+}
+
+type ExportTeamTopic struct {
+	Code      string `json:"code" bson:"code" `
+	Name      string `json:"name" bson:"name"`
+	Team_type string `json:"team_type" bson:"team_type" `
 }
 
 func (am *ExportAssignmentTopic) ToEntity() (*entities.ExportAssignmentTopic, error) {

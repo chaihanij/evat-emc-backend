@@ -27,5 +27,22 @@ func (r repo) FindTopicAssignment(ctx context.Context, input *entities.Assignmen
 		return nil, err
 	}
 
+	var exportTeam []models.ExportTeamTopic
+	fitlerTeam := models.NewTeamFilter(input)
+	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
+		Collection(constants.CollectionTeams).
+		Find(ctx, fitlerTeam, nil)
+	if err != nil {
+		log.WithError(err).Errorln("DB FindAllTeam Error")
+		return nil, err
+	}
+	err = cursor.All(ctx, &exportTeam)
+	if err != nil {
+		log.WithError(err).Errorln("DB FindAll-Team Error")
+		return nil, err
+	}
+
+	topic.ExportTeamTopic = exportTeam
+
 	return topic.ToEntity()
 }
