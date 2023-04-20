@@ -136,13 +136,18 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	if err := fm.SaveAs(dst); err != nil {
 	}
 
-	topic.Path = dst
+	// aa := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, filenames)
 
+	// topic.Path = fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, filenames)
+
+	fmt.Println("fileExt", fileExt)
+	fmt.Println("originalFileName", originalFileName)
+	fmt.Println("filenames", filenames)
 	fileBytes, err := ioutil.ReadFile(dst)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 	}
-
+	// topic.Path = fmt.Sprintf("%d", len(fileBytes))
 	c.Writer.WriteHeader(http.StatusOK)
 
 	c.Header("Content-Type", "application/octet-stream")
