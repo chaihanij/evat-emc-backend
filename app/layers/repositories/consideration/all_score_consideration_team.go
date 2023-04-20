@@ -2,6 +2,7 @@ package consideration
 
 import (
 	"context"
+	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -17,10 +18,26 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
+	fmt.Println("input :", input)
+
+	page := 1
+	if input.Page != 0 {
+		page = input.Page
+	}
+
+	pagesize := 10
+	if input.Pagesize >= 10 {
+		pagesize = input.Pagesize
+	}
+
+	filter := models.AllScoreFilter(input)
+
 	stateAssignment := []bson.M{
+
 		{
 			"$unwind": "$consideration",
 		},
+
 		{
 			"$project": bson.M{
 				"_id":           1,
@@ -32,6 +49,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 			"$group": bson.M{
 				"_id":   bson.M{"id": "$consideration.nameteam", "title": "$title"},
 				"team":  bson.M{"$first": "$consideration.nameteam"},
+				"code":  bson.M{"$first": "$consideration.id"},
 				"title": bson.M{"$first": "$title"},
 				"considerations": bson.M{"$push": bson.M{
 					"id":       "$consideration.id",
@@ -46,6 +64,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 			"$group": bson.M{
 				"_id":  bson.M{"team": "$team"},
 				"team": bson.M{"$first": "$team"},
+				"code": bson.M{"$first": "$code"},
 				"considerations": bson.M{"$push": bson.M{
 					"title": "$title",
 					"total": bson.M{"$sum": "$considerations.score"},
@@ -53,10 +72,17 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"total": bson.M{"$sum": "$total"},
 			},
 		},
+		filter,
 		{
 			"$sort": bson.M{
-				"code": -1,
+				"total": -1,
 			},
+		},
+		{
+			"$skip": page - 1,
+		},
+		{
+			"$limit": pagesize,
 		},
 	}
 
@@ -75,14 +101,14 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		return nil, err
 	}
 
-	var AllScore models.AllScoreConsiderations
+	// var AllScore models.AllScoreConsiderations
 
 	// for _, value := range fieldRaces {
 	// 	AllScore = append(AllScore, value)
 	// }
-	for _, value := range assignments {
-		AllScore = append(AllScore, value)
-	}
+	// for _, value := range assignments {
+	// 	AllScore = append(AllScore, value)
+	// }
 
-	return AllScore.ToEntity(), nil
+	return assignments.ToEntity(), nil
 }

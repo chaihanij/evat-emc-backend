@@ -24,6 +24,7 @@ type FieldRaceTeamScore struct {
 type AllScore struct {
 	ID                string
 	Title             string
+	Code              string
 	No                int
 	Allconsiderations []AllConsideration
 	Total             float64
@@ -40,5 +41,7 @@ type Allconsiderations struct {
 }
 
 type AllScoreFilter struct {
-	Name string
+	Name     string
+	Page     int
+	Pagesize int
 }

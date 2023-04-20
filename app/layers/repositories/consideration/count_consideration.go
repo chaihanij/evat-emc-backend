@@ -17,7 +17,7 @@ func (r repo) CountConsideration(ctx context.Context, input *entities.Considerat
 
 	filter := models.NewAssignmentFilter(input)
 	count, err := r.MongoDBClient.Database(env.MongoDBName).
-		Collection(constants.CollectionFieldRaceTeams).
+		Collection(constants.CollectionAssignments).
 		CountDocuments(ctx, filter)
 
 	if err != nil {

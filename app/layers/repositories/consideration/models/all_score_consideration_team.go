@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
 )
@@ -11,6 +9,7 @@ type AllScoreConsideration struct {
 	ID                string              `json:"team" bson:"team"`
 	Title             string              `json:"title" bson:"title" `
 	Total             float64             `json:"total" bson:"total"`
+	Code              string              `json:"code" bson:"code" `
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 
@@ -30,7 +29,6 @@ type AllScoreConsiderations []AllScoreConsideration
 func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 	var allScoreConsiderations []entities.AllScore
 
-	fmt.Println("as", as)
 	for _, value := range as {
 
 		var allScoresconsiderations []entities.AllConsideration
@@ -47,14 +45,12 @@ func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 			ID:                value.ID,
 			Title:             value.Title,
 			Total:             value.Total,
+			Code:              value.Code,
 			Allconsiderations: allScoresconsiderations,
 		}
-
-		fmt.Println("alsc ;", alsc)
 
 		// allScore, _ := value.ToEntity()
 		allScoreConsiderations = append(allScoreConsiderations, alsc)
 	}
-	fmt.Println("allScoreConsiderations :", allScoreConsiderations)
 	return allScoreConsiderations
 }

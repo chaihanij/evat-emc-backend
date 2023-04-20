@@ -9,7 +9,10 @@ import (
 )
 
 type AllScoreRequestJSON struct {
-	Name string `json:"name"`
+	Name     string `form:"name"`
+	TeamType string `form:"teamtype"`
+	Page     int    `form:"page" validate:"omitempty,gte=1" example:"1"`
+	PageSize int    `form:"pageSize" validate:"omitempty,gte=1" example:"10"`
 }
 
 // type AllScoreResponseJSON struct {
@@ -18,17 +21,26 @@ type AllScoreRequestJSON struct {
 
 func (req *AllScoreRequestJSON) Parse(c *gin.Context) (*AllScoreRequestJSON, error) {
 
-	if err := c.ShouldBind(req); err != nil {
+	if err := c.ShouldBindQuery(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
+
+	// if err := c.ShouldBindUri(req); err != nil {
+	// 	return nil, errors.ParameterError{Message: err.Error()}
+	// }
+
+	fmt.Println("req :", req)
 
 	return req, nil
 
 }
 
 func (req *AllScoreRequestJSON) ToEntity() *entities.AllScoreFilter {
+	fmt.Println("name :", req.Name)
 	return &entities.AllScoreFilter{
-		// Name: req.Name,
+		Name:     req.Name,
+		Page:     req.Page,
+		Pagesize: req.PageSize,
 	}
 }
 
@@ -36,6 +48,7 @@ type AllScoreResponseJSON struct {
 	ID                string              `json:"_id" bson:"id"`
 	Title             string              `json:"title" bson:"title"`
 	Total             float64             `json:"total" bson:"total"`
+	Code              string              `json:"code" bson:"code"`
 	No                int                 `json:"no" bson:"no"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
@@ -56,6 +69,7 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 	// idx += 1
 
 	// }
+
 	for _, value := range data {
 
 		// fmt.Println("len data ", len(data))
@@ -67,10 +81,10 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 		// 	fmt.Println("idx :", idx)
 		// }
 
-		if value.Total > total {
+		if value.Total >= total {
 			idx += 1
-			total = value.Total
 		}
+		// sort.Sort(sort.Float64Slice{value.Allconsiderations[0].Score})
 
 		// if value.Total == total {
 		// 	idx  = idx
@@ -90,12 +104,11 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 
 		}
 
-		fmt.Println("idx :", idx)
-
 		allScore := &AllScoreResponseJSON{
 			ID:                value.ID,
 			No:                idx,
 			Title:             value.Title,
+			Code:              value.Code,
 			Total:             value.Total,
 			AllConsiderations: allConsideration,
 		}

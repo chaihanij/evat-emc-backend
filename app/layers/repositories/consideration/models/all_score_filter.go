@@ -8,15 +8,18 @@ import (
 )
 
 func AllScoreFilter(input interface{}) bson.M {
-	var filter bson.M
+	filter := bson.M{
+		"$match": bson.M{},
+	}
 
-	if val, ok := input.(*entities.AllScoreFilter); ok {
+	if val, ok := input.(entities.AllScoreFilter); ok {
 		if val.Name != "" {
 			filter = bson.M{
-					"$match": bson.M{
-						"name": val.Name,
-					},
+				"$match": bson.M{
+					"team": bson.M{"$regex": val.Name},
+				},
 			}
+			// filter = append(filter, filterteam)
 		}
 	}
 	log.WithField("value", filter).Debugln("models.ScoreFilter")
