@@ -2,7 +2,6 @@ package consideration
 
 import (
 	"context"
-	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -18,17 +17,17 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-	fmt.Println("input :", input)
+	// fmt.Println("input :", input)
 
-	page := 1
-	if input.Page != 0 {
-		page = input.Page
-	}
+	// page := 1
+	// if input.Page != 0 {
+	// 	page = input.Page
+	// }
 
-	pagesize := 10
-	if input.Pagesize >= 10 {
-		pagesize = input.Pagesize
-	}
+	// pagesize := 10
+	// if input.Pagesize >= 10 {
+	// 	pagesize = input.Pagesize
+	// }
 
 	filter := models.AllScoreFilter(input)
 
@@ -52,10 +51,11 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"code":  bson.M{"$first": "$consideration.id"},
 				"title": bson.M{"$first": "$title"},
 				"considerations": bson.M{"$push": bson.M{
-					"id":       "$consideration.id",
-					"nameteam": "$consideration.nameteam",
-					"title":    "$title",
-					"score":    "$consideration.score",
+					"id":        "$consideration.id",
+					"nameteam":  "$consideration.nameteam",
+					"team_type": "$consideration.team_type",
+					"title":     "$title",
+					"score":     "$consideration.score",
 				}},
 				"total": bson.M{"$sum": "$consideration.score"},
 			},
@@ -77,12 +77,6 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 			"$sort": bson.M{
 				"total": -1,
 			},
-		},
-		{
-			"$skip": page - 1,
-		},
-		{
-			"$limit": pagesize,
 		},
 	}
 

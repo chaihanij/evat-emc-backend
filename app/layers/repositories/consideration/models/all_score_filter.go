@@ -19,7 +19,13 @@ func AllScoreFilter(input interface{}) bson.M {
 					"team": bson.M{"$regex": val.Name},
 				},
 			}
-			// filter = append(filter, filterteam)
+		}
+		if val.Teamtype != "" {
+			filter = bson.M{
+				"$match": bson.M{
+					"teamtype": bson.M{"$regex": val.Teamtype},
+				},
+			}
 		}
 	}
 	log.WithField("value", filter).Debugln("models.ScoreFilter")

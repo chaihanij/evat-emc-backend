@@ -41,6 +41,7 @@ type Allconsiderations struct {
 }
 
 type AllScoreFilter struct {
+	Teamtype string
 	Name     string
 	Page     int
 	Pagesize int
