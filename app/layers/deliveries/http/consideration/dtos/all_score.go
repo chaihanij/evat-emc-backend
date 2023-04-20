@@ -1,8 +1,6 @@
 package dtos
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
@@ -10,7 +8,7 @@ import (
 
 type AllScoreRequestJSON struct {
 	Name     string `form:"name"`
-	TeamType string `form:"teamtype"`
+	TeamType string `form:"team_type"`
 	Page     int    `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize int    `form:"pageSize" validate:"omitempty,gte=1" example:"10"`
 }
@@ -28,17 +26,14 @@ func (req *AllScoreRequestJSON) Parse(c *gin.Context) (*AllScoreRequestJSON, err
 	// if err := c.ShouldBindUri(req); err != nil {
 	// 	return nil, errors.ParameterError{Message: err.Error()}
 	// }
-
-	fmt.Println("req :", req)
-
 	return req, nil
 
 }
 
 func (req *AllScoreRequestJSON) ToEntity() *entities.AllScoreFilter {
-	fmt.Println("name :", req.Name)
 	return &entities.AllScoreFilter{
 		Name:     req.Name,
+		Teamtype: req.TeamType,
 		Page:     req.Page,
 		Pagesize: req.PageSize,
 	}
