@@ -89,11 +89,9 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	idx := 0
 	for ch = 69; ch < chasc; ch++ {
 		as = fmt.Sprintf("%c", ch)
-		fmt.Println("as :", as, "ch", ch)
 
 		index := 0
 		convertRow := fmt.Sprintf("%s%d", as, index+1)
-		fmt.Println("convertRow :", convertRow, topic.Topic[idx])
 		fm.SetCellValue(sheetNameM, convertRow, topic.Topic[idx])
 
 		idx += 1
