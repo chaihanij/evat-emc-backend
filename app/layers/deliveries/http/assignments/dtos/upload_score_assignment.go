@@ -15,10 +15,11 @@ type UploadScoreAssingment struct {
 }
 
 type ConsiderationAssignment struct {
-	ID       string  `json:"id" bson:"id"`
-	Title    string  `json:"title" bson:"title"`
-	NameTeam string  `json:"nameteam" bson:"nameteam"`
-	Score    float64 `json:"score" bson:"score"`
+	ID        string  `json:"id" bson:"id"`
+	Title     string  `json:"title" bson:"title"`
+	Team_type string  `json:"team_type" bson:"team_type"`
+	NameTeam  string  `json:"nameteam" bson:"nameteam"`
+	Score     float64 `json:"score" bson:"score"`
 }
 
 func (req *UploadScoreAssingment) Parse(c *gin.Context) (*UploadScoreAssingment, error) {
@@ -60,6 +61,7 @@ func (req *UploadScoreAssingment) ToEntity() *entities.Assignment {
 			NameTeam: value.NameTeam,
 			Score:    value.Score,
 			Title:    value.Title,
+			TeamType: value.Team_type,
 		}
 
 		scoreAssignments = append(scoreAssignments, *scoreAssignment)

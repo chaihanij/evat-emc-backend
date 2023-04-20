@@ -32,10 +32,11 @@ type Assignment struct {
 }
 
 type ConsiderationAssignment struct {
-	ID       string  `bson:"id"`
-	Title    string  `bson:"title"`
-	Nameteam string  `bson:"nameteam"`
-	Score    float64 `bson:"score"`
+	ID        string  `bson:"id"`
+	Title     string  `bson:"title"`
+	Nameteam  string  `bson:"nameteam"`
+	Team_type string  `bson:"team_type"`
+	Score     float64 `bson:"score"`
 }
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {

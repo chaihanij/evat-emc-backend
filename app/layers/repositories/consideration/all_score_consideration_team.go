@@ -101,14 +101,5 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		return nil, err
 	}
 
-	// var AllScore models.AllScoreConsiderations
-
-	// for _, value := range fieldRaces {
-	// 	AllScore = append(AllScore, value)
-	// }
-	// for _, value := range assignments {
-	// 	AllScore = append(AllScore, value)
-	// }
-
 	return assignments.ToEntity(), nil
 }

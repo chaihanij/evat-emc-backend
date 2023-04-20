@@ -30,6 +30,7 @@ type ConsiderationAssignment struct {
 	ID       string
 	Title    string
 	NameTeam string
+	TeamType string
 	Score    float64
 }
 
