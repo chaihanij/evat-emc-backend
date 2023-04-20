@@ -24,6 +24,7 @@ type FieldRaceTeamScore struct {
 type AllScore struct {
 	ID                string
 	Title             string
+	No                int
 	Allconsiderations []AllConsideration
 	Total             float64
 }

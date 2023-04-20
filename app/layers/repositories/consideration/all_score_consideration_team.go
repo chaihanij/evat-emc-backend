@@ -17,114 +17,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-	// filter := models.AllScoreFilter(input)
-	// statefieldRaces := []bson.M{
-
-	// 	// {
-	// 	// 	"$unwind": "$consideration",
-	// 	// },
-	// 	// {
-	// 	// 	"$group": bson.M{
-	// 	// 		"_id": "$consideration.id",
-	// 	// 		"name": bson.M{
-	// 	// 			"$first": "$consideration.nameteam",
-	// 	// 		},
-	// 	// 		"considerations": bson.M{
-	// 	// 			"$push": bson.M{
-	// 	// 				"title": "$consideration.title",
-	// 	// 				"score": "$consideration.score",
-	// 	// 				"type":  "field_races",
-	// 	// 			}},
-	// 	// 	},
-	// 	// },
-
-	// 	{
-	// 		"$unwind": "$consideration",
-	// 	},
-	// 	{
-	// 		"$group": bson.M{
-	// 			"_id": "$consideration.id",
-	// 			"name": bson.M{
-	// 				"$first": "$consideration.nameteam",
-	// 			},
-	// 			"total":bson.M{
-	// 				"$sum":"$consideration.score",
-	// 			 },
-	// 			"considerations": bson.M{
-	// 				"$push": bson.M{
-	// 					"title": "$consideration.title",
-	// 					"score": "$consideration.score",
-	// 					"type":  "field_races",
-	// 				}},
-	// 		},
-	// 	},
-
-	// 	// filter,
-	// }
-
-	// var fieldRaces models.AllScoreConsiderations
-	// FieldRace, err := r.MongoDBClient.Database(env.MongoDBName).
-	// 	Collection(constants.CollectionFieldRaces).
-	// 	Aggregate(ctx, statefieldRaces)
-	// if err != nil {
-	// 	log.WithError(err).Errorln("FieldRace Error")
-	// 	return nil, err
-	// }
-	// err = FieldRace.All(ctx, &fieldRaces)
-
-	// if err != nil {
-	// 	log.WithError(err).Errorln("FieldRace-Error")
-	// 	return nil, err
-	// }
-
 	stateAssignment := []bson.M{
-
-		// {
-		// 	"$unwind": "$consideration",
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id": "$consideration.id",
-		// 		"name": bson.M{
-		// 			"$first": "$consideration.nameteam",
-		// 		},
-		// 		"total": bson.M{
-		// 			"$sum": "$consideration.score",
-		// 		},
-		// 		"considerations": bson.M{
-		// 			"$push": bson.M{
-		// 				"title": "$consideration.title",
-		// 				"score": "$consideration.score",
-		// 				"type":  "assignment",
-		// 			}},
-		// 	},
-		// },
-		// filter,
-
-		// {
-		// 	"$unwind": "$consideration",
-		// },
-		// {
-		// 	"$project": bson.M{
-		// 		"_id":           1,
-		// 		"consideration": 1,
-		// 		"title":         1,
-		// 	},
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id":   "$consideration.nameteam",
-		// 		"title": bson.M{"$first": "$title"},
-		// 		"considerations": bson.M{"$push": bson.M{
-		// 			"id":       "$consideration.id",
-		// 			"nameteam": "$consideration.nameteam",
-		// 			"title":    "$consideration.title",
-		// 			"score":    "$consideration.score",
-		// 		}},
-		// 		"total": bson.M{"$sum": "$consideration.score"},
-		// 	},
-		// },
-
 		{
 			"$unwind": "$consideration",
 		},
@@ -158,6 +51,11 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 					"total": bson.M{"$sum": "$considerations.score"},
 				}},
 				"total": bson.M{"$sum": "$total"},
+			},
+		},
+		{
+			"$sort": bson.M{
+				"code": -1,
 			},
 		},
 	}

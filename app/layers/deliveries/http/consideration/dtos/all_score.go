@@ -36,6 +36,7 @@ type AllScoreResponseJSON struct {
 	ID                string              `json:"_id" bson:"id"`
 	Title             string              `json:"title" bson:"title"`
 	Total             float64             `json:"total" bson:"total"`
+	No                int                 `json:"no" bson:"no"`
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 type AllConsiderations struct {
@@ -48,10 +49,32 @@ type AllScoresResponseJSON []AllScoreResponseJSON
 func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) *AllScoresResponseJSON {
 
 	var allScores AllScoresResponseJSON = AllScoresResponseJSON{}
+	idx := 0
+	total := 0.0
+	// for i := 0; i <= len(data); i++ {
 
-	fmt.Println("-data :", data)
+	// idx += 1
 
+	// }
 	for _, value := range data {
+
+		// fmt.Println("len data ", len(data))
+		//
+		// for i := 0; i <= len(data); i++ {
+		// 	idx := 1
+
+		// 	idx += 1
+		// 	fmt.Println("idx :", idx)
+		// }
+
+		if value.Total > total {
+			idx += 1
+			total = value.Total
+		}
+
+		// if value.Total == total {
+		// 	idx  = idx
+		// }
 
 		// fmt.Println("data", value.Allconsiderations)
 
@@ -67,8 +90,11 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 
 		}
 
+		fmt.Println("idx :", idx)
+
 		allScore := &AllScoreResponseJSON{
 			ID:                value.ID,
+			No:                idx,
 			Title:             value.Title,
 			Total:             value.Total,
 			AllConsiderations: allConsideration,
