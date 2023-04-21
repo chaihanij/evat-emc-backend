@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"go.mongodb.org/mongo-driver/bson"
@@ -33,14 +31,20 @@ func NewTeamFilter(input interface{}) *bson.M {
 			filter["year"] = val.Year
 		}
 		if val.Name != nil {
-			filter["name"] = bson.M{
-				"$regex":   val.Name,
-				"$options": "i",
+			if *val.Name != "" {
+				filter["name"] = bson.M{
+					"$regex":   val.Name,
+					"$options": "i",
+				}
 			}
+
 		}
 		if val.TeamType != nil {
-			fmt.Println("TeamType", val.TeamType)
-			filter["team_type"] = val.TeamType
+			// fmt.Println("TeamType", val.TeamType)
+			if *val.TeamType != "" {
+				filter["team_type"] = val.TeamType
+			}
+			// filter["team_type"] = val.TeamType
 		}
 	}
 	log.WithField("value", filter).Debugln("models.NewTeamFilter")
