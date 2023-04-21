@@ -351,7 +351,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 				//character
 				// formularank1 := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student), len(student)+1)
 
-				formularank := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(population)+len(student), len(population)+len(student)+1)
+				formularank := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student)+2, len(population)+len(student)+1)
 				fm.SetCellFormula(sheetNameM, convertRow, formularank)
 
 				fill := excelize.Fill{
@@ -398,7 +398,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 				}
 				styleID, _ := fm.NewStyle(&style)
 
-				highlightstart := fmt.Sprintf("A%d", len(population)+len(student))
+				highlightstart := fmt.Sprintf("A%d", len(student)+2)
 				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+len(population)+len(student))
 
 				fm.SetCellStyle("Sheet1", highlightstart, highlightend, styleID)
