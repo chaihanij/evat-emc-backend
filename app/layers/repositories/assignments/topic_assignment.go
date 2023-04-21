@@ -8,6 +8,8 @@ import (
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/assignments/models"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r repo) FindTopicAssignment(ctx context.Context, input *entities.AssignmentFilter) (*entities.ExportAssignmentTopic, error) {
@@ -28,10 +30,13 @@ func (r repo) FindTopicAssignment(ctx context.Context, input *entities.Assignmen
 	}
 
 	var exportTeam []models.ExportTeamTopic
+
+	findOptions := options.Find().SetSort(bson.D{{Key: "team_type", Value: -1}})
+
 	fitlerTeam := models.NewTeamFilter(input)
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionTeams).
-		Find(ctx, fitlerTeam, nil)
+		Find(ctx, fitlerTeam, findOptions)
 	if err != nil {
 		log.WithError(err).Errorln("DB FindAllTeam Error")
 		return nil, err

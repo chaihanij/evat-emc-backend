@@ -90,6 +90,51 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	fm.SetCellValue(sheetNameM, "F1", "ลำดับ")
 	fm.SetColWidth(sheetNameM, "F", "F", 20)
 
+	// fill := excelize.Fill{
+	// 	Type:    "pattern",
+	// 	Color:   []string{"#fef2cb"},
+	// 	Pattern: 1,
+	// }
+
+	// borderleft := excelize.Border{
+
+	// 	Type:  "left",
+	// 	Style: 1,
+	// 	Color: "#000000",
+	// }
+	// bordertop := excelize.Border{
+
+	// 	Type:  "top",
+	// 	Style: 1,
+	// 	Color: "#000000",
+	// }
+	// borderbottom := excelize.Border{
+
+	// 	Type:  "bottom",
+	// 	Style: 1,
+	// 	Color: "#000000",
+	// }
+	// borderright := excelize.Border{
+
+	// 	Type:  "right",
+	// 	Style: 1,
+	// 	Color: "#000000",
+	// }
+	// style := excelize.Style{
+	// 	Border: []excelize.Border{
+	// 		borderleft,
+	// 		bordertop,
+	// 		borderbottom,
+	// 		borderright,
+	// 	},
+	// 	Fill: fill,
+	// 	// Border: []excelize.Border{
+	// 	// 	border,
+	// 	// },
+	// }
+	// styleID, _ := fm.NewStyle(&style)
+	// fm.SetCellStyle("Sheet1", "A1", "F1", styleID)
+
 	asc := len(topic.Topic)
 	as := ""
 	ch := 71
@@ -102,6 +147,51 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 		convertRow := fmt.Sprintf("%s%d", as, 1)
 		fm.SetCellValue(sheetNameM, convertRow, topic.Topic[idx])
 		fm.SetColWidth(sheetNameM, as, as, 40)
+
+		fill := excelize.Fill{
+			Type:    "pattern",
+			Color:   []string{"#fef2cb"},
+			Pattern: 1,
+		}
+
+		borderleft := excelize.Border{
+
+			Type:  "left",
+			Style: 1,
+			Color: "#000000",
+		}
+		bordertop := excelize.Border{
+
+			Type:  "top",
+			Style: 1,
+			Color: "#000000",
+		}
+		borderbottom := excelize.Border{
+
+			Type:  "bottom",
+			Style: 1,
+			Color: "#000000",
+		}
+		borderright := excelize.Border{
+
+			Type:  "right",
+			Style: 1,
+			Color: "#000000",
+		}
+		style := excelize.Style{
+			Border: []excelize.Border{
+				borderleft,
+				bordertop,
+				borderbottom,
+				borderright,
+			},
+			Fill: fill,
+			// Border: []excelize.Border{
+			// 	border,
+			// },
+		}
+		styleID, _ := fm.NewStyle(&style)
+		fm.SetCellStyle("Sheet1", "A1", convertRow, styleID)
 
 		// fm.SetColWidth()
 
@@ -116,6 +206,23 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	// fmt.Println("ch :", ch)
 	character := 71
 	id := 1
+
+	student := []string{}
+	population := []string{}
+
+	for _, v := range topic.ExportTeamTopic {
+
+		if v.Team_type == "STUDENT" {
+			student = append(student, v.Name)
+		} else {
+			population = append(population, v.Name)
+
+		}
+	}
+
+	fmt.Println("student :", student)
+	fmt.Println("population :", population)
+
 	for index, value := range topic.ExportTeamTopic {
 
 		if value.Team_type == "STUDENT" {
@@ -124,41 +231,179 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 			value.Team_type = "ประเภทประชาชนทั่วไป"
 		}
 
-		// id += 1
 		for i := 1; i <= 1; i++ {
 			id += 1
 
-			// fmt.Println("i :", i, "id", id, "index", index, "value.Code", topic.ExportTeamTopic[index].Code)
-			// fmt.Println("index :", index-1)
+			// convertRow := fmt.Sprintf("A%d", id)
+			// fm.SetCellValue(sheetNameM, convertRow, id-1)
+			// convertRow = fmt.Sprintf("B%d", id)
+			// fm.SetCellValue(sheetNameM, convertRow, value.Team_type)
+			// convertRow = fmt.Sprintf("C%d", id)
+			// fm.SetCellValue(sheetNameM, convertRow, topic.ExportTeamTopic[index].Code)
+			// convertRow = fmt.Sprintf("D%d", id)
+			// fm.SetCellValue(sheetNameM, convertRow, value.Name)
 
-			convertRow := fmt.Sprintf("A%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, id-1)
-			convertRow = fmt.Sprintf("B%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, value.Team_type)
-			convertRow = fmt.Sprintf("C%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, topic.ExportTeamTopic[index].Code)
-			convertRow = fmt.Sprintf("D%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, value.Name)
+			// characterStop := fmt.Sprintf("%c", ch-1)
 
-			characterStop := fmt.Sprintf("%c", ch-1)
-			// fmt.Println("characterStop", characterStop, id)
+			// characterStart := fmt.Sprintf("%c", character)
 
-			characterStart := fmt.Sprintf("%c", character)
-			// fmt.Println("characterStart", characterStart, id)
+			// characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
 
-			characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
-			// fmt.Println("characterCount", characterCount)
-			//err := f.SetCellFormula("Sheet1", "A3", "=SUM(A1,B1)")
+			// convertRow = fmt.Sprintf("E%d", id)
+			// fm.SetCellFormula(sheetNameM, convertRow, characterCount)
+			// convertRow = fmt.Sprintf("F%d", id)
 
-			convertRow = fmt.Sprintf("E%d", id)
-			fm.SetCellFormula(sheetNameM, convertRow, characterCount)
-			// fm.SetCellValue(sheetNameM, convertRow, "12")
-			//=RANK(E2,$E$2:$E$3)
-			convertRow = fmt.Sprintf("F%d", id)
+			// formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(topic.ExportTeamTopic)+1)
+			// fm.SetCellFormula(sheetNameM, convertRow, formularank)
 
-			formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(topic.ExportTeamTopic)+1)
-			// fmt.Println("formularank :", formularank)
-			fm.SetCellFormula(sheetNameM, convertRow, formularank)
+			if value.Team_type == "ประเภทสถาบันการศึกษา" {
+
+				convertRow := fmt.Sprintf("A%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, id-1)
+				convertRow = fmt.Sprintf("B%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, value.Team_type)
+				convertRow = fmt.Sprintf("C%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, topic.ExportTeamTopic[index].Code)
+				convertRow = fmt.Sprintf("D%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, value.Name)
+
+				characterStop := fmt.Sprintf("%c", ch-1)
+
+				characterStart := fmt.Sprintf("%c", character)
+
+				characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
+
+				convertRow = fmt.Sprintf("E%d", id)
+				fm.SetCellFormula(sheetNameM, convertRow, characterCount)
+				convertRow = fmt.Sprintf("F%d", id)
+
+				formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(student)+1)
+				fm.SetCellFormula(sheetNameM, convertRow, formularank)
+
+				fill := excelize.Fill{
+					Type:    "pattern",
+					Color:   []string{"#e2edd9"},
+					Pattern: 1,
+				}
+
+				borderleft := excelize.Border{
+
+					Type:  "left",
+					Style: 1,
+					Color: "#000000",
+				}
+				bordertop := excelize.Border{
+
+					Type:  "top",
+					Style: 1,
+					Color: "#000000",
+				}
+				borderbottom := excelize.Border{
+
+					Type:  "bottom",
+					Style: 1,
+					Color: "#000000",
+				}
+				borderright := excelize.Border{
+
+					Type:  "right",
+					Style: 1,
+					Color: "#000000",
+				}
+
+				style := excelize.Style{
+					Border: []excelize.Border{
+						borderleft,
+						bordertop,
+						borderbottom,
+						borderright,
+					},
+					Fill: fill,
+					// Border: []excelize.Border{
+					// 	border,
+					// },
+				}
+				styleID, _ := fm.NewStyle(&style)
+				highlightend := fmt.Sprintf("%s%d", characterStop, len(student)+1)
+				fm.SetCellStyle("Sheet1", "A2", highlightend, styleID)
+
+			}
+			if value.Team_type == "ประเภทประชาชนทั่วไป" {
+				convertRow := fmt.Sprintf("A%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, id-1)
+				convertRow = fmt.Sprintf("B%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, value.Team_type)
+				convertRow = fmt.Sprintf("C%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, topic.ExportTeamTopic[index].Code)
+				convertRow = fmt.Sprintf("D%d", id)
+				fm.SetCellValue(sheetNameM, convertRow, value.Name)
+
+				characterStop := fmt.Sprintf("%c", ch-1)
+
+				characterStart := fmt.Sprintf("%c", character)
+
+				characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
+
+				convertRow = fmt.Sprintf("E%d", id)
+				fm.SetCellFormula(sheetNameM, convertRow, characterCount)
+				convertRow = fmt.Sprintf("F%d", id)
+
+				//character
+				// formularank1 := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student), len(student)+1)
+
+				formularank := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(population)+len(student), len(population)+len(student)+1)
+				fm.SetCellFormula(sheetNameM, convertRow, formularank)
+
+				fill := excelize.Fill{
+					Type:    "pattern",
+					Color:   []string{"#fbe3d4"},
+					Pattern: 1,
+				}
+				borderleft := excelize.Border{
+
+					Type:  "left",
+					Style: 1,
+					Color: "#000000",
+				}
+				bordertop := excelize.Border{
+
+					Type:  "top",
+					Style: 1,
+					Color: "#000000",
+				}
+				borderbottom := excelize.Border{
+
+					Type:  "bottom",
+					Style: 1,
+					Color: "#000000",
+				}
+				borderright := excelize.Border{
+
+					Type:  "right",
+					Style: 1,
+					Color: "#000000",
+				}
+
+				style := excelize.Style{
+					Border: []excelize.Border{
+						borderleft,
+						bordertop,
+						borderbottom,
+						borderright,
+					},
+					Fill: fill,
+					// Border: []excelize.Border{
+					// 	border,
+					// },
+				}
+				styleID, _ := fm.NewStyle(&style)
+
+				highlightstart := fmt.Sprintf("A%d", len(population)+len(student))
+				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+len(population)+len(student))
+
+				fm.SetCellStyle("Sheet1", highlightstart, highlightend, styleID)
+
+			}
 
 		}
 	}
@@ -171,23 +416,13 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	filenames := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", time.Now().Unix()) + fileExt
 
 	dst := filepath.Join(env.DataPath, "assignments", "template", filenames)
-	// fmt.Println("dst", dst)
 
 	if err := fm.SaveAs(dst); err != nil {
 	}
-
-	// aa := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, filenames)
-
-	// topic.Path = fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, filenames)
-
-	// fmt.Println("fileExt", fileExt)
-	// fmt.Println("originalFileName", originalFileName)
-	// fmt.Println("filenames", filenames)
 	fileBytes, err := ioutil.ReadFile(dst)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 	}
-	// topic.Path = fmt.Sprintf("%d", len(fileBytes))
 	c.Writer.WriteHeader(http.StatusOK)
 
 	c.Header("Content-Type", "application/octet-stream")
