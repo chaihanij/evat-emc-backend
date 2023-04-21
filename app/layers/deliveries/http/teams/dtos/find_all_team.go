@@ -13,7 +13,7 @@ type FindAllTeamRequestJSON struct {
 	Page     *int64  `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize *int64  `form:"pageSize" validate:"omitempty,gte=1" example:"20"`
 	Name     *string `form:"name"`
-	TeamType *string `from:"teamtype"`
+	TeamType *string `form:"teamtype"`
 }
 
 func (req *FindAllTeamRequestJSON) Parse(c *gin.Context) (*FindAllTeamRequestJSON, error) {

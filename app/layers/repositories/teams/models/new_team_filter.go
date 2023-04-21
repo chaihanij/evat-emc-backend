@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"go.mongodb.org/mongo-driver/bson"
@@ -37,6 +39,7 @@ func NewTeamFilter(input interface{}) *bson.M {
 			}
 		}
 		if val.TeamType != nil {
+			fmt.Println("TeamType", val.TeamType)
 			filter["team_type"] = val.TeamType
 		}
 	}

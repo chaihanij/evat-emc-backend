@@ -8,7 +8,7 @@ import (
 
 type AllScoreRequestJSON struct {
 	Name     string `form:"name"`
-	TeamType string `form:"team_type"`
+	TeamType string `form:"teamtype"`
 	Page     int    `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize int    `form:"pageSize" validate:"omitempty,gte=1" example:"10"`
 }
