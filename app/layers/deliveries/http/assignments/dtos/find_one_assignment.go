@@ -1,10 +1,12 @@
 package dtos
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"gitlab.com/chaihanij/evat/app/entities"
+	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/errors"
 )
 
@@ -28,6 +30,14 @@ func (req *FindOneAssignmentRequestJSON) ToEntity() *entities.AssignmentFilter {
 type FindOneAssignmentResponseJSON AssignmentResponse
 
 func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *FindOneAssignmentResponseJSON {
+
+	url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileName)
+
+	Assignment := File{
+		FileName:   url,
+		CreateDate: input.UploadFile.CreateDate,
+	}
+
 	assignment := &FindOneAssignmentResponseJSON{
 		UUID:         input.UUID,
 		No:           input.No,
@@ -44,6 +54,7 @@ func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.As
 		SendDoc:      input.SendDoc,
 		DeliveryTime: input.DeliveryTime,
 		IsShowMenu:   input.IsShowMenu,
+		File:         Assignment,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)

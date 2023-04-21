@@ -40,6 +40,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/assignment/:assignment_uuid/doc", handler.UploadScoreAssignment)
 
 		v1Auth.PUT("/assignment/:assignment_uuid/updatescors", handler.UploadScoreAssignment)
+		v1Auth.PUT("/assignment/:assignment_uuid/uploadfile", handler.UploadFileScore)
 
 	}
 }

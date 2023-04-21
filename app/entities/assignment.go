@@ -24,6 +24,14 @@ type Assignment struct {
 	Consideration []ConsiderationAssignment
 	// OverDue      time.Time
 	DeliveryTime time.Time
+	UploadFile   UploadFile
+}
+
+type UploadFile struct {
+	// UUID       *string
+	FileName   string
+	CreateDate time.Time
+	CreateBy   string
 }
 
 type ConsiderationAssignment struct {
@@ -63,6 +71,7 @@ type AssignmentPartialUpdate struct {
 	Consideration *[]interface{}
 	DeliveryTime  *time.Time
 	IsShowMenu    *bool
+	// UploadFile    []UploadFile
 }
 
 type AssignmentFilter struct {

@@ -34,6 +34,13 @@ func NewAssignmentFilter(input interface{}) *bson.M {
 			filter["uuid"] = val.UUID
 		}
 	}
+
+	// if val, ok := input.(*entities.UploadFile); ok {
+	// 	if val.UUID != nil {
+	// 		filter["uuid"] = val.UUID
+	// 	}
+	// }
+
 	log.WithField("value", filter).Debugln("models.NewAssignmentFilter")
 	return &filter
 }

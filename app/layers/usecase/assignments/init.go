@@ -26,6 +26,8 @@ type UseCase interface {
 	FindTopicAssignment(ctx context.Context, input *entities.AssignmentFilter) (*entities.ExportAssignmentTopic, error)
 	FindAllTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, []entities.TeamAssignment, error)
 	UploadScoreAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
+
+	UploadFileScore(ctx context.Context, assignmentUUID string, file *entities.File) (*entities.Assignment, error)
 }
 
 func InitUseCase(assignmentsRepo assignments.Repo, filesRepo files.Repo) UseCase {

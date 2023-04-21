@@ -29,6 +29,12 @@ type Assignment struct {
 	Consideration []ConsiderationAssignment `bson:"consideration"`
 	DeliveryTime  time.Time                 `bson:"delivery_time"`
 	IsShowMenu    bool                      `bson:"isShowMenu"`
+	UploadFile    UploadFile                `bson:"files"`
+}
+
+type UploadFile struct {
+	FileName   string    `bson:"filename"`
+	CreateDate time.Time `bson:"createdate"`
 }
 
 type ConsiderationAssignment struct {

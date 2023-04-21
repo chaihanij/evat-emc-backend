@@ -11,13 +11,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r repo) PartialUpdateAssignment(ctx context.Context, input *entities.AssignmentPartialUpdate) (*entities.Assignment, error) {
-	log.Debugln("DB PartiarlUpdateAssignment")
+func (r repo) UploadFileScore(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error) {
+	log.Debugln("DB UploadScore")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
 	filter := models.NewAssignmentFilter(input)
-	update := models.PartialUpdateAssignment(input)
+	update := models.UploadFileScore(input)
+
 	var assignment models.Assignment
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionAssignments).
@@ -27,6 +28,6 @@ func (r repo) PartialUpdateAssignment(ctx context.Context, input *entities.Assig
 		log.WithError(err).Errorln("DB PartialUpdateAssignment Error")
 		return nil, err
 	}
-	log.WithField("value", assignment).Debugln("DB PartialUpdateAssignment")
+	// log.WithField("value", assignment).Debugln("DB PartialUpdateAssignment")
 	return assignment.ToEntity()
 }

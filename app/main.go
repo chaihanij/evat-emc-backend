@@ -104,6 +104,7 @@ func main() {
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "images"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "documents"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "template"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "score"), os.ModePerm)
 
 	db := database.ConnectMongoDB()
 
