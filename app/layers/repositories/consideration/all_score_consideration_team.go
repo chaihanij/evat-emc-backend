@@ -17,18 +17,6 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 
-	// fmt.Println("input :", input)
-
-	// page := 1
-	// if input.Page != 0 {
-	// 	page = input.Page
-	// }
-
-	// pagesize := 10
-	// if input.Pagesize >= 10 {
-	// 	pagesize = input.Pagesize
-	// }
-
 	filter := models.AllScoreFilter(input)
 
 	stateAssignment := []bson.M{
