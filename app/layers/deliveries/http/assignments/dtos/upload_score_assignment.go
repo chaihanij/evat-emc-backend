@@ -20,6 +20,7 @@ type ConsiderationAssignment struct {
 	Team_type string  `json:"team_type" bson:"team_type"`
 	NameTeam  string  `json:"nameteam" bson:"nameteam"`
 	Score     float64 `json:"score" bson:"score"`
+	No        int     `json:"no" bson:"no"`
 }
 
 func (req *UploadScoreAssingment) Parse(c *gin.Context) (*UploadScoreAssingment, error) {
@@ -62,6 +63,7 @@ func (req *UploadScoreAssingment) ToEntity() *entities.Assignment {
 			Score:    value.Score,
 			Title:    value.Title,
 			TeamType: value.Team_type,
+			No:       value.No,
 		}
 
 		scoreAssignments = append(scoreAssignments, *scoreAssignment)

@@ -37,6 +37,7 @@ type ConsiderationAssignment struct {
 	Nameteam  string  `bson:"nameteam"`
 	Team_type string  `bson:"team_type"`
 	Score     float64 `bson:"score"`
+	No        int     `bson:"no"`
 }
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {
