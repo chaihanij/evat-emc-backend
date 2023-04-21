@@ -18,6 +18,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	defer cancel()
 
 	filter := models.AllScoreFilter(input)
+	filterTeamType := models.AllScoreTeamtype(input)
 
 	stateAssignment := []bson.M{
 
@@ -65,6 +66,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 			},
 		},
 		filter,
+		filterTeamType,
 		{
 			"$sort": bson.M{
 				"total": -1,
