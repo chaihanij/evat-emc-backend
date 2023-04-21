@@ -46,10 +46,11 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		},
 		{
 			"$group": bson.M{
-				"_id":   bson.M{"id": "$consideration.nameteam", "title": "$title"},
-				"team":  bson.M{"$first": "$consideration.nameteam"},
-				"code":  bson.M{"$first": "$consideration.id"},
-				"title": bson.M{"$first": "$title"},
+				"_id":       bson.M{"id": "$consideration.nameteam", "title": "$title"},
+				"team":      bson.M{"$first": "$consideration.nameteam"},
+				"code":      bson.M{"$first": "$consideration.id"},
+				"title":     bson.M{"$first": "$title"},
+				"team_type": bson.M{"$first": "$consideration.teamtype"},
 				"considerations": bson.M{"$push": bson.M{
 					"id":        "$consideration.id",
 					"nameteam":  "$consideration.nameteam",
@@ -62,9 +63,11 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		},
 		{
 			"$group": bson.M{
-				"_id":  bson.M{"team": "$team"},
-				"team": bson.M{"$first": "$team"},
-				"code": bson.M{"$first": "$code"},
+				"_id":      bson.M{"team": "$team"},
+				"team":     bson.M{"$first": "$team"},
+				"code":     bson.M{"$first": "$code"},
+				"teamtype": bson.M{"$first": "$team_type"},
+
 				"considerations": bson.M{"$push": bson.M{
 					"title": "$title",
 					"total": bson.M{"$sum": "$considerations.score"},
