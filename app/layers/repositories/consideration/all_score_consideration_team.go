@@ -2,7 +2,6 @@ package consideration
 
 import (
 	"context"
-	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -100,21 +99,21 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		return nil, err
 	}
 
-	idx := 0
-	total := 0.0
-	// var AllScoreAssignments models.AllScoreConsiderations
+	// idx := 0
+	// total := 0.0
+	// // var AllScoreAssignments models.AllScoreConsiderations
 
-	for index, value := range assignments {
-		fmt.Println("value :", value.Total)
+	// for index, value := range assignments {
+	// 	fmt.Println("value :", value.Total)
 
-		if value.Total >= total {
-			idx += 1
-		}
-		// value.No = idx
-		assignments[index].No = idx
-		fmt.Println("idx", idx)
+	// 	if value.Total >= total {
+	// 		idx += 1
+	// 	}
+	// 	// value.No = idx
+	// 	assignments[index].No = idx
+	// 	fmt.Println("idx", idx)
 
-	}
+	// }
 
 	return assignments.ToEntity(), nil
 }

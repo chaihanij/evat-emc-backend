@@ -78,11 +78,17 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	sheetNameM := "Sheet1"
 
 	fm.SetCellValue(sheetNameM, "A1", "ทีมที่")
+	fm.SetColWidth(sheetNameM, "A", "A", 20)
 	fm.SetCellValue(sheetNameM, "B1", "ประเภทผู้เข้าร่วมแข่งขัน")
+	fm.SetColWidth(sheetNameM, "B", "B", 20)
 	fm.SetCellValue(sheetNameM, "C1", "รหัสทีม")
+	fm.SetColWidth(sheetNameM, "C", "C", 20)
 	fm.SetCellValue(sheetNameM, "D1", "ชื่อทีม")
+	fm.SetColWidth(sheetNameM, "D", "D", 20)
 	fm.SetCellValue(sheetNameM, "E1", "รวมคะแนน")
+	fm.SetColWidth(sheetNameM, "E", "E", 20)
 	fm.SetCellValue(sheetNameM, "F1", "ลำดับ")
+	fm.SetColWidth(sheetNameM, "F", "F", 20)
 
 	asc := len(topic.Topic)
 	as := ""
@@ -95,6 +101,10 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 		// index := 0
 		convertRow := fmt.Sprintf("%s%d", as, 1)
 		fm.SetCellValue(sheetNameM, convertRow, topic.Topic[idx])
+		fm.SetColWidth(sheetNameM, as, as, 40)
+
+		// fm.SetColWidth()
+
 		// fmt.Println("ch :", ch)
 
 		// asend := fmt.Sprintf("%c", ch+1)
