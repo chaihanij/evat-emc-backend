@@ -49,6 +49,8 @@ type TeamFilter struct {
 	Sort     *string
 	Page     *int64
 	PageSize *int64
+	Name     *string
+	TeamType *string
 }
 
 type TeamSearch struct {

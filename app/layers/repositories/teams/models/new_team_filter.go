@@ -30,6 +30,15 @@ func NewTeamFilter(input interface{}) *bson.M {
 		if val.Year != nil {
 			filter["year"] = val.Year
 		}
+		if val.Name != nil {
+			filter["name"] = bson.M{
+				"$regex":   val.Name,
+				"$options": "i",
+			}
+		}
+		if val.TeamType != nil {
+			filter["team_type"] = val.TeamType
+		}
 	}
 	log.WithField("value", filter).Debugln("models.NewTeamFilter")
 	return &filter

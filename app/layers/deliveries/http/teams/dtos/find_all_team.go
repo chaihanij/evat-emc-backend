@@ -12,6 +12,8 @@ type FindAllTeamRequestJSON struct {
 	Year     *string `form:"year" example:"2023"`
 	Page     *int64  `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize *int64  `form:"pageSize" validate:"omitempty,gte=1" example:"20"`
+	Name     *string `form:"name"`
+	TeamType *string `from:"teamtype"`
 }
 
 func (req *FindAllTeamRequestJSON) Parse(c *gin.Context) (*FindAllTeamRequestJSON, error) {
@@ -28,6 +30,8 @@ func (req *FindAllTeamRequestJSON) ToEntity() *entities.TeamFilter {
 		Year:     req.Year,
 		Page:     req.Page,
 		PageSize: req.PageSize,
+		Name:     req.Name,
+		TeamType: req.TeamType,
 	}
 }
 
