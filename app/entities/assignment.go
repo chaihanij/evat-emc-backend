@@ -31,6 +31,7 @@ type UploadFile struct {
 	// UUID       *string
 	FileName   string
 	CreateDate time.Time
+	FileUrl    string
 	CreateBy   string
 }
 

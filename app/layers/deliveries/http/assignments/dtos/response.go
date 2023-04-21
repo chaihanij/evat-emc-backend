@@ -50,6 +50,7 @@ type AssignmentResponse struct {
 }
 
 type File struct {
+	FileUrl    string    `bson:"fileurl"`
 	FileName   string    `bson:"filename"`
 	CreateDate time.Time `bson:"createdate"`
 }

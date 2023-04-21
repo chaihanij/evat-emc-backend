@@ -34,7 +34,8 @@ func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.As
 	url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileName)
 
 	Assignment := File{
-		FileName:   url,
+		FileName:   input.UploadFile.FileName,
+		FileUrl:    url,
 		CreateDate: input.UploadFile.CreateDate,
 	}
 
