@@ -103,10 +103,10 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 
 		idx += 1
 	}
-	fmt.Println("ch :", ch)
+	// fmt.Println("ch :", ch)
 	character := 71
-
-	for _, value := range topic.ExportTeamTopic {
+	id := 1
+	for index, value := range topic.ExportTeamTopic {
 
 		if value.Team_type == "STUDENT" {
 			value.Team_type = "ประเภทสถาบันการศึกษา"
@@ -114,28 +114,30 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 			value.Team_type = "ประเภทประชาชนทั่วไป"
 		}
 
-		id := 1
-
-		for i := 1; i <= len(topic.ExportTeamTopic); i++ {
+		// id += 1
+		for i := 1; i <= 1; i++ {
 			id += 1
+
+			// fmt.Println("i :", i, "id", id, "index", index, "value.Code", topic.ExportTeamTopic[index].Code)
+			// fmt.Println("index :", index-1)
 
 			convertRow := fmt.Sprintf("A%d", id)
 			fm.SetCellValue(sheetNameM, convertRow, id-1)
 			convertRow = fmt.Sprintf("B%d", id)
 			fm.SetCellValue(sheetNameM, convertRow, value.Team_type)
 			convertRow = fmt.Sprintf("C%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, value.Code)
+			fm.SetCellValue(sheetNameM, convertRow, topic.ExportTeamTopic[index].Code)
 			convertRow = fmt.Sprintf("D%d", id)
 			fm.SetCellValue(sheetNameM, convertRow, value.Name)
 
 			characterStop := fmt.Sprintf("%c", ch-1)
-			fmt.Println("characterStop", characterStop, id)
+			// fmt.Println("characterStop", characterStop, id)
 
 			characterStart := fmt.Sprintf("%c", character)
-			fmt.Println("characterStart", characterStart, id)
+			// fmt.Println("characterStart", characterStart, id)
 
 			characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
-			fmt.Println("characterCount", characterCount)
+			// fmt.Println("characterCount", characterCount)
 			//err := f.SetCellFormula("Sheet1", "A3", "=SUM(A1,B1)")
 
 			convertRow = fmt.Sprintf("E%d", id)
@@ -145,7 +147,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 			convertRow = fmt.Sprintf("F%d", id)
 
 			formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(topic.ExportTeamTopic)+1)
-			fmt.Println("formularank :", formularank)
+			// fmt.Println("formularank :", formularank)
 			fm.SetCellFormula(sheetNameM, convertRow, formularank)
 
 		}
@@ -159,7 +161,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	filenames := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", time.Now().Unix()) + fileExt
 
 	dst := filepath.Join(env.DataPath, "assignments", "template", filenames)
-	fmt.Println("dst", dst)
+	// fmt.Println("dst", dst)
 
 	if err := fm.SaveAs(dst); err != nil {
 	}
