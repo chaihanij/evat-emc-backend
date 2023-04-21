@@ -77,7 +77,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	fm := excelize.NewFile()
 	sheetNameM := "Sheet1"
 
-	fm.SetCellValue(sheetNameM, "A1", "ลำดับ")
+	fm.SetCellValue(sheetNameM, "A1", "ทีมที่")
 	fm.SetCellValue(sheetNameM, "B1", "ประเภทผู้เข้าร่วมแข่งขัน")
 	fm.SetCellValue(sheetNameM, "C1", "รหัสทีม")
 	fm.SetCellValue(sheetNameM, "D1", "ชื่อทีม")
