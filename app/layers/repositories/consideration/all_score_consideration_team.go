@@ -69,6 +69,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		filterTeamType,
 		{
 			"$sort": bson.M{
+				"no":    1,
 				"total": -1,
 			},
 		},
