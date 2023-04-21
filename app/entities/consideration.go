@@ -26,6 +26,7 @@ type AllScore struct {
 	Title             string
 	Code              string
 	No                int
+	TeamType          string
 	Allconsiderations []AllConsideration
 	Total             float64
 }

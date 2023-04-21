@@ -45,6 +45,7 @@ type AllScoreResponseJSON struct {
 	Total             float64             `json:"total" bson:"total"`
 	Code              string              `json:"code" bson:"code"`
 	No                int                 `json:"no" bson:"no"`
+	Teamtype          string              `json:"teamtype" bson:"teamtype" `
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 type AllConsiderations struct {
@@ -104,6 +105,7 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 			No:                value.No,
 			Title:             value.Title,
 			Code:              value.Code,
+			Teamtype:          value.TeamType,
 			Total:             value.Total,
 			AllConsiderations: allConsideration,
 		}

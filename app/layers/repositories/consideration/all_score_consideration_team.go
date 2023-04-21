@@ -55,7 +55,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"considerations": bson.M{"$push": bson.M{
 					"id":        "$consideration.id",
 					"nameteam":  "$consideration.nameteam",
-					"team_type": "$consideration.team_type",
+					"team_type": "$consideration.teamtype",
 					"title":     "$title",
 					"score":     "$consideration.score",
 				}},

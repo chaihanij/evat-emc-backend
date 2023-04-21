@@ -11,6 +11,7 @@ type AllScoreConsideration struct {
 	Total             float64             `json:"total" bson:"total"`
 	Code              string              `json:"code" bson:"code" `
 	No                int                 `json:"no" bson:"no"`
+	TeamType          string              `json:"teamtype" bson:"teamtype" `
 	AllConsiderations []AllConsiderations `json:"considerations" bson:"considerations"`
 }
 
@@ -47,6 +48,7 @@ func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 			Title:             value.Title,
 			Total:             value.Total,
 			Code:              value.Code,
+			TeamType:          value.TeamType,
 			No:                value.No,
 			Allconsiderations: allScoresconsiderations,
 		}
