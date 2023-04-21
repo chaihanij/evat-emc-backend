@@ -16,7 +16,9 @@ func AllScoreFilter(input interface{}) bson.M {
 		if val.Name != "" {
 			filter = bson.M{
 				"$match": bson.M{
-					"team": bson.M{"$regex": val.Name},
+					"team": bson.M{"$regex": val.Name,
+						"$options": "i",
+					},
 				},
 			}
 		}
