@@ -23,7 +23,10 @@ func AllScoreFilter(input interface{}) bson.M {
 		if val.Teamtype != "" {
 			filter = bson.M{
 				"$match": bson.M{
-					"teamtype": bson.M{"$regex": val.Teamtype},
+					"teamtype": bson.M{
+						"$regex":   val.Teamtype,
+						"$options": "i",
+					},
 				},
 			}
 		}
