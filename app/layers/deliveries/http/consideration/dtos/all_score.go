@@ -57,8 +57,8 @@ type AllScoresResponseJSON []AllScoreResponseJSON
 func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) *AllScoresResponseJSON {
 
 	var allScores AllScoresResponseJSON = AllScoresResponseJSON{}
-	idx := 0
-	total := 0.0
+	// idx := 0
+	// total := 0.0
 	// for i := 0; i <= len(data); i++ {
 
 	// idx += 1
@@ -76,9 +76,9 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 		// 	fmt.Println("idx :", idx)
 		// }
 
-		if value.Total >= total {
-			idx += 1
-		}
+		// if value.Total >= total {
+		// 	idx += 1
+		// }
 		// sort.Sort(sort.Float64Slice{value.Allconsiderations[0].Score})
 
 		// if value.Total == total {
@@ -101,7 +101,7 @@ func (m *AllScoresResponseJSON) Parse(c *gin.Context, data []entities.AllScore) 
 
 		allScore := &AllScoreResponseJSON{
 			ID:                value.ID,
-			No:                idx,
+			No:                value.No,
 			Title:             value.Title,
 			Code:              value.Code,
 			Total:             value.Total,
