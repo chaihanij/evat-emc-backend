@@ -21,6 +21,6 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 
 		v1Auth.GET("/consideration/all", handler.AllScoreConsideration)
 		v1Auth.GET("/consideration/allscore/assignment/:assignment_UUID", handler.AllScoreConsiderationAssignment)
-		v1Auth.GET("/consideration/allscore/assignment/topic/:code", handler.AllScoreConsiderationAssignmentMember)
+		v1Auth.GET("/consideration/member/allscore/assignment/:code", handler.AllScoreConsiderationAssignmentMember)
 	}
 }
