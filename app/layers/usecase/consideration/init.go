@@ -17,6 +17,7 @@ type UseCase interface {
 
 	AllScore(ctx context.Context, input *entities.AllScoreFilter) ([]entities.AllScore, error)
 	AllScoreConsiderationAssignment(ctx context.Context, input *entities.AllScoreFilter) ([]entities.AllScore, error)
+	AllScoreConsiderationAssignmentMember(ctx context.Context, input *entities.AllScoreFilter) ([]entities.AllScore, error)
 }
 
 func InitUseCase(ConsiderationRepo consideration.Repo) UseCase {

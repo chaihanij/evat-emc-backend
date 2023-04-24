@@ -19,6 +19,7 @@ type Repo interface {
 
 	AllScore(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error)
 	AllScoreConsiderationAssignment(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error)
+	AllScoreConsiderationAssignmentMember(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {
