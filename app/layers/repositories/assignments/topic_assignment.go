@@ -31,7 +31,10 @@ func (r repo) FindTopicAssignment(ctx context.Context, input *entities.Assignmen
 
 	var exportTeam []models.ExportTeamTopic
 
-	findOptions := options.Find().SetSort(bson.D{{Key: "team_type", Value: -1}})
+	findOptions := options.Find().SetSort(bson.D{
+		{Key: "team_type", Value: -1},
+		{Key: "code", Value: 1},
+	})
 
 	fitlerTeam := models.NewTeamFilter(input)
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).

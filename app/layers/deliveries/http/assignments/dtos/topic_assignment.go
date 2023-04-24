@@ -85,10 +85,10 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 	fm.SetColWidth(sheetNameM, "C", "C", 20)
 	fm.SetCellValue(sheetNameM, "D1", "ชื่อทีม")
 	fm.SetColWidth(sheetNameM, "D", "D", 20)
-	fm.SetCellValue(sheetNameM, "E1", "รวมคะแนน")
-	fm.SetColWidth(sheetNameM, "E", "E", 20)
-	fm.SetCellValue(sheetNameM, "F1", "ลำดับ")
-	fm.SetColWidth(sheetNameM, "F", "F", 20)
+	// fm.SetCellValue(sheetNameM, "E1", "รวมคะแนน")
+	// fm.SetColWidth(sheetNameM, "E", "E", 20)
+	// fm.SetCellValue(sheetNameM, "F1", "ลำดับ")
+	// fm.SetColWidth(sheetNameM, "F", "F", 20)
 
 	// fill := excelize.Fill{
 	// 	Type:    "pattern",
@@ -137,10 +137,10 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 
 	asc := len(topic.Topic)
 	as := ""
-	ch := 71
+	ch := 69
 	chasc := ch + asc
 	idx := 0
-	for ch = 71; ch < chasc; ch++ {
+	for ch = 69; ch < chasc; ch++ {
 		as = fmt.Sprintf("%c", ch)
 
 		// index := 0
@@ -204,7 +204,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 		idx += 1
 	}
 	// fmt.Println("ch :", ch)
-	character := 71
+	// character := 71
 	id := 1
 
 	student := []string{}
@@ -220,11 +220,7 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 		}
 	}
 
-	fmt.Println("student :", student)
-	fmt.Println("population :", population)
-
 	for index, value := range topic.ExportTeamTopic {
-
 		if value.Team_type == "STUDENT" {
 			value.Team_type = "ประเภทสถาบันการศึกษา"
 		} else {
@@ -269,16 +265,16 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 
 				characterStop := fmt.Sprintf("%c", ch-1)
 
-				characterStart := fmt.Sprintf("%c", character)
+				// characterStart := fmt.Sprintf("%c", character)
 
-				characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
+				// characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
 
-				convertRow = fmt.Sprintf("E%d", id)
-				fm.SetCellFormula(sheetNameM, convertRow, characterCount)
-				convertRow = fmt.Sprintf("F%d", id)
+				// convertRow = fmt.Sprintf("E%d", id)
+				// fm.SetCellFormula(sheetNameM, convertRow, characterCount)
+				// convertRow = fmt.Sprintf("F%d", id)
 
-				formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(student)+1)
-				fm.SetCellFormula(sheetNameM, convertRow, formularank)
+				// formularank := fmt.Sprintf("RANK(E%d,$E$2:$E%d)", id, len(student)+1)
+				// fm.SetCellFormula(sheetNameM, convertRow, formularank)
 
 				fill := excelize.Fill{
 					Type:    "pattern",
@@ -340,19 +336,19 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 
 				characterStop := fmt.Sprintf("%c", ch-1)
 
-				characterStart := fmt.Sprintf("%c", character)
+				// characterStart := fmt.Sprintf("%c", character)
 
-				characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
+				// characterCount := fmt.Sprintf("SUM(%s%d:%s%d)", characterStart, id, characterStop, id)
 
-				convertRow = fmt.Sprintf("E%d", id)
-				fm.SetCellFormula(sheetNameM, convertRow, characterCount)
-				convertRow = fmt.Sprintf("F%d", id)
+				// convertRow = fmt.Sprintf("E%d", id)
+				// fm.SetCellFormula(sheetNameM, convertRow, characterCount)
+				// convertRow = fmt.Sprintf("F%d", id)
 
 				//character
 				// formularank1 := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student), len(student)+1)
 
-				formularank := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student)+2, len(population)+len(student)+1)
-				fm.SetCellFormula(sheetNameM, convertRow, formularank)
+				// formularank := fmt.Sprintf("RANK(E%d,$E$%d:$E%d)", id, len(student)+2, len(population)+len(student)+1)
+				// fm.SetCellFormula(sheetNameM, convertRow, formularank)
 
 				fill := excelize.Fill{
 					Type:    "pattern",
@@ -399,8 +395,8 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 				styleID, _ := fm.NewStyle(&style)
 
 				highlightstart := fmt.Sprintf("A%d", len(student)+2)
-				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+len(population)+len(student))
-
+				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+3)
+				fmt.Println("highlightend :", highlightend)
 				fm.SetCellStyle("Sheet1", highlightstart, highlightend, styleID)
 
 			}
@@ -408,12 +404,21 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 		}
 	}
 
-	fileName := fmt.Sprintf("%s.xlsx", topic.Title)
+	// startRow := 1
+	// // endRow := len(rows)
+	// err = fm.RemoveRow(sheetNameM, startRow)
+	// // err = fm.RemoveRows(sheetNameM, startRow, endRow)
+	// if err != nil {
+	// 	fmt.Println(err)
+
+	// }
+
+	fileName := fmt.Sprintf("%s-%v-%v-%v.xlsx", topic.Title, time.Now().Day(), time.Now().Month(), time.Now().Year())
 
 	fileExt := filepath.Ext(fileName)
 
 	originalFileName := strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
-	filenames := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", time.Now().Unix()) + fileExt
+	filenames := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v-%v-%v", time.Now().Day(), time.Now().Month(), time.Now().Year()) + fileExt
 
 	dst := filepath.Join(env.DataPath, "assignments", "template", filenames)
 
