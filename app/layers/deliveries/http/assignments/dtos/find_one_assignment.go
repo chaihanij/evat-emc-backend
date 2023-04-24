@@ -31,12 +31,12 @@ type FindOneAssignmentResponseJSON AssignmentResponse
 
 func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *FindOneAssignmentResponseJSON {
 
-	url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileName)
-
+	url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileUrl)
 	Assignment := File{
 		FileName:   input.UploadFile.FileName,
 		FileUrl:    url,
 		CreateDate: input.UploadFile.CreateDate,
+		Createby:   input.UploadFile.CreateBy,
 	}
 
 	assignment := &FindOneAssignmentResponseJSON{

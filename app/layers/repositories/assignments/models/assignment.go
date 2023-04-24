@@ -33,8 +33,10 @@ type Assignment struct {
 }
 
 type UploadFile struct {
-	FileName   string    `bson:"filename"`
-	CreateDate time.Time `bson:"createdate"`
+	Fileurl    string    `json:"fileurl" bson:"fileurl"`
+	FileName   string    `bson:"filename" bson:"filename"`
+	Createby   string    `bson:"createby" bson:"createby"`
+	CreateDate time.Time `bson:"createdate" bson:"createdate"`
 }
 
 type ConsiderationAssignment struct {
@@ -48,6 +50,9 @@ type ConsiderationAssignment struct {
 
 func (am *Assignment) ToEntity() (*entities.Assignment, error) {
 	var assignment entities.Assignment
+	assignment.UploadFile.FileUrl = am.UploadFile.Fileurl
+	assignment.UploadFile.CreateBy = am.UploadFile.Createby
+
 	err := copier.Copy(&assignment, am)
 	return &assignment, err
 }
