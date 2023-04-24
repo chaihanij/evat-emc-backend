@@ -32,7 +32,7 @@ func (req *UploadScoreAssingment) Parse(c *gin.Context) (*UploadScoreAssingment,
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
 
-	log.WithField("value", req).Debugln("SendAssignmentDocumentRequestJSON")
+	log.WithField("value", req).Debugln("ConsiderationAssignment")
 
 	jwtRawData, ok := c.Get(constants.JWTDataKey)
 	if !ok {
@@ -63,7 +63,7 @@ func (req *UploadScoreAssingment) ToEntity() *entities.Assignment {
 			Score:    value.Score,
 			Title:    value.Title,
 			TeamType: value.Team_type,
-			No:       value.No,
+			// No:       value.No,
 		}
 
 		scoreAssignments = append(scoreAssignments, *scoreAssignment)
