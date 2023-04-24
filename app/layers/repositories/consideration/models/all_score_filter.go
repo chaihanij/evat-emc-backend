@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	log "github.com/sirupsen/logrus"
 
 	"gitlab.com/chaihanij/evat/app/entities"
@@ -12,6 +14,7 @@ func AllScoreFilter(input interface{}) bson.M {
 		"$match": bson.M{},
 	}
 
+	fmt.Println("input :", input)
 	if val, ok := input.(entities.AllScoreFilter); ok {
 		if val.Name != "" {
 			filter = bson.M{
@@ -22,6 +25,24 @@ func AllScoreFilter(input interface{}) bson.M {
 				},
 			}
 		}
+		if val.Code != "" {
+			filter = bson.M{
+				"$match": bson.M{
+					"code": bson.M{"$regex": val.Code,
+						"$options": "i",
+					},
+				},
+			}
+		}
+
+		if val.UUID != "" {
+			filter = bson.M{
+				"$match": bson.M{
+					"uuid": val.UUID,
+				},
+			}
+		}
+
 		// if val.Teamtype != "" {
 		// 	filter = bson.M{
 		// 		"$match": bson.M{

@@ -46,4 +46,6 @@ type AllScoreFilter struct {
 	Name     string
 	Page     int
 	Pagesize int
+	UUID     string
+	Code     string
 }

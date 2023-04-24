@@ -18,6 +18,7 @@ type Repo interface {
 	FindConsiderationFieldRaceTeam(ctx context.Context, input *entities.ConsiderationFilter) ([]entities.FieldRaceTeamScore, error)
 
 	AllScore(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error)
+	AllScoreConsiderationAssignment(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {
