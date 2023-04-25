@@ -43,12 +43,11 @@ func (r repo) SendEmailRegister(data string) error {
             }
             .txt-bb {
                 padding-bottom: 20px;
-                cursor:pointer;
             }
             .txt-button {
         
             padding: 15px;
-            align-items: center;
+            align-items: center;    
             color: white;
             width: 35%;
             border-radius: 30px;
@@ -122,7 +121,7 @@ func (r repo) SendEmailRegister(data string) error {
             <div class="head-main">
                 <div class="head-second">
                     <div class="head-img">
-                        <img src="http://127.0.0.1:8080/v1/files/1ec1f201-b758-4754-8880-ecad82a0c56a" alt="logo">
+                        <img src="./logo.png" alt="logo">
                     </div>
                     <div class="desc">
                         <p>โครงการแข่งขันรถจักรยานยนต์ไฟฟ้าดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
@@ -131,12 +130,9 @@ func (r repo) SendEmailRegister(data string) error {
                         <div class="head2-img">
                             <img src="./hero.svg" alt="logo">
                         </div>
-                        <!-- <div>
-                            <img src="./desc.png" alt="">
-                        </div> -->
         
                         <div class="txt-customer">
-                            <p>สวัสดีคุณ ` + nameUser + `</p>
+                            <p>สวัสดีคุณ ` + nameUser + `  </p>
                         </div>
                         
                         <div class="txt-decs">
@@ -149,13 +145,9 @@ func (r repo) SendEmailRegister(data string) error {
                             <button class="txt-button">ตั้งค่ารหัสผ่าน</button>
                         </div>
                         <div class="txt-link">
-                            <p>หรือกดลิงก์:&nbsp;<span>http://evat.com/123445</span></p>
+                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/login" target="_blank" >http://evat.com/123445</a></span></p>
                         </div>
                         <div class="txt-footer">
-                            
-                            <!-- <div class="txt-button">
-                                <img src="./Group 107.svg" alt="">
-                            </div> -->
                             <p>ด้วยความเคารพ</p>
                             <p>สมาคมโครงการแข่งขันรถจักรยานยนต์ไฟฟ้า</p>
                             <p>ดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
@@ -183,6 +175,8 @@ func (r repo) SendEmailRegister(data string) error {
 	receiver := data
 	cc := ""
 
+	// email.Sender = "pr@evat.or.th"
+	// email.Password = "evatOMS100%"
 	email.Sender = "sanch_ai@hotmail.com"
 	email.Password = "0877380568"
 

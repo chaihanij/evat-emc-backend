@@ -44,6 +44,12 @@ func (u useCase) WebHooks(ctx context.Context, input *entities.OmiseEvent) error
 	if err != nil {
 		return err
 	}
+
+	// err = u.TeamsRepo.SendEmailRegister(email)
+	// if err != nil {
+	// 	return nil
+	// }
+
 	log.WithFields(log.Fields{
 		"emai":   email,
 		"charge": charge,
