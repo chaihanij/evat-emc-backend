@@ -140,15 +140,17 @@ func (r repo) SendEmailRegister(data string, activate_code string) error {
                             <p>การสมัครโครงการได้รับการอนุมัติแล้ว</p>
                         </div>
                         <div class="txt-a">
-                            <p>เพื่อดำเนินการให้เสร็จสมบูรณ์ กรุณาตั้งค่ารหัสผ่านโดยกดที่ปุ่มหรือ<br/>กดลิงก์ด้านล่างนี้ ขอบพระคุณครับ</p>
+                            <p>เพื่อดำเนินการให้เสร็จสมบูรณ์ กรุณาตั้งค่ารหัสผ่านโดยกดที่ปุ่มหรือ<br/>กดลิงก์ด้านล่างนี้</p>
                         </div>
                         <div class="txt-bb">
-                            <button class="txt-button">ตั้งค่ารหัสผ่าน</button>
+                            <a href="https://emc.evat.or.th/dev/change-password?activatecode` + activate_code + `" target="_blank" ><button class="txt-button">ตั้งค่ารหัสผ่าน</button></a>    
+                        
                         </div>
                         <div class="txt-link">
-                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/change-password?` + activate_code + `" target="_blank" >http://evat.com/123445</a></span></p>
+                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/change-password?activatecode` + activate_code + `" target="_blank" >http://evat.com/123445</a></span></p>
                         </div>
                         <div class="txt-footer">
+                            <p>ทั้งนี้ทางสมาคมจะยืนยันความความถูกต้องให้อีกครั้ง</p>
                             <p>ด้วยความเคารพ</p>
                             <p>สมาคมโครงการแข่งขันรถจักรยานยนต์ไฟฟ้า</p>
                             <p>ดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
