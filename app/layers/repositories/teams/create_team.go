@@ -2,6 +2,8 @@ package teams
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -9,6 +11,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/errors"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/teams/models"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -16,6 +19,20 @@ func (r repo) CreateTeam(ctx context.Context, input *entities.Team) (*entities.T
 	log.Debugln("DB CreateTeam")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
+	filter := bson.M{}
+	count, err := r.MongoDBClient.Database(env.MongoDBName).
+		Collection(constants.CollectionTeams).
+		CountDocuments(ctx, filter)
+
+		// eMC23S006
+	paddedStr := fmt.Sprintf("%03d", count)
+	year := time.Now().Year()
+	str := fmt.Sprintf("%d", year)
+	trimmedStr := str[2:]
+	code := fmt.Sprintf("eMC%sS%s", trimmedStr, paddedStr)
+
+	input.Code = code
+
 	team := models.NewTeam(input)
 	result, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionTeams).
