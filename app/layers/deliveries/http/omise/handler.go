@@ -17,6 +17,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 
 	v1 := ginEngine.Group("v1")
 	{
-		v1.POST("/omise/web/hooks", handler.WebHooks)
+		// v1.POST("/omise/web/hooks", handler.WebHooks)
+		v1.POST("/hooks", handler.WebHooks)
 	}
 }
