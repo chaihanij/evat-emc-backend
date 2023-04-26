@@ -49,6 +49,7 @@ import (
 	_announcementsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/announcements"
 	_assignmentTeamHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignment_teams"
 	_assignmentsHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/assignments"
+	_certificate "gitlab.com/chaihanij/evat/app/layers/deliveries/http/certificate"
 	_configHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/config"
 	_considerationHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/consideration"
 	_emailHttp "gitlab.com/chaihanij/evat/app/layers/deliveries/http/email"
@@ -105,6 +106,7 @@ func main() {
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "documents"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "template"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "score"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "template"), os.ModePerm)
 
 	db := database.ConnectMongoDB()
 
@@ -188,6 +190,8 @@ func main() {
 	_emailcontactHttp.NewEndpointHttpHandler(ginEngine, emailcontactUseCase)
 	_omiseHttp.NewEndpointHttpHandler(ginEngine, teamsUseCase)
 	_configHttp.NewEndpointHttpHandler(ginEngine, authMiddleware, configUseCase)
+	_certificate.NewEndpointHttpHandler(ginEngine)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
