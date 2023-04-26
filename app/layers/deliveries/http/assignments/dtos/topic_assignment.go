@@ -395,8 +395,9 @@ func (u ExportAssignmentTopicResponseJSON) Parse(c *gin.Context, input *entities
 				styleID, _ := fm.NewStyle(&style)
 
 				highlightstart := fmt.Sprintf("A%d", len(student)+2)
-				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+3)
-				fmt.Println("highlightend :", highlightend)
+				highlightend := fmt.Sprintf("%s%d", characterStop, len(population)+len(student)+1)
+				// fmt.Println("___ :", len(population)+len(student))
+				// fmt.Println("highlightend :", highlightend)
 				fm.SetCellStyle("Sheet1", highlightstart, highlightend, styleID)
 
 			}
