@@ -44,6 +44,6 @@ func (r repo) FindAllAssignment(ctx context.Context, input *entities.AssignmentF
 		return nil, err
 	}
 
-	log.WithField("value", assignments).Debugln("DB FindAllAssignment")
+	// log.WithField("value", assignments).Debugln("DB FindAllAssignment")
 	return assignments.ToEntity(), nil
 }
