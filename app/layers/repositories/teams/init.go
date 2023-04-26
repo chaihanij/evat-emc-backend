@@ -22,7 +22,7 @@ type Repo interface {
 	UpdateTeam(ctx context.Context, input *entities.Team) (*entities.Team, error)
 	FindAllSearchTeam(ctx context.Context, input *entities.TeamFilter) ([]entities.TeamSearch, error)
 
-	SendEmailRegister(data string) ( error)
+	SendEmailRegister(data string ,activate_code string ) ( error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

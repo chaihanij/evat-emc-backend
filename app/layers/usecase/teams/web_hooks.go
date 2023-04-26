@@ -45,7 +45,9 @@ func (u useCase) WebHooks(ctx context.Context, input *entities.OmiseEvent) error
 		return err
 	}
 
-	err = u.TeamsRepo.SendEmailRegister(email)
+	activateCode, err := u.UsersRepo.FindOneUser(ctx, &entities.UserFilter{Email: &email})
+
+	err = u.TeamsRepo.SendEmailRegister(email, activateCode.ActivateCode)
 	if err != nil {
 		return nil
 	}

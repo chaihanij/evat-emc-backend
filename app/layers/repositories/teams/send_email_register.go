@@ -9,8 +9,11 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func (r repo) SendEmailRegister(data string) error {
+func (r repo) SendEmailRegister(data string , activate_code string ) error {
 	log.Debugln("Send Email")
+
+
+
 
 	nameUser := data
 
