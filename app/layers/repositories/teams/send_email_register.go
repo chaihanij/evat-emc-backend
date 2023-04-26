@@ -9,11 +9,9 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func (r repo) SendEmailRegister(data string , activate_code string ) error {
+func (r repo) SendEmailRegister(data string, activate_code string) error {
 	log.Debugln("Send Email")
-
-
-
+	log.Debugln("activate_code :", activate_code)
 
 	nameUser := data
 
@@ -148,7 +146,7 @@ func (r repo) SendEmailRegister(data string , activate_code string ) error {
                             <button class="txt-button">ตั้งค่ารหัสผ่าน</button>
                         </div>
                         <div class="txt-link">
-                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/login" target="_blank" >http://evat.com/123445</a></span></p>
+                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/change-password?` + activate_code + `" target="_blank" >http://evat.com/123445</a></span></p>
                         </div>
                         <div class="txt-footer">
                             <p>ด้วยความเคารพ</p>
