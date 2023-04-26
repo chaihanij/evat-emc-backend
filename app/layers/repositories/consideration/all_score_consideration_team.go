@@ -22,60 +22,10 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 
 	stateAssignment := []bson.M{
 
-		// {
-		// 	"$unwind": "$consideration",
-		// },
-
-		// {
-		// 	"$project": bson.M{
-		// 		"_id":           1,
-		// 		"consideration": 1,
-		// 		"title":         1,
-		// 	},
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id":       bson.M{"id": "$consideration.nameteam", "title": "$title"},
-		// 		"team":      bson.M{"$first": "$consideration.nameteam"},
-		// 		"code":      bson.M{"$first": "$consideration.id"},
-		// 		"title":     bson.M{"$first": "$title"},
-		// 		"team_type": bson.M{"$first": "$consideration.teamtype"},
-		// 		"no":        bson.M{"$first": "$consideration.no"},
-		// 		"considerations": bson.M{"$push": bson.M{
-		// 			"id":        "$consideration.id",
-		// 			"nameteam":  "$consideration.nameteam",
-		// 			"team_type": "$consideration.teamtype",
-		// 			"title":     "$title",
-		// 			"score":     "$consideration.score",
-		// 		}},
-		// 		"total": bson.M{"$sum": "$consideration.score"},
-		// 	},
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id":      bson.M{"team": "$team"},
-		// 		"team":     bson.M{"$first": "$team"},
-		// 		"code":     bson.M{"$first": "$code"},
-		// 		"teamtype": bson.M{"$first": "$team_type"},
-		// 		"no":       bson.M{"$first": "$no"},
-		// 		"considerations": bson.M{"$push": bson.M{
-		// 			"title": "$title",
-		// 			"total": bson.M{"$sum": "$considerations.score"},
-		// 		}},
-		// 		"total": bson.M{"$sum": "$total"},
-		// 	},
-		// },
-		// filter,
-		// filterTeamType,
-		// {
-		// 	"$sort": bson.M{
-		// 		"total": -1,
-		// 	},
-		// },
-
 		{
 			"$unwind": "$consideration",
 		},
+
 		{
 			"$project": bson.M{
 				"_id":           1,
@@ -90,15 +40,14 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"code":      bson.M{"$first": "$consideration.id"},
 				"title":     bson.M{"$first": "$title"},
 				"team_type": bson.M{"$first": "$consideration.teamtype"},
-				"considerations": bson.M{
-					"$push": bson.M{
-						"id":        "$consideration.id",
-						"nameteam":  "$consideration.nameteam",
-						"team_type": "$consideration.teamtype",
-						"title":     "$title",
-						"score":     "$consideration.score",
-					},
-				},
+				"no":        bson.M{"$first": "$consideration.no"},
+				"considerations": bson.M{"$push": bson.M{
+					"id":        "$consideration.id",
+					"nameteam":  "$consideration.nameteam",
+					"team_type": "$consideration.teamtype",
+					"title":     "$title",
+					"score":     "$consideration.score",
+				}},
 				"total": bson.M{"$sum": "$consideration.score"},
 			},
 		},
@@ -108,35 +57,22 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				"team":     bson.M{"$first": "$team"},
 				"code":     bson.M{"$first": "$code"},
 				"teamtype": bson.M{"$first": "$team_type"},
-				"considerations": bson.M{
-					"$push": bson.M{
-						"title": "$considerations.title",
-						"total": bson.M{"$sum": "$considerations.score"},
-					},
-				},
+				"no":       bson.M{"$first": "$no"},
+				"considerations": bson.M{"$push": bson.M{
+					"title": "$title",
+					"total": bson.M{"$sum": "$considerations.score"},
+				}},
 				"total": bson.M{"$sum": "$total"},
-			},
-		},
-		{
-			"$setWindowFields": bson.M{
-				"partitionBy": "$teamtype",
-				"sortBy": bson.M{
-					"total": -1,
-				},
-				"output": bson.M{
-					"no": bson.M{
-						"$rank": bson.M{},
-					},
-				},
-			},
-		},
-		{
-			"$sort": bson.M{
-				"teamtype": -1,
 			},
 		},
 		filter,
 		filterTeamType,
+		{
+			"$sort": bson.M{
+				"no":    1,
+				"total": -1,
+			},
+		},
 	}
 
 	var assignments models.AllScoreConsiderations
@@ -153,6 +89,22 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		log.WithError(err).Errorln("assignment Error")
 		return nil, err
 	}
+
+	// idx := 0
+	// total := 0.0
+	// // var AllScoreAssignments models.AllScoreConsiderations
+
+	// for index, value := range assignments {
+	// 	fmt.Println("value :", value.Total)
+
+	// 	if value.Total >= total {
+	// 		idx += 1
+	// 	}
+	// 	// value.No = idx
+	// 	assignments[index].No = idx
+	// 	fmt.Println("idx", idx)
+
+	// }
 
 	return assignments.ToEntity(), nil
 }
