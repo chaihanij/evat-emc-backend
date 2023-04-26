@@ -13,7 +13,7 @@ import (
 
 func (r repo) AllScoreConsiderationAssignment(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error) {
 
-	log.Debugln("Consideration")
+	log.Debugln("Consideration Assignment")
 
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()

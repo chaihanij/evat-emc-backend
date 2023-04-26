@@ -45,7 +45,7 @@ func (r repo) AllScoreConsiderationAssignmentMember(ctx context.Context, input e
 						"id":        "$consideration.id",
 						"nameteam":  "$consideration.nameteam",
 						"team_type": "$consideration.teamtype",
-						"title":     "$title",
+						"title":     "$consideration.title",
 						"total":     "$consideration.score",
 					},
 				},
