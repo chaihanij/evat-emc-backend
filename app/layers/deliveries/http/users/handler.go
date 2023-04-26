@@ -30,6 +30,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/users", handler.CreateUser)
 		v1Auth.GET("/users/:uid", handler.FineOneUser)
 		v1Auth.PUT("/users/:uid", handler.UpdateUser)
+		v1Auth.PUT("/users/activate/:teamUUID", handler.UpdateActivateCode)
 		v1Auth.DELETE("/users/:uid", handler.DeleteUser)
 
 		v1Auth.GET("/profiles", handler.FindOneUserProfile)

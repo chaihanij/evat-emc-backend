@@ -1,6 +1,7 @@
 package dtos
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -12,8 +13,9 @@ import (
 )
 
 type UpdateUserRequestJSON struct {
-	UID       string  `json:"-" uri:"uid" validate:"required"`
-	Username  *string `json:"username" validate:"required"`
+	// UID       string  `json:"-" uri:"uid" validate:"required"`
+	UID       string  `json:"-" uri:"uid" validate:""`
+	Username  *string `json:"username" validate:""`
 	Email     *string `json:"email" validate:""`
 	FirstName *string `json:"firstname" validate:""`
 	LastName  *string `json:"lastname" validate:""`
@@ -21,9 +23,10 @@ type UpdateUserRequestJSON struct {
 	Tel       *string `json:"tel" validate:""`
 	Role      *string `json:"role" validate:"userRole"`
 	Year      *string `json:"year" validate:""`
-	TeamUUID  *string `json:"teamUUID" validate:""`
-	IsActive  *bool   `json:"isActive" validate:""`
-	UpdatedBy string  `json:"-" validate:""`
+	TeamUUID  *string `json:"teamUUID" uri:"teamUUID" validate:""`
+	// TeamUUID  *string `json:"teamUUID" validate:""`
+	IsActive  *bool  `json:"isActive" validate:""`
+	UpdatedBy string `json:"-" validate:""`
 }
 
 type UpdateUserResponseJSON struct {
@@ -78,6 +81,7 @@ func (req *UpdateUserRequestJSON) Parse(c *gin.Context) (*UpdateUserRequestJSON,
 }
 
 func (req *UpdateUserRequestJSON) ToEntity() *entities.UserPartialUpdate {
+	fmt.Println("req :", req.TeamUUID)
 	return &entities.UserPartialUpdate{
 		UID:       req.UID,
 		Username:  req.Username,
@@ -98,6 +102,65 @@ func (m *UpdateUserResponseJSON) Parse(data *entities.User) *UpdateUserResponseJ
 	_ = copier.Copy(m, data)
 	return m
 }
+
+type UpdateActivateCode UpdateUserRequestJSON
+
+func (req *UpdateActivateCode) Parse(c *gin.Context) (*UpdateActivateCode, error) {
+	if err := c.ShouldBindUri(req); err != nil {
+		return nil, errors.ParameterError{Message: err.Error()}
+	}
+	if err := c.ShouldBindJSON(req); err != nil {
+		return nil, errors.ParameterError{Message: err.Error()}
+	}
+
+	// if err := types.Validate.Struct(req); err != nil {
+	// 	if err := types.HandleValidateError(err, req); err != nil {
+	// 		return nil, errors.ParameterError{Message: err.Error()}
+	// 	}
+	// 	return nil, errors.ParameterError{Message: err.Error()}
+	// }
+
+	jwtRawData, ok := c.Get(constants.JWTDataKey)
+	if !ok {
+		return nil, errors.InternalError{Message: constants.JWTRestoreFail}
+	}
+
+	jwtData, ok := jwtRawData.(entities.JwtData)
+	if !ok {
+		return nil, errors.InternalError{Message: constants.JWTInvalidStructure}
+	}
+
+	if jwtData.UID == "" {
+		return nil, errors.ParameterError{Message: constants.UserUIDMissing}
+	}
+	req.UpdatedBy = jwtData.UID
+
+	return req, nil
+}
+
+// type UpdateActivateCodeRequestJSON UpdateUserRequestJSON
+
+func (req *UpdateActivateCode) ToEntity() *entities.UserPartialUpdate {
+	fmt.Println("req :", req.TeamUUID)
+	return &entities.UserPartialUpdate{
+		UID:       req.UID,
+		Username:  req.Username,
+		Email:     req.Email,
+		FirstName: req.FirstName,
+		LastName:  req.LastName,
+		Address:   req.Address,
+		Tel:       req.Tel,
+		Role:      req.Role,
+		Year:      req.Year,
+		TeamUUID:  req.TeamUUID,
+		IsActive:  req.IsActive,
+		UpdatedBy: &req.UpdatedBy,
+	}
+}
+
+
+
+
 
 type UpdateUserResponseSwagger struct {
 	StatusCode    int                    `json:"statusCode" example:"1000"`
