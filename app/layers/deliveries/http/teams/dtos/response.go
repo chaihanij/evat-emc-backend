@@ -66,7 +66,7 @@ type TeamResponse struct {
 	Detail        string           `json:"detail"`
 	Year          string           `json:"year"`
 	Slip          *FileResponse    `json:"slip,omitempty"`
-	IsPaid        bool             `json:"is_paid,omitempty"`
+	IsPaid        bool             `json:"is_paid"`
 	PaymentMethod string           `json:"payment_method,omitempty"`
 	IsVerify      bool             `json:"is_verify,omitempty"`
 	Members       *MembersResponse `json:"members,omitempty"`

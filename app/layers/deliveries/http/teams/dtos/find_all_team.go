@@ -52,6 +52,7 @@ func (m *FindAllTeamResponseJSON) Parse(data []entities.Team) *FindAllTeamRespon
 			UpdatedAt: value.UpdatedAt,
 			CreatedBy: value.CreatedBy,
 			UpdatedBy: value.UpdatedBy,
+			IsPaid:    value.IsPaid,
 		}
 		teams = append(teams, *team)
 	}
