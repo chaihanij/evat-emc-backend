@@ -122,14 +122,14 @@ func (r repo) SendEmailRegister(data string, activate_code string) error {
             <div class="head-main">
                 <div class="head-second">
                     <div class="head-img">
-                        <img src="./logo.png" alt="logo">
+                        <img src="https://emc.evat.or.th/apps/evat/emc/api/dev/v1/files/201498cd-1be8-496a-9372-68899bae1f5f" alt="logo">
                     </div>
                     <div class="desc">
                         <p>โครงการแข่งขันรถจักรยานยนต์ไฟฟ้าดัดแปลงเพื่อธุรกิจแห่งอนาคต</p>
                     </div>
                     <div class="continner">
                         <div class="head2-img">
-                            <img src="./hero.svg" alt="logo">
+                            <img src="https://emc.evat.or.th/apps/evat/emc/api/dev/v1/files/c4ac0701-23ce-4d76-a0fa-af76cd2ed5e7" alt="logo">
                         </div>
         
                         <div class="txt-customer">
