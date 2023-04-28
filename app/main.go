@@ -100,6 +100,7 @@ func main() {
 	}).Debugln("main")
 	// Create data dir
 	os.MkdirAll(filepath.Join(env.DataPath, "teams", "slips"), os.ModePerm)
+	os.MkdirAll(filepath.Join(env.DataPath, "teams", "export"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "members", "images"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "members", "documents"), os.ModePerm)
 	os.MkdirAll(filepath.Join(env.DataPath, "assignments", "images"), os.ModePerm)

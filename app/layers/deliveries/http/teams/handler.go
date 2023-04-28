@@ -21,6 +21,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 	{
 		v1.POST("/register-teams", handler.RegisterTeam)
 		v1.POST("/teams/:team_uuid/slip", handler.UpdateTeamSlip)
+		v1.GET("/teams/export", handler.ExportTeams)
 	}
 
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
@@ -38,6 +39,6 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine,
 		v1Auth.POST("/teams/:team_uuid/assignments/:assignment_uuid/documents", handler.SendAssignmentTeamPushDocument)
 		v1Auth.DELETE("/teams/:team_uuid/assignments/:assignment_uuid/documents/:document_uuid", handler.SendAssignmentTeamPullhDocument)
 		//search
-		v1Auth.GET("/teams/search", handler.FindAllSearchTeam)
+		// v1Auth.GET("/teams/search", handler.FindAllSearchTeam)
 	}
 }
