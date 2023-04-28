@@ -8,7 +8,7 @@ import (
 
 type UpdateFileScore struct {
 	Assingment_uuid string     `bson:"uuid"`
-	UploadFile      UploadFile `bson:"files"`
+	UploadFile      File `bson:"files"`
 }
 
 func (am *UpdateFileScore) ToEntity() (*entities.AssignmentPartialUpdateScore, error) {

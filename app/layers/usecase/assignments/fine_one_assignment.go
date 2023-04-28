@@ -3,7 +3,6 @@ package assignments
 import (
 	"context"
 
-	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -34,6 +33,6 @@ func (u useCase) FindOneAssignment(ctx context.Context, input *entities.Assignme
 		}
 	}
 
-	log.WithField("value", assignment).Debugln("UseCase FindOneAssignments")
+	// log.WithField("value", assignment).Debugln("UseCase FindOneAssignments")
 	return assignment, nil
 }

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jinzhu/copier"
@@ -29,16 +30,14 @@ type Assignment struct {
 	Consideration []ConsiderationAssignment `bson:"consideration"`
 	DeliveryTime  time.Time                 `bson:"delivery_time"`
 	IsShowMenu    bool                      `bson:"isShowMenu"`
-	UploadFile    []UploadFile                `bson:"files"`
+	UploadFile    []File                    `bson:"files"`
 }
 
-
-
-type UploadFile struct {
+type File struct {
 	Fileurl    string    `json:"fileurl" bson:"fileurl"`
-	FileName   string    `bson:"filename" bson:"filename"`
-	Createby   string    `bson:"createby" bson:"createby"`
-	CreateDate time.Time `bson:"createdate" bson:"createdate"`
+	FileName   string    `json:"filename" bson:"filename"`
+	Createby   string    `json:"createby" bson:"createby"`
+	CreateDate time.Time `json:"createdate" bson:"createdate"`
 }
 
 type ConsiderationAssignment struct {
@@ -54,8 +53,21 @@ func (am *Assignment) ToEntity() (*entities.Assignment, error) {
 	var assignment entities.Assignment
 	// assignment.UploadFile.FileUrl = am.UploadFile.Fileurl
 	// assignment.UploadFile.CreateBy = am.UploadFile.Createby
+	var files []entities.Fileassignment
+
+	for _, value := range am.UploadFile {
+		file := entities.Fileassignment{
+			FileName:   value.FileName,
+			FileUrl:    value.Fileurl,
+			CreateDate: value.CreateDate,
+			CreateBy:   value.Createby,
+		}
+		files = append(files, file)
+	}
+	assignment.Fileassignment = files
 
 	err := copier.Copy(&assignment, am)
+	fmt.Println("assignment :", assignment)
 	return &assignment, err
 }
 

@@ -24,10 +24,10 @@ type Assignment struct {
 	Consideration []ConsiderationAssignment
 	// OverDue      time.Time
 	DeliveryTime time.Time
-	UploadFile   []UploadFile
+	Fileassignment   []Fileassignment
 }
 
-type UploadFile struct {
+type Fileassignment struct {
 	// UUID       *string
 	FileName   string
 	CreateDate time.Time
@@ -101,5 +101,5 @@ type ExportTeamTopic struct {
 
 type AssignmentPartialUpdateScore struct {
 	AssignmentUUID string
-	UploadFile     UploadFile
+	UploadFile     Fileassignment
 }

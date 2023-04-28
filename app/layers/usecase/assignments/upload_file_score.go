@@ -13,7 +13,7 @@ func (u useCase) UploadFileScore(ctx context.Context, assignmentUUID string, fil
 	if err != nil {
 		return nil, err
 	}
-	fileinput := entities.UploadFile{
+	fileinput := entities.Fileassignment{
 		FileUrl:    file.UUID,
 		FileName:   file.FileName,
 		CreateDate: time.Now(),

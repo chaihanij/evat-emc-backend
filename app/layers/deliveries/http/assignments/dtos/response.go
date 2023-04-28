@@ -46,14 +46,18 @@ type AssignmentResponse struct {
 	DeliveryTime  time.Time                 `json:"delivery_time"`
 	Consideration []ConsiderationAssignment `json:"consideration"`
 	IsShowMenu    bool                      `json:"isShowMenu"`
-	File          []File                      `json:"files" bson:"files"`
+	File          []File                    `json:"files" bson:"files"`
 }
 
 type File struct {
-	FileUrl    string    `json:"fileurl"  bson:"fileurl"`
+	// FileUrl    string    `json:"fileurl"  bson:"fileurl"`
+	// FileName   string    `json:"filename" bson:"filename"`
+	// CreateDate time.Time `json:"createdate" bson:"createdate"`
+	// Createby   string    `json:"createby" bson:"createby"`
+	Fileurl    string    `json:"fileurl" bson:"fileurl"`
 	FileName   string    `json:"filename" bson:"filename"`
-	CreateDate time.Time `json:"createdate" bson:"createdate"`
 	Createby   string    `json:"createby" bson:"createby"`
+	CreateDate time.Time `json:"createdate" bson:"createdate"`
 }
 
 type TeamAssignmentResponse struct {
