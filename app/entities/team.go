@@ -51,6 +51,7 @@ type TeamFilter struct {
 	PageSize *int64
 	Name     *string
 	TeamType *string
+	Tel      *string
 }
 
 type TeamSearch struct {
