@@ -23,7 +23,7 @@ type Repo interface {
 	CountTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) (*int64, error)
 	FindTeamAssignment(ctx context.Context, input *entities.AssignmentFilter) ([]entities.TeamAssignment, error)
 
-	UploadFileScore(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)
+	UploadFileScore(ctx context.Context, input *entities.AssignmentPartialUpdateScore) (*entities.Assignment, error)
 
 	FindTopicAssignment(ctx context.Context, input *entities.AssignmentFilter) (*entities.ExportAssignmentTopic, error)
 	UploadScoreAssignment(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error)

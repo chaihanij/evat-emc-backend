@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r repo) UploadFileScore(ctx context.Context, input *entities.Assignment) (*entities.Assignment, error) {
+func (r repo) UploadFileScore(ctx context.Context, input *entities.AssignmentPartialUpdateScore) (*entities.Assignment, error) {
 	log.Debugln("DB UploadScore")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
@@ -25,7 +25,7 @@ func (r repo) UploadFileScore(ctx context.Context, input *entities.Assignment) (
 		FindOneAndUpdate(ctx, filter, update, opts).
 		Decode(&assignment)
 	if err != nil {
-		log.WithError(err).Errorln("DB PartialUpdateAssignment Error")
+		log.WithError(err).Errorln("DB PartialUpdateScoreAssignment Error")
 		return nil, err
 	}
 	// log.WithField("value", assignment).Debugln("DB PartialUpdateAssignment")

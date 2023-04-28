@@ -19,7 +19,7 @@ func (u useCase) UploadFileScore(ctx context.Context, assignmentUUID string, fil
 		CreateDate: time.Now(),
 	}
 
-	assignment, err := u.AssignmentsRepo.UploadFileScore(ctx, &entities.Assignment{UUID: assignmentUUID, UploadFile: fileinput})
+	assignment, err := u.AssignmentsRepo.UploadFileScore(ctx, &entities.AssignmentPartialUpdateScore{AssignmentUUID: assignmentUUID, UploadFile: fileinput})
 	if err != nil {
 		return nil, err
 	}

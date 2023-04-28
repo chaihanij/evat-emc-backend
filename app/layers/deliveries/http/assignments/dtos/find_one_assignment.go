@@ -31,12 +31,25 @@ type FindOneAssignmentResponseJSON AssignmentResponse
 
 func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.Assignment) *FindOneAssignmentResponseJSON {
 
-	url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileUrl)
-	Assignment := File{
-		FileName:   input.UploadFile.FileName,
-		FileUrl:    url,
-		CreateDate: input.UploadFile.CreateDate,
-		Createby:   input.UploadFile.CreateBy,
+	// url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, input.UploadFile.FileUrl)
+	// Assignment := File{
+	// 	FileName:   input.UploadFile.FileName,
+	// 	FileUrl:    url,
+	// 	CreateDate: input.UploadFile.CreateDate,
+	// 	Createby:   input.UploadFile.CreateBy,
+	// }
+
+	var files []File
+
+	for _, value := range input.UploadFile {
+		url := fmt.Sprintf("%s/v1/files/%s", env.BaseUrl, value.FileUrl)
+		Assignment := File{
+			FileName:   value.FileName,
+			FileUrl:    url,
+			CreateDate: value.CreateDate,
+			Createby:   value.CreateBy,
+		}
+		files = append(files, Assignment)
 	}
 
 	assignment := &FindOneAssignmentResponseJSON{
@@ -55,7 +68,7 @@ func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.As
 		SendDoc:      input.SendDoc,
 		DeliveryTime: input.DeliveryTime,
 		IsShowMenu:   input.IsShowMenu,
-		File:         Assignment,
+		File:         files,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)

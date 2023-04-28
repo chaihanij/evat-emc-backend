@@ -46,7 +46,7 @@ type AssignmentResponse struct {
 	DeliveryTime  time.Time                 `json:"delivery_time"`
 	Consideration []ConsiderationAssignment `json:"consideration"`
 	IsShowMenu    bool                      `json:"isShowMenu"`
-	File          File                      `json:"files" bson:"files"`
+	File          []File                      `json:"files" bson:"files"`
 }
 
 type File struct {

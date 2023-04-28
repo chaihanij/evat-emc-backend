@@ -24,7 +24,7 @@ type Assignment struct {
 	Consideration []ConsiderationAssignment
 	// OverDue      time.Time
 	DeliveryTime time.Time
-	UploadFile   UploadFile
+	UploadFile   []UploadFile
 }
 
 type UploadFile struct {
@@ -97,4 +97,9 @@ type ExportTeamTopic struct {
 	Code      string
 	Name      string
 	Team_type string
+}
+
+type AssignmentPartialUpdateScore struct {
+	AssignmentUUID string
+	UploadFile     UploadFile
 }
