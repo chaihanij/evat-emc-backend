@@ -6,11 +6,13 @@ import (
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/assignments"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
+	"gitlab.com/chaihanij/evat/app/layers/repositories/logsetting"
 )
 
 type useCase struct {
 	AssignmentsRepo assignments.Repo
 	FilesRepo       files.Repo
+	LogsettingRepo  logsetting.Repo
 }
 
 type UseCase interface {
@@ -30,9 +32,10 @@ type UseCase interface {
 	UploadFileScore(ctx context.Context, assignmentUUID string, file *entities.File) (*entities.Assignment, error)
 }
 
-func InitUseCase(assignmentsRepo assignments.Repo, filesRepo files.Repo) UseCase {
+func InitUseCase(assignmentsRepo assignments.Repo, filesRepo files.Repo, logSettingRepo logsetting.Repo) UseCase {
 	return &useCase{
 		AssignmentsRepo: assignmentsRepo,
 		FilesRepo:       filesRepo,
+		LogsettingRepo:  logSettingRepo,
 	}
 }

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jinzhu/copier"
@@ -67,7 +66,6 @@ func (am *Assignment) ToEntity() (*entities.Assignment, error) {
 	assignment.Fileassignment = files
 
 	err := copier.Copy(&assignment, am)
-	fmt.Println("assignment :", assignment)
 	return &assignment, err
 }
 

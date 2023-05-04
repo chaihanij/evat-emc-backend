@@ -23,8 +23,8 @@ type Assignment struct {
 	SendDoc       bool
 	Consideration []ConsiderationAssignment
 	// OverDue      time.Time
-	DeliveryTime time.Time
-	Fileassignment   []Fileassignment
+	DeliveryTime   time.Time
+	Fileassignment []Fileassignment
 }
 
 type Fileassignment struct {
@@ -76,14 +76,15 @@ type AssignmentPartialUpdate struct {
 }
 
 type AssignmentFilter struct {
-	ID       *string
-	UUID     *string
-	TeamUUID *string
-	No       *int
-	Title    *string
-	Year     *string
-	Page     *int64
-	PageSize *int64
+	ID        *string
+	UUID      *string
+	User_UUID *string
+	TeamUUID  *string
+	No        *int
+	Title     *string
+	Year      *string
+	Page      *int64
+	PageSize  *int64
 }
 
 type ExportAssignmentTopic struct {

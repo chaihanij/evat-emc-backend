@@ -83,6 +83,7 @@ func (req *FileRequestJSON) ToEntity() *entities.File {
 		FileExtension:    req.FileExtension,
 		FileFullPath:     req.FileFullPath,
 		FilePath:         req.FilePath,
+		UpdateBy:         req.UpdatedBy,
 	}
 }
 

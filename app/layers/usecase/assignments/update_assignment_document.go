@@ -16,9 +16,16 @@ func (u useCase) UpdateAssignmentDocument(ctx context.Context, assignmentUUID st
 		return nil, err
 	}
 
+	
 	_, err = u.AssignmentsRepo.PartialUpdateAssignment(ctx, &entities.AssignmentPartialUpdate{UUID: assignmentUUID, Document: pointer.ToString(file.UUID)})
 	if err != nil {
 		return nil, err
 	}
+
+
+
+
+
+
 	return file, nil
 }

@@ -2,6 +2,7 @@ package assignments
 
 import (
 	"context"
+	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
@@ -9,6 +10,8 @@ import (
 )
 
 func (u useCase) UpdateAssignment(ctx context.Context, input *entities.AssignmentPartialUpdate) (*entities.Assignment, error) {
+	assignmentOld, _ := u.AssignmentsRepo.FindOneAssignment(ctx, &entities.AssignmentFilter{UUID: &input.UUID})
+
 	assignment, err := u.AssignmentsRepo.PartialUpdateAssignment(ctx, input)
 	if err != nil {
 		return nil, err
@@ -31,6 +34,17 @@ func (u useCase) UpdateAssignment(ctx context.Context, input *entities.Assignmen
 		if doc != nil {
 			assignment.Document = *doc
 		}
+	}
+	logSetting := entities.LogSetting{
+		NewData:     assignment,
+		UUID_User:   input.UpdatedBy,
+		OldData:     assignmentOld,
+		Discription: "update assignment",
+	}
+
+	_, err = u.LogsettingRepo.CreateLogSetting(ctx, &logSetting)
+	if err != nil {
+		fmt.Println("err :", err)
 	}
 
 	log.WithField("value", assignment).Debugln("UseCase FindOneAssignments")
