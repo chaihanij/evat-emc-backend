@@ -42,16 +42,17 @@ type TeamPartialUpdate struct {
 }
 
 type TeamFilter struct {
-	ID       *string
-	UUID     *string
-	Year     *string
-	IsVerify *bool
-	Sort     *string
-	Page     *int64
-	PageSize *int64
-	Name     *string
-	TeamType *string
-	Tel      *string
+	ID        *string
+	UUID      *string
+	Year      *string
+	IsVerify  *bool
+	Sort      *string
+	Page      *int64
+	PageSize  *int64
+	Name      *string
+	TeamType  *string
+	Tel       *string
+	User_UUID *string
 }
 
 type TeamSearch struct {

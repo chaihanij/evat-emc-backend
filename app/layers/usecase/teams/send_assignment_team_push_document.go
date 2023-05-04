@@ -2,6 +2,7 @@ package teams
 
 import (
 	"context"
+	"fmt"
 
 	"gitlab.com/chaihanij/evat/app/entities"
 )
@@ -28,9 +29,20 @@ func (u useCase) SendAssignmentTeamPushDocument(ctx context.Context, input *enti
 	// 	u.AssignmentTeamsRepo.UpdateAssignmentTeam(ctx, assignmentTeam)
 	// }
 
-	_, err = u.AssignmentTeamsRepo.UpdateAssignmentTeamPushDocument(ctx, input, file.UUID)
+	senddocTeam, err := u.AssignmentTeamsRepo.UpdateAssignmentTeamPushDocument(ctx, input, file.UUID)
 	if err != nil {
 		return nil, err
 	}
+
+	logsetting := entities.LogSetting{
+		NewData:     senddocTeam,
+		UUID_User:   input.UpdatedBy,
+		Discription: "send document Team",
+	}
+	_, err = u.LogsettingRepo.CreateLogSetting(ctx, &logsetting)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
+
 	return file, nil
 }

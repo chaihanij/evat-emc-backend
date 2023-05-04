@@ -6,6 +6,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/entities"
 	assignmentTeams "gitlab.com/chaihanij/evat/app/layers/repositories/assignment_teams"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
+	"gitlab.com/chaihanij/evat/app/layers/repositories/logsetting"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/omise"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/teams"
@@ -19,6 +20,7 @@ type useCase struct {
 	FilesRepo           files.Repo
 	AssignmentTeamsRepo assignmentTeams.Repo
 	OmiseRepo           omise.Repo
+	LogsettingRepo      logsetting.Repo
 }
 
 type UseCase interface {
@@ -43,7 +45,7 @@ func InitUseCase(teamsRepo teams.Repo,
 	usersRepo users.Repo, membersRepo members.Repo,
 	filesRepo files.Repo,
 	assignmentTeamsRepo assignmentTeams.Repo,
-	omiseRepo omise.Repo) UseCase {
+	omiseRepo omise.Repo, logSettingRepo logsetting.Repo) UseCase {
 	return &useCase{
 		TeamsRepo:           teamsRepo,
 		UsersRepo:           usersRepo,
@@ -51,5 +53,6 @@ func InitUseCase(teamsRepo teams.Repo,
 		FilesRepo:           filesRepo,
 		AssignmentTeamsRepo: assignmentTeamsRepo,
 		OmiseRepo:           omiseRepo,
+		LogsettingRepo:      logSettingRepo,
 	}
 }
