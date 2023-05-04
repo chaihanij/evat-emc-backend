@@ -22,6 +22,7 @@ type Repo interface {
 	UpdateUser(ctx context.Context, userFilter, input *entities.User) (*entities.User, error)
 	
 	FindOneUserLogin(ctx context.Context, input *entities.UserFilter) (*entities.User, error)
+	CreateUserLogin(ctx context.Context, input *entities.LastLogin) (*entities.LastLogin, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

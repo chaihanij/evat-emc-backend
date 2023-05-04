@@ -17,4 +17,5 @@ const (
 	CollectionEmail             string = "email"
 	CollectionEmailContact      string = "email_contact"
 	CollectionConfig            string = "config"
+	CollectionLastLogin         string = "last_login"
 )

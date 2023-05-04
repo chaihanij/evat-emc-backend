@@ -27,56 +27,11 @@ func (r repo) getFindOptions(input *entities.TeamFilter) *options.FindOptions {
 func (r repo) FindAllTeam(ctx context.Context, input *entities.TeamFilter) ([]entities.Team, error) {
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
-	pagination := bson.M{"$match": bson.M{}}
-	skip := bson.M{"$match": bson.M{}}
-	if input.PageSize != nil && input.Page != nil {
-		pageSize := *input.PageSize
-		page := *input.Page
-		offset := (page - 1) * pageSize
-
-		pagination = bson.M{
-			"$limit": *input.PageSize,
-		}
-		skip = bson.M{
-			"$skip": offset,
-		}
-
-	}
-
-	match := bson.M{
-		"$match": bson.M{},
-	}
-	if input.Tel != nil {
-		match = bson.M{
-			"$match": bson.M{
-				"users.tel": bson.M{
-					"$regex": *input.Tel,
-				},
-			},
-		}
-	}
-
-	filter := []bson.M{
-		{
-			"$lookup": bson.M{
-				"from":         "users",
-				"localField":   "uuid",
-				"foreignField": "team_uuid",
-				"as":           "users",
-			},
-		},
-		{
-			"$unwind": "$users",
-		},
-		match,
-		pagination,
-		skip,
-	}
+	findOptions := r.getFindOptions(input)
+	filter := models.NewTeamFilter(input)
 	cursor, err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionTeams).
-		// Find(ctx, filter, findOptions)
-		Aggregate(ctx, filter)
-
+		Find(ctx, filter, findOptions)
 	if err != nil {
 		log.WithError(err).Errorln("DB FindAllTeam Error")
 		return nil, err

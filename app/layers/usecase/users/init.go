@@ -21,6 +21,8 @@ type UseCase interface {
 	FindAllUser(ctx context.Context, input *entities.UserFilter) (*int64, []entities.User, error)
 	FindOneUser(ctx context.Context, input *entities.UserFilter) (*entities.User, error)
 	UpdateUser(ctx context.Context, input *entities.UserPartialUpdate) (*entities.User, error)
+
+	CreatLastLogin(ctx context.Context, input *entities.LastLogin) (*entities.LastLogin, error)
 }
 
 func InitUseCase(usersRepo users.Repo) UseCase {
