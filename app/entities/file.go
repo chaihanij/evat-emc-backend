@@ -12,6 +12,7 @@ type File struct {
 	FilePath         string
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
+	UpdateBy         string
 }
 
 type Files []File
