@@ -24,6 +24,7 @@ import (
 	_fildracteamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_race_teams"
 	_fieldracesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/field_races"
 	_filesRepo "gitlab.com/chaihanij/evat/app/layers/repositories/files"
+	_logsettingRepo "gitlab.com/chaihanij/evat/app/layers/repositories/logsetting"
 	_membersRepo "gitlab.com/chaihanij/evat/app/layers/repositories/members"
 	_teamsRepo "gitlab.com/chaihanij/evat/app/layers/repositories/teams"
 	_userRepo "gitlab.com/chaihanij/evat/app/layers/repositories/users"
@@ -127,6 +128,7 @@ func main() {
 	emailcontactRepo := _emailcontact.InitRepo(db)
 	omiseRepo := _omiseRepo.InitRepo(env.OMISEPublicKey, env.OMISEPrivateKey)
 	configRepo := _configRepo.InitRepo(db)
+	logsettingRepo := _logsettingRepo.InitRepo(db)
 	// config repo
 	assignmentsRepo.Config()
 	filesRepo.Config()
@@ -144,9 +146,9 @@ func main() {
 	configRepo.Config()
 
 	// usecase
-	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo)
+	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo, logsettingRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
-	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo, omiseRepo)
+	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo, omiseRepo, logsettingRepo)
 	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
