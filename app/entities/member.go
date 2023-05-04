@@ -47,11 +47,12 @@ type MemberPartialUpdate struct {
 }
 
 type MemberFilter struct {
-	ID       *string
-	UUID     *string
-	Year     *string
-	TeamUUID *string
-	Sort     *string
-	Page     *int64
-	PageSize *int64
+	ID        *string
+	UUID      *string
+	Year      *string
+	TeamUUID  *string
+	Sort      *string
+	Page      *int64
+	PageSize  *int64
+	User_UUID *string
 }

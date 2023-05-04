@@ -2,6 +2,7 @@ package members
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/AlekSi/pointer"
 	log "github.com/sirupsen/logrus"
@@ -10,6 +11,11 @@ import (
 )
 
 func (u useCase) UpdateMember(ctx context.Context, input *entities.MemberPartialUpdate) (*entities.Member, error) {
+	memberOld, err := u.MembersRepo.FindOneMember(ctx, &entities.MemberFilter{UUID: &input.UUID})
+	if err != nil {
+		fmt.Println("err 123 :", err)
+		return nil, err
+	}
 	member, err := u.MembersRepo.PartialUpdateMember(ctx, input)
 	if err != nil {
 		return nil, err
@@ -33,6 +39,19 @@ func (u useCase) UpdateMember(ctx context.Context, input *entities.MemberPartial
 		}
 		member.Documents = documents
 	}
+
+	logsetting := entities.LogSetting{
+		OldData:     memberOld,
+		NewData:     member,
+		UUID_User:   *input.UpdatedBy,
+		Discription: "Update Member",
+	}
+
+	_, err = u.LogsettingRepo.CreateLogSetting(ctx, &logsetting)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
+
 	log.WithField("member", member).Debugln("UpdateMember")
 	return member, nil
 }

@@ -5,12 +5,14 @@ import (
 
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
+	"gitlab.com/chaihanij/evat/app/layers/repositories/logsetting"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/members"
 )
 
 type useCase struct {
-	MembersRepo members.Repo
-	FilesRepo   files.Repo
+	MembersRepo    members.Repo
+	FilesRepo      files.Repo
+	LogsettingRepo logsetting.Repo
 }
 
 type UseCase interface {
@@ -24,9 +26,10 @@ type UseCase interface {
 	UpdateMemberPushDocument(ctx context.Context, memberUUID string, file *entities.File) (*entities.File, error)
 }
 
-func InitUseCase(membersRepo members.Repo, filesRepo files.Repo) UseCase {
+func InitUseCase(membersRepo members.Repo, filesRepo files.Repo , logSettingRepo logsetting.Repo ) UseCase {
 	return &useCase{
 		MembersRepo: membersRepo,
 		FilesRepo:   filesRepo,
+		LogsettingRepo:      logSettingRepo,
 	}
 }
