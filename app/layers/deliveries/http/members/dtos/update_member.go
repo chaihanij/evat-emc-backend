@@ -27,7 +27,9 @@ type UpdateMemberRequest struct {
 	TeamUUID     string `json:"teamUUID" validate:"required"`
 	IsTeamLeader bool   `json:"isTeamLeader"`
 	//
-	UpdatedBy string `json:"-" swaggerignore:"true"`
+	UpdatedBy  string    `json:"-" swaggerignore:"true"`
+	BirthDay   time.Time `json:"birth_day" validate:"required"`
+	NationalId string    `json:"national_id" validate:"required"`
 }
 
 func (req *UpdateMemberRequest) Parse(c *gin.Context) (*UpdateMemberRequest, error) {
@@ -77,6 +79,8 @@ func (req *UpdateMemberRequest) ToEntity() *entities.MemberPartialUpdate {
 		TeamUUID:     &req.TeamUUID,
 		IsTeamLeader: &req.IsTeamLeader,
 		UpdatedBy:    &req.UpdatedBy,
+		NationalId:   &req.NationalId,
+		BirthDay:     &req.BirthDay,
 	}
 	return member
 }

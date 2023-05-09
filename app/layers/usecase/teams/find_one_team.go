@@ -37,7 +37,7 @@ func (u useCase) FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*
 				member.Documents = []entities.File{}
 			}
 		}
-		log.WithField("member", member).Debugln("FindOneTeam Member")
+		// log.WithField("member", member).Debugln("FindOneTeam Member")
 		members[index] = member
 	}
 
@@ -55,7 +55,7 @@ func (u useCase) FindOneTeam(ctx context.Context, input *entities.TeamFilter) (*
 			team.Slip = *silp
 		}
 	}
-	log.WithField("team", team).Debugln("FindOneTeam")
+	// log.WithField("team", team).Debugln("FindOneTeam")
 
 	return team, nil
 }

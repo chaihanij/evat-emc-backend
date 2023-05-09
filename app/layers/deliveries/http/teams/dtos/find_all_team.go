@@ -58,6 +58,7 @@ func (m *FindAllTeamResponseJSON) Parse(data []entities.Team) *FindAllTeamRespon
 		}
 		teams = append(teams, *team)
 	}
+
 	return &teams
 }
 

@@ -13,18 +13,20 @@ import (
 )
 
 type CreateMemberRequestJSON struct {
-	FirstName    string `json:"firstname" validate:"required"`
-	LastName     string `json:"lastname"  validate:"required"`
-	Address      string `json:"address"`
-	Email        string `json:"email"  validate:"email"`
-	Tel          string `json:"tel"`
-	Academy      string `json:"academy"`
-	Major        string `json:"major"`
-	Year         string `json:"year"`
-	MemberType   string `json:"memberType" validate:"required,memberType" example:"MEMBER, MENTOR"`
-	TeamUUID     string `json:"teamUUID" validate:"required"`
-	IsTeamLeader bool   `json:"isTeamLeader"`
-	CreatedBy    string `json:"-" swaggerignore:"true"`
+	FirstName    string    `json:"firstname" validate:"required"`
+	LastName     string    `json:"lastname"  validate:"required"`
+	Address      string    `json:"address"`
+	Email        string    `json:"email"  validate:"email"`
+	Tel          string    `json:"tel"`
+	Academy      string    `json:"academy"`
+	Major        string    `json:"major"`
+	Year         string    `json:"year"`
+	MemberType   string    `json:"memberType" validate:"required,memberType" example:"MEMBER, MENTOR"`
+	TeamUUID     string    `json:"teamUUID" validate:"required"`
+	IsTeamLeader bool      `json:"isTeamLeader"`
+	CreatedBy    string    `json:"-" swaggerignore:"true"`
+	BirthDay     time.Time `json:"birth_day" validate:"required" `
+	NationalId   string    `json:"national_id" validate:"required" `
 }
 
 type CreateMemberResponseJSON MemberResponse
@@ -72,6 +74,8 @@ func (req *CreateMemberRequestJSON) ToEntity() *entities.Member {
 		TeamUUID:     req.TeamUUID,
 		IsTeamLeader: req.IsTeamLeader,
 		CreatedBy:    req.CreatedBy,
+		NationalId:   req.NationalId,
+		BirthDay:     req.BirthDay,
 	}
 	return member
 }

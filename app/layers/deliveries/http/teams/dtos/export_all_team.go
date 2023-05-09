@@ -83,8 +83,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 
 	// fmt.Println("team :", teams)
 	id := 1
-	for index, value := range teams {
-		fmt.Println("index :", index, "value :", value)
+	for _, value := range teams {
 
 		for i := 1; i <= 1; i++ {
 			id += 1

@@ -22,6 +22,8 @@ func UpdateMember(input *entities.Member) *bson.D {
 		bson.E{Key: "is_team_leader", Value: input.IsTeamLeader},
 		bson.E{Key: "team_uuid", Value: input.TeamUUID},
 		bson.E{Key: "updated_at", Value: time.Now()},
+		bson.E{Key: "birth_day", Value: input.BirthDay},
+		bson.E{Key: "national_id", Value: input.NationalId},
 	}
 
 	if val, ok := input.Image.(string); ok {

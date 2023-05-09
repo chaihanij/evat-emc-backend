@@ -27,6 +27,8 @@ func NewMember(input *entities.Member) *Member {
 		CreatedAt:  now,
 		UpdatedAt:  now,
 		CreatedBy:  input.CreatedBy,
+		NationalId: input.NationalId,
+		BirthDay:   input.BirthDay,
 	}
 	if val, ok := input.Image.(string); ok {
 		member.Image = val

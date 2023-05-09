@@ -22,6 +22,8 @@ type Member struct {
 	UpdatedAt    time.Time
 	CreatedBy    string
 	UpdatedBy    string
+	BirthDay     time.Time
+	NationalId   string
 }
 
 type Members []Member
@@ -44,6 +46,8 @@ type MemberPartialUpdate struct {
 	TeamUUID     *string
 	CreatedBy    *string
 	UpdatedBy    *string
+	BirthDay     *time.Time
+	NationalId   *string
 }
 
 type MemberFilter struct {

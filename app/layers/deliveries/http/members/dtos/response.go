@@ -44,6 +44,8 @@ type MemberResponse struct {
 	UpdatedAt    time.Time      `json:"updatedAt"`
 	CreatedBy    string         `json:"createdBy"`
 	UpdatedBy    string         `json:"updatedBy"`
+	BirthDay     time.Time      `json:"birth_day" `
+	NationalId   string         `json:"national_id" `
 }
 
 type MetaDataResponse struct {

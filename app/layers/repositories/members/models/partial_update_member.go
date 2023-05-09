@@ -58,6 +58,13 @@ func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 		updateFields = append(updateFields, bson.E{Key: "team_uuid", Value: input.TeamUUID})
 	}
 
+	if input.BirthDay != nil {
+		updateFields = append(updateFields, bson.E{Key: "birth_day", Value: input.BirthDay})
+	}
+	if input.NationalId != nil {
+		updateFields = append(updateFields, bson.E{Key: "national_id", Value: input.NationalId})
+	}
+
 	if val, ok := input.Image.(*string); ok {
 		updateFields = append(updateFields, bson.E{Key: "image", Value: val})
 	}
@@ -65,6 +72,7 @@ func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 	if val, ok := input.Documents.(*[]string); ok {
 		updateFields = append(updateFields, bson.E{Key: "document", Value: val})
 	}
+
 	update := bson.D{{Key: "$set", Value: updateFields}}
 	log.WithField("value", update).Debugln("models.PartialUpdateMember")
 	return &update

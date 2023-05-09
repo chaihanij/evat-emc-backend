@@ -28,6 +28,8 @@ type Member struct {
 	UpdatedAt    time.Time          `bson:"updated_at"`
 	CreatedBy    string             `bson:"created_by"`
 	UpdatedBy    string             `bson:"updated_by"`
+	BirthDay     time.Time          `bson:"birth_day" `
+	NationalId   string             `bson:"national_id" `
 }
 
 func (m *Member) ToEntity() (*entities.Member, error) {

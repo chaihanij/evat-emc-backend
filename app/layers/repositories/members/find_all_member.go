@@ -43,6 +43,6 @@ func (r repo) FindAllMember(ctx context.Context, input *entities.MemberFilter) (
 		log.WithError(err).Errorln("DB FineAllMember Error")
 		return nil, err
 	}
-	log.WithField("value", members).Debugln("DB FindAllMember")
+	// log.WithField("value", members).Debugln("DB FindAllMember")
 	return members.ToEntity(), nil
 }

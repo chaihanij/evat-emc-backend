@@ -52,6 +52,8 @@ type MemberResponse struct {
 	UpdatedAt    time.Time      `json:"updatedAt"`
 	CreatedBy    string         `json:"createdBy"`
 	UpdatedBy    string         `json:"updatedBy"`
+	BirthDay     time.Time      `json:"birth_day" validate:"required" `
+	NationalId   string         `json:"national_id" validate:"required" `
 }
 
 type MembersResponse []MemberResponse

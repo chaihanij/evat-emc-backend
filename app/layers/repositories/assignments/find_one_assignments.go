@@ -14,6 +14,7 @@ func (r repo) FindOneAssignment(ctx context.Context, input *entities.AssignmentF
 	log.Debugln("DB FindOneAssignment")
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
+
 	filter := models.NewAssignmentFilter(input)
 	var assignment models.Assignment
 	err := r.MongoDBClient.Database(env.MongoDBName).
@@ -24,6 +25,6 @@ func (r repo) FindOneAssignment(ctx context.Context, input *entities.AssignmentF
 		log.WithError(err).Errorln("DB FindOneAssignment Error")
 		return nil, err
 	}
-	log.WithField("value", assignment).Debugln("DB FindOneAssignment")
+	// log.WithField("	value", assignment).Debugln("DB FindOneAssignment")
 	return assignment.ToEntity()
 }
