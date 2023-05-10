@@ -40,6 +40,10 @@ func NewUserFilter(input interface{}) *bson.M {
 		if val.IsActive != nil {
 			filter["is_active"] = val.IsActive
 		}
+		if val.Tel != nil {
+			filter["tel"] = bson.M{"$regex": val.Tel}
+
+		}
 	}
 	log.WithField("value", filter).Debugln("models.NewUserFilter")
 	return &filter

@@ -67,6 +67,7 @@ type UserFilter struct {
 	IsActive      *bool
 	ActivateCode  *string
 	AccessToken   *string
+	Tel           *string
 
 	Page     *int64
 	PageSize *int64
