@@ -15,7 +15,7 @@ func (u useCase) DeleteMember(ctx context.Context, input *entities.MemberFilter)
 	}
 
 	logsetting := entities.LogSetting{
-		NewData:     member,
+		OldData:     member,
 		UUID_User:   *input.User_UUID,
 		Discription: "Delete Member",
 	}
