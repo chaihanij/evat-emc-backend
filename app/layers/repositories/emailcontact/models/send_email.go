@@ -40,8 +40,10 @@ func SendEmail(data *entities.CreateContactEmail) bool {
 	// 	fmt.Println(err)
 	// }
 
-	email.Sender = "sanch_ai@hotmail.com"
-	email.Password = "0877380568"
+	// email.Sender = "sanch_ai@hotmail.com"
+	// email.Password = "0877380568"
+	email.Sender = "pr@evat.or.th"
+	email.Password = "evat0863903339"
 
 	mailto := strings.Split(receiver, ",")
 	mailcc := strings.Split(cc, ",")
