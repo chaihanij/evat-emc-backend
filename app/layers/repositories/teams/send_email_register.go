@@ -147,7 +147,7 @@ func (r repo) SendEmailRegister(data string, activate_code string) error {
                         
                         </div>
                         <div class="txt-link">
-                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/change-password?activatecode` + activate_code + `" target="_blank" >http://evat.com/123445</a></span></p>
+                            <p>หรือกดลิงก์:&nbsp;<span> <a href="https://emc.evat.or.th/dev/change-password?activatecode` + activate_code + `" target="_blank" > https://emc.evat.or.th/dev/change-password?activatecode ` + activate_code + ` </a></span></p>
                         </div>
                         <div class="txt-footer">
                             <p>ทั้งนี้ทางสมาคมจะยืนยันความความถูกต้องให้อีกครั้ง</p>
@@ -183,7 +183,7 @@ func (r repo) SendEmailRegister(data string, activate_code string) error {
 	// email.Sender = "sanch_ai@hotmail.com"
 	// email.Password = ""
 
-    email.Sender = "evat-01@outlook.com"
+	email.Sender = "evat-01@outlook.com"
 	email.Password = "evat0863903339"
 
 	mailto := strings.Split(receiver, ",")
