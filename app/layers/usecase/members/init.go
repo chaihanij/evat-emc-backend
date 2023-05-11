@@ -24,12 +24,13 @@ type UseCase interface {
 	UpdateMemberImage(ctx context.Context, memberUUID string, newFile *entities.File) (*entities.File, error)
 	UpdateMemberPullDocument(ctx context.Context, memberUUID string, fileUUID string) error
 	UpdateMemberPushDocument(ctx context.Context, memberUUID string, file *entities.File) (*entities.File, error)
+	UseCaseMemberCheckeIn(ctx context.Context, input *entities.MemberCheckIn) (*entities.Member, error)
 }
 
-func InitUseCase(membersRepo members.Repo, filesRepo files.Repo , logSettingRepo logsetting.Repo ) UseCase {
+func InitUseCase(membersRepo members.Repo, filesRepo files.Repo, logSettingRepo logsetting.Repo) UseCase {
 	return &useCase{
-		MembersRepo: membersRepo,
-		FilesRepo:   filesRepo,
-		LogsettingRepo:      logSettingRepo,
+		MembersRepo:    membersRepo,
+		FilesRepo:      filesRepo,
+		LogsettingRepo: logSettingRepo,
 	}
 }

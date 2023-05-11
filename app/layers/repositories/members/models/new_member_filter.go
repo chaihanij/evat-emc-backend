@@ -34,6 +34,12 @@ func NewMemberFilter(input interface{}) *bson.M {
 			filter["team_uuid"] = val.TeamUUID
 		}
 	}
+	if val, ok := input.(*entities.MemberCheckIn); ok {
+		if val.Member_uuid != nil {
+			filter["uuid"] = val.Member_uuid
+		}
+	}
+
 	log.WithField("value", filter).Debugln("models.NewMemberFilter")
 	return &filter
 }

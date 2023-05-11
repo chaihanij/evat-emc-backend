@@ -28,5 +28,8 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/members/:member_uuid/image", handler.UpdateMemberImage)
 		v1Auth.POST("/members/:member_uuid/documents", handler.UpdateMemberPushDocument)
 		v1Auth.DELETE("/members/:member_uuid/documents/:document_uuid", handler.UpdateMemberPullDocument)
+
+		//checkin
+		v1Auth.POST("/member/checkin/:member_uuid", handler.MemberCheckIn)
 	}
 }

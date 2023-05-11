@@ -9,27 +9,32 @@ import (
 )
 
 type Member struct {
-	ID           primitive.ObjectID `bson:"_id"`
-	UUID         string             `bson:"uuid"`
-	FirstName    string             `bson:"firstname"`
-	LastName     string             `bson:"lastname"`
-	Address      string             `bson:"address"`
-	Email        string             `bson:"email"`
-	Tel          string             `bson:"tel"`
-	Academy      string             `bson:"academy"`
-	Major        string             `bson:"major"`
-	Year         string             `bson:"year"`
-	MemberType   string             `bson:"member_type"`
-	IsTeamLeader bool               `bson:"is_team_leader"`
-	TeamUUID     string             `bson:"team_uuid"`
-	Image        string             `bson:"image"`
-	Documents    []string           `bson:"documents"`
-	CreatedAt    time.Time          `bson:"created_at"`
-	UpdatedAt    time.Time          `bson:"updated_at"`
-	CreatedBy    string             `bson:"created_by"`
-	UpdatedBy    string             `bson:"updated_by"`
-	BirthDay     time.Time          `bson:"birth_day" `
-	NationalId   string             `bson:"national_id" `
+	ID             primitive.ObjectID `bson:"_id"`
+	UUID           string             `bson:"uuid"`
+	FirstName      string             `bson:"firstname"`
+	LastName       string             `bson:"lastname"`
+	Address        string             `bson:"address"`
+	Email          string             `bson:"email"`
+	Tel            string             `bson:"tel"`
+	Academy        string             `bson:"academy"`
+	Major          string             `bson:"major"`
+	Year           string             `bson:"year"`
+	MemberType     string             `bson:"member_type"`
+	IsTeamLeader   bool               `bson:"is_team_leader"`
+	TeamUUID       string             `bson:"team_uuid"`
+	Image          string             `bson:"image"`
+	Documents      []string           `bson:"documents"`
+	CreatedAt      time.Time          `bson:"created_at"`
+	UpdatedAt      time.Time          `bson:"updated_at"`
+	CreatedBy      string             `bson:"created_by"`
+	UpdatedBy      string             `bson:"updated_by"`
+	BirthDay       time.Time          `bson:"birth_day" `
+	NationalId     string             `bson:"national_id" `
+	Is_checkin     bool               `bson:"is_checkin"`
+	Checkin_date   time.Time          `bson:"checkin_date"`
+	Check_national bool               `bson:"is_national"`
+	Is_check_data  bool               `bson:"is_data"`
+	Is_Check_image bool               `bson:"is_image"`
 }
 
 func (m *Member) ToEntity() (*entities.Member, error) {
