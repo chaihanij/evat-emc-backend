@@ -42,7 +42,10 @@ func SendEmail(data *entities.CreateContactEmail) bool {
 
 	// email.Sender = "sanch_ai@hotmail.com"
 	// email.Password = "0877380568"
-	email.Sender = "pr@evat.or.th"
+	// email.Sender = "pr@evat.or.th"
+	// email.Password = "evat0863903339"
+
+	email.Sender = "evat-01@outlook.com"
 	email.Password = "evat0863903339"
 
 	mailto := strings.Split(receiver, ",")

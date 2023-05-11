@@ -181,9 +181,9 @@ func (r repo) SendEmailRegister(data string, activate_code string) error {
 	// email.Sender = "pr@evat.or.th"
 	// email.Password = "evatOMS100%"
 	// email.Sender = "sanch_ai@hotmail.com"
-	// email.Password = "0877380568"
+	// email.Password = ""
 
-    email.Sender = "pr@evat.or.th"
+    email.Sender = "evat-01@outlook.com"
 	email.Password = "evat0863903339"
 
 	mailto := strings.Split(receiver, ",")
