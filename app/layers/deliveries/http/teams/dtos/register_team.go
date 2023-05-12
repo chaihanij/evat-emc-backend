@@ -44,7 +44,7 @@ func (req *RegisterTeamRequestJSON) Parse(c *gin.Context) (*RegisterTeamRequestJ
 	return req, nil
 }
 
-func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) {
+func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User, *entities.Member) {
 
 	return &entities.Team{
 			Code:     req.Code,
@@ -63,6 +63,15 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User) 
 			Tel:        req.Tel,
 			Year:       req.Year,
 			Role:       string(types.UserRoleUSER),
+		},
+		&entities.Member{
+			UUID:      uuid.NewString(),
+			FirstName: req.FirstName,
+			LastName:  req.LastName,
+			Email:     req.Email,
+			Academy:   req.Academy,
+			Tel:       req.Tel,
+			Year:      req.Year,
 		}
 }
 

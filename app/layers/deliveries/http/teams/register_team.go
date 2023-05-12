@@ -12,8 +12,8 @@ func (h *Handler) RegisterTeam(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	team, user := request.ToEntity()
-	team, user, charge, err := h.TeamsUseCase.RegisterTeam(c.Request.Context(), team, user)
+	team, user, member := request.ToEntity()
+	team, user, charge, err := h.TeamsUseCase.RegisterTeam(c.Request.Context(), team, user, member)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return
