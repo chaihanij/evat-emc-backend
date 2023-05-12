@@ -1,67 +1,90 @@
 package dtos
 
 import (
-	"time"
-
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/errors"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type Config struct {
-	ID             primitive.ObjectID `json:"_id" bson:"_id"`
-	RegisterConfig RegisterConfig     `json:"register_config" bson:"register_config"`
+type ConfigReq struct {
+	ConfigUUID string `uri:"config_uuid"`
+
+	// RegisterConfig RegisterConfig `json:"register_config" bson:"register_config"`
 }
 
-type RegisterConfig struct {
-	StartDate time.Time `json:"start_date" bson:"start_date"`
-	EndDate   time.Time `json:"end_date" bson:"end_date"`
-}
+// type RegisterConfig struct {
+// 	StartDate time.Time `json:"start_date" bson:"start_date"`
+// 	EndDate   time.Time `json:"end_date" bson:"end_date"`
+// }
 
-func (Register *RegisterConfig) Parse(c *gin.Context, data *entities.RegisterConfig) *RegisterConfig {
-	copier.Copy(Register, data)
-	return Register
+// func (Register *RegisterConfig) Parse(c *gin.Context, data *entities.DateRegisterConfig) *RegisterConfig {
+// 	copier.Copy(Register, data)
+// 	return Register
 
-}
+// }
 
-func (req *Config) Parse(c *gin.Context) (*Config, error) {
-	if err := c.ShouldBindJSON(req); err != nil {
+func (req *ConfigReq) Parse(c *gin.Context) (*ConfigReq, error) {
+	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 
 	}
 	return req, nil
 }
 
-type ConfigResponse Config
-type RegisterConfigs []RegisterConfig
+func (req *ConfigReq) ToEntity() *entities.Config {
 
-func (res *ConfigResponse) Parse(c *gin.Context, input *entities.Config) *ConfigResponse {
-	var ConFig RegisterConfig
-
-	if val, ok := input.RegisterConfig.(entities.RegisterConfig); ok {
-
-		ConFig.StartDate = val.Start_date
-		ConFig.EndDate = val.End_date
-		// 	for _, value := range val {
-		// 		registerConfig := new(RegisterConfig).Parse(c, &value)
-
-		// 		ConFig = append(ConFig, *registerConfig)
-
-		// 	}
+	return &entities.Config{
+		UUID: req.ConfigUUID,
 	}
 
-	// ConFig.StartDate = input.RegisterConfig.
-
-	return &ConfigResponse{
-		// ID: input.ID,
-		RegisterConfig: ConFig,
-	}
 }
 
-func (req *Config) ToEntity() *entities.Config {
-	return &entities.Config{
-		RegisterConfig: req.RegisterConfig,
+type ConfigRes struct {
+	Uuid           string      `json:"uuid"`
+	Registerconfig interface{} `json:"registerconfig"`
+	Startproject   interface{} `json:"startproject"`
+}
+
+// type Registerconfig struct {
+// 	StartDate time.Time `json:"start_date" bson:"start_date"`
+// 	EndDate   time.Time `json:"end_date" bson:"end_date"`
+// }
+
+// type Startproject struct {
+// 	StartDate time.Time `json:"start_date" bson:"start_date"`
+// 	EndDate   time.Time `json:"end_date" bson:"end_date"`
+// }
+
+func (m *ConfigRes) Parse(c *gin.Context, input *entities.Config) *ConfigRes {
+
+	// var reg interface{} = input.RegisterConfig
+	// // fmt.Println("reg :", reg)
+
+	// register, _ := reg.(entities.DateRegisterConfig)
+	// fmt.Println("reg :", register)
+	// var startproject interface{} = input.StartProject
+	// start, _ := startproject.(Startproject)
+
+	// p, ok := i.()
+
+	// var registerconfig Registerconfig
+	// var startproject Startproject
+
+	// reg := input.RegisterConfig.(entities.DateRegisterConfig)
+	// project := input.RegisterConfig.(entities.DateStartProject)
+
+	// registerconfig.StartDate = reg.Start_date
+	// registerconfig.EndDate = reg.End_date
+
+	// startproject.StartDate = project.Start_date
+	// startproject.EndDate = project.End_date
+
+	// // startproject := input.StartProject.(entities.Da)
+
+	configRes := &ConfigRes{
+		Uuid:           input.UUID,
+		Registerconfig: input.RegisterConfig,
+		Startproject:   input.StartProject,
 	}
+	return configRes
 }

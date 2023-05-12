@@ -7,18 +7,18 @@ import (
 )
 
 func (h *Handler) FindOneConfig(c *gin.Context) {
-	request, err := new(dtos.Config).Parse(c)
+	// fmt.Println("request :", c)
+	request, err := new(dtos.ConfigReq).Parse(c)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-
 	config, err := h.ConfigUseCase.FindOneConfig(c.Request.Context(), request.ToEntity())
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-	responseData := new(dtos.ConfigResponse).Parse(c, config)
+	responseData := new(dtos.ConfigRes).Parse(c, config)
 
 	utils.JSONSuccessResponse(c, responseData)
 

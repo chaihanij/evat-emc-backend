@@ -14,6 +14,7 @@ type repo struct {
 type Repo interface {
 	Config() ([]string, error)
 	FindOneConfig(ctx context.Context, input *entities.Config) (*entities.Config, error)
+	UpdateConfig(ctx context.Context, input *entities.Config) (*entities.Config, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

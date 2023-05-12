@@ -13,6 +13,7 @@ type useCase struct {
 
 type UseCase interface {
 	FindOneConfig(ctx context.Context, input *entities.Config) (*entities.Config, error)
+	UpdateConfigs(ctx context.Context, input *entities.Config) (*entities.Config, error)
 }
 
 func InitUseCase(config config.Repo) UseCase {

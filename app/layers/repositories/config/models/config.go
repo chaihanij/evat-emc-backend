@@ -9,8 +9,13 @@ import (
 )
 
 type Config struct {
-	ID             primitive.ObjectID `json:"id" bson:"id" `
-	RegisterConfig RegisterConfig     `json:"register_config" bson:"register_config"`
+	ID             primitive.ObjectID `json:"_id" bson:"_id" `
+	RegisterConfig RegisterConfig     `json:"registerconfig" bson:"registerconfig"`
+	StartProject   StartProject       `json:"startproject"`
+}
+type StartProject struct {
+	StartDate time.Time `json:"start_date" bson:"start_date"`
+	EndDate   time.Time `json:"end_date" bson:"end_date" `
 }
 
 type RegisterConfig struct {
@@ -21,8 +26,6 @@ type RegisterConfig struct {
 func (t *Config) ToEntity() (*entities.Config, error) {
 	var Config entities.Config
 	err := copier.Copy(&Config, t)
-	return &Config , err
+	return &Config, err
 
 }
-
-
