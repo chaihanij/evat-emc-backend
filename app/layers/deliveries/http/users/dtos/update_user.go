@@ -25,8 +25,9 @@ type UpdateUserRequestJSON struct {
 	Year      *string `json:"year" validate:""`
 	TeamUUID  *string `json:"teamUUID" uri:"teamUUID" validate:""`
 	// TeamUUID  *string `json:"teamUUID" validate:""`
-	IsActive  *bool  `json:"isActive" validate:""`
-	UpdatedBy string `json:"-" validate:""`
+	IsActive  *bool   `json:"isActive" validate:""`
+	UpdatedBy string  `json:"-" validate:""`
+	Prefix    *string `json:"prefix"`
 }
 
 type UpdateUserResponseJSON struct {
@@ -45,6 +46,7 @@ type UpdateUserResponseJSON struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 	CreatedBy string    `json:"createdBy"`
 	UpdatedBy string    `json:"updatedBy"`
+	Prefix    string    `json:"prefix"`
 }
 
 func (req *UpdateUserRequestJSON) Parse(c *gin.Context) (*UpdateUserRequestJSON, error) {
@@ -95,6 +97,7 @@ func (req *UpdateUserRequestJSON) ToEntity() *entities.UserPartialUpdate {
 		TeamUUID:  req.TeamUUID,
 		IsActive:  req.IsActive,
 		UpdatedBy: &req.UpdatedBy,
+		Prefix:    req.Prefix,
 	}
 }
 
@@ -157,10 +160,6 @@ func (req *UpdateActivateCode) ToEntity() *entities.UserPartialUpdate {
 		UpdatedBy: &req.UpdatedBy,
 	}
 }
-
-
-
-
 
 type UpdateUserResponseSwagger struct {
 	StatusCode    int                    `json:"statusCode" example:"1000"`

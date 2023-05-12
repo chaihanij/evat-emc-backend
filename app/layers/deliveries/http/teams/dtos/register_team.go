@@ -25,6 +25,7 @@ type RegisterTeamRequestJSON struct {
 	Occupation string `json:"occupation"`
 	IsConsent  bool   `json:"isConsent" validate:"required"`
 	Code       string `json:"code"`
+	Prefix     string `json:"prefix"`
 }
 
 func (req *RegisterTeamRequestJSON) Parse(c *gin.Context) (*RegisterTeamRequestJSON, error) {
@@ -63,6 +64,7 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User, 
 			Tel:        req.Tel,
 			Year:       req.Year,
 			Role:       string(types.UserRoleUSER),
+			Prefix:     req.Prefix,
 		},
 		&entities.Member{
 			UUID:      uuid.NewString(),
@@ -72,6 +74,7 @@ func (req *RegisterTeamRequestJSON) ToEntity() (*entities.Team, *entities.User, 
 			Academy:   req.Academy,
 			Tel:       req.Tel,
 			Year:      req.Year,
+			Prefix:    &req.Prefix,
 		}
 }
 

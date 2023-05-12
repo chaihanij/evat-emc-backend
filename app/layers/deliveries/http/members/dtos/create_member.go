@@ -31,6 +31,7 @@ type CreateMemberRequestJSON struct {
 	Check_national bool      `json:"is_national"`
 	Is_check_data  bool      `json:"is_data"`
 	Is_Check_image bool      `json:"is_image"`
+	Prefix         string    `json:"prefix"`
 }
 
 type CreateMemberResponseJSON MemberResponse
@@ -80,6 +81,7 @@ func (req *CreateMemberRequestJSON) ToEntity() *entities.Member {
 		CreatedBy:    req.CreatedBy,
 		NationalId:   req.NationalId,
 		BirthDay:     req.BirthDay,
+		Prefix:       &req.Prefix,
 	}
 	return member
 }

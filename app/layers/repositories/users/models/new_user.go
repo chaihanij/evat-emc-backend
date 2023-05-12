@@ -35,5 +35,6 @@ func NewUser(input *entities.User) *User {
 		CreatedAt:     now,
 		UpdatedAt:     now,
 		CreatedBy:     input.CreatedBy,
+		Prefix:        input.Prefix,
 	}
 }

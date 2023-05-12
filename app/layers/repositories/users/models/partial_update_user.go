@@ -66,6 +66,10 @@ func PartialUpdateUser(input *entities.UserPartialUpdate) *bson.D {
 	if input.LastLogin != nil {
 		updateFields = append(updateFields, bson.E{Key: "last_login", Value: input.LastLogin})
 	}
+	if input.Prefix != nil {
+		updateFields = append(updateFields, bson.E{Key: "prefix", Value: input.Prefix})
+	}
+
 	update := bson.D{{Key: "$set", Value: updateFields}}
 	log.WithField("value", update).Debugln("models.PartialUpdateUser")
 	return &update

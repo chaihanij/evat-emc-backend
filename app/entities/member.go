@@ -29,6 +29,7 @@ type Member struct {
 	Check_national *bool
 	Is_check_data  *bool
 	Is_Check_image *bool
+	Prefix         *string
 }
 
 type Members []Member
@@ -53,6 +54,7 @@ type MemberPartialUpdate struct {
 	UpdatedBy    *string
 	BirthDay     *time.Time
 	NationalId   *string
+	Prefix       *string
 }
 
 type MemberFilter struct {

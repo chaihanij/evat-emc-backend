@@ -21,6 +21,7 @@ type CreateUserRequestJSON struct {
 	Year      string `json:"year" validate:"required"`
 	TeamUID   string `json:"teamUID"`
 	Password  string `json:"password" validate:"required,passwordComplexity"`
+	Prefix    string `json:"prefix"`
 }
 
 type CreateUserResponseJSON struct {
@@ -38,6 +39,7 @@ type CreateUserResponseJSON struct {
 	LastLogin *time.Time `json:"lastLogin"`
 	UpdatedAt time.Time  `json:"updatedAt"`
 	CreatedAt time.Time  `json:"createdAt"`
+	Prefix    string     `json:"prefix"`
 }
 
 func (req *CreateUserRequestJSON) Parse(c *gin.Context) (*CreateUserRequestJSON, error) {
@@ -68,6 +70,7 @@ func (req *CreateUserRequestJSON) ToEntity() *entities.User {
 		Role:      req.Role,
 		Year:      req.Year,
 		Password:  req.Password,
+		Prefix:    req.Prefix,
 	}
 }
 
@@ -90,6 +93,7 @@ func (m *CreateUserResponseJSON) Parse(data *entities.User) *CreateUserResponseJ
 		LastLogin: lastLogin,
 		CreatedAt: data.CreatedAt,
 		UpdatedAt: data.UpdatedAt,
+		Prefix:    data.Prefix,
 	}
 	return user
 }

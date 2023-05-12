@@ -34,6 +34,7 @@ type User struct {
 	UpdatedAt     time.Time          `bson:"updated_at"`
 	CreatedBy     string             `bson:"created_by"`
 	UpdatedBy     string             `bson:"updated_by"`
+	Prefix        string             `bson:"prefix"`
 }
 
 func (u *User) ToEntity() (*entities.User, error) {

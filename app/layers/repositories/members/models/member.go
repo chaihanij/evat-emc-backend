@@ -35,6 +35,7 @@ type Member struct {
 	Check_national bool               `bson:"is_national"`
 	Is_check_data  bool               `bson:"is_data"`
 	Is_Check_image bool               `bson:"is_image"`
+	Prefix         string             `bson:"prefix"`
 }
 
 func (m *Member) ToEntity() (*entities.Member, error) {

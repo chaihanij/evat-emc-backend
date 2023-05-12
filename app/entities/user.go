@@ -29,6 +29,7 @@ type User struct {
 	UpdatedAt     time.Time
 	CreatedBy     string
 	UpdatedBy     string
+	Prefix        string
 }
 
 type UserMinimalCreate struct {
@@ -57,6 +58,7 @@ type UserPartialUpdate struct {
 	IsActive      *bool
 	LastLogin     *time.Time
 	UpdatedBy     *string
+	Prefix        *string
 }
 
 type UserFilter struct {
