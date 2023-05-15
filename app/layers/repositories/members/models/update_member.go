@@ -3,7 +3,6 @@ package models
 import (
 	"time"
 
-	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -34,6 +33,6 @@ func UpdateMember(input *entities.Member) *bson.D {
 		updateFields = append(updateFields, bson.E{Key: "documents", Value: val})
 	}
 	update := bson.D{{Key: "$set", Value: updateFields}}
-	log.WithField("value", update).Debugln("models.UpdateMember")
+	// log.WithField("value", update).Debugln("models.UpdateMember")
 	return &update
 }

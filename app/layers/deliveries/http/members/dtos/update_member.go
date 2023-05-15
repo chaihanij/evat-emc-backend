@@ -34,6 +34,7 @@ type UpdateMemberRequest struct {
 }
 
 func (req *UpdateMemberRequest) Parse(c *gin.Context) (*UpdateMemberRequest, error) {
+
 	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}

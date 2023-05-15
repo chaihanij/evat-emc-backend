@@ -27,6 +27,6 @@ func (r repo) UpdateMember(ctx context.Context, input *entities.Member) (*entiti
 		log.WithError(err).Errorln("DB UpdateMember Error")
 		return nil, err
 	}
-	log.WithField("value", member).Debugln("DB UpdateMember")
+	// log.WithField("value", member).Debugln("DB UpdateMember")
 	return member.ToEntity()
 }

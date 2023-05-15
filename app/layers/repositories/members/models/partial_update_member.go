@@ -65,6 +65,10 @@ func PartialUpdateMember(input *entities.MemberPartialUpdate) *bson.D {
 		updateFields = append(updateFields, bson.E{Key: "national_id", Value: input.NationalId})
 	}
 
+	if input.Prefix != nil {
+		updateFields = append(updateFields, bson.E{Key: "prefix", Value: input.Prefix})
+	}
+
 	if val, ok := input.Image.(*string); ok {
 		updateFields = append(updateFields, bson.E{Key: "image", Value: val})
 	}
