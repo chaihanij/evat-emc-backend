@@ -119,16 +119,39 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 
 	if err := fm.SaveAs(dst); err != nil {
 	}
-	fileBytes, err := ioutil.ReadFile(dst)
+	// fileBytes, err := ioutil.ReadFile(dst)
+	// if err != nil {
+	// 	utils.JSONErrorResponse(c, err)
+	// }
+
+	f, err := excelize.OpenFile(dst)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+	}
+	// index := f.NewSheet("Sheet2")
+
+	f.SetCellValue("Sheet2", "A1", "Hello")
+	f.SetCellValue("Sheet2", "B1", "World!")
+
+	fileName2 := fmt.Sprintf("team-%v-%v-%v.xlsx", time.Now().Day(), time.Now().Month(), time.Now().Year())
+	fileExt2 := filepath.Ext(fileName2)
+	originalFileName2 := strings.TrimSuffix(filepath.Base(fileName2), filepath.Ext(fileName2))
+	filenames2 := strings.ReplaceAll(strings.ToLower(originalFileName2), " ", "-") + "-" + fmt.Sprintf("%v-%v-%v", time.Now().Day(), time.Now().Month(), time.Now().Year()) + fileExt2
+
+	dst2 := filepath.Join(env.DataPath, "teams", "export", filenames2)
+
+	if err := fm.SaveAs(dst); err != nil {
+	}
+	fileBytes2, err := ioutil.ReadFile(dst2)
 	if err != nil {
 		utils.JSONErrorResponse(c, err)
 	}
-	c.Writer.WriteHeader(http.StatusOK)
 
+	c.Writer.WriteHeader(http.StatusOK)
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", `attachment; filename=`+filenames)
-	c.Header("Content-Length", fmt.Sprintf("%d", len(fileBytes)))
-	c.Writer.Write(fileBytes)
+	c.Header("Content-Length", fmt.Sprintf("%d", len(fileBytes2)))
+	c.Writer.Write(fileBytes2)
 
 	return &teams
 }

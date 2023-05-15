@@ -52,8 +52,14 @@ type MemberResponse struct {
 	UpdatedAt    time.Time      `json:"updatedAt"`
 	CreatedBy    string         `json:"createdBy"`
 	UpdatedBy    string         `json:"updatedBy"`
-	BirthDay     time.Time      `json:"birth_day" validate:"required" `
-	NationalId   string         `json:"national_id" validate:"required" `
+	BirthDay     time.Time      `json:"birth_day"`
+	NationalId   string         `json:"national_id"`
+	Prefix       string         `json:"prefix"`
+	Is_checkin   bool           `json:"is_checkin"`
+	Is_national  bool           `json:"is_national"`
+	Is_data      bool           `json:"is_data"`
+	Is_image     bool           `json:"is_image"`
+	Checkin_date time.Time      `json:"checkin_date"`
 }
 
 type MembersResponse []MemberResponse

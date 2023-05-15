@@ -51,6 +51,8 @@ func (ms Members) ToEntity() []entities.Member {
 	for _, v := range ms {
 		member, _ := v.ToEntity()
 		members = append(members, *member)
+
 	}
+
 	return members
 }
