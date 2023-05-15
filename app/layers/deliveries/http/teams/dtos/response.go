@@ -82,6 +82,7 @@ type TeamResponse struct {
 	UpdatedAt     time.Time        `json:"updatedAt"`
 	CreatedBy     string           `json:"createdBy"`
 	UpdatedBy     string           `json:"updatedBy"`
+	PaidDateTime  time.Time        `json:"paid_date_time"`
 }
 
 type TeamSearchResponse struct {

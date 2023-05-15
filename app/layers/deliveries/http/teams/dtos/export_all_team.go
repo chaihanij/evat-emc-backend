@@ -66,19 +66,20 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 
 	fm := excelize.NewFile()
 
-	sheetNameM := "Sheet1"
+	sheetNameM := "team"
+	index, _ := fm.NewSheet("team")
 	fm.SetCellValue(sheetNameM, "A1", "ลำดับ")
 	fm.SetColWidth(sheetNameM, "A", "A", 20)
-	// fm.SetCellValue(sheetNameM, "A1", "รหัสทีม")
-	// fm.SetColWidth(sheetNameM, "A", "A", 20)
 	fm.SetCellValue(sheetNameM, "B1", "รหัสทีม")
 	fm.SetColWidth(sheetNameM, "B", "B", 20)
 	fm.SetCellValue(sheetNameM, "C1", "ประเภททีม")
 	fm.SetColWidth(sheetNameM, "C", "C", 20)
 	fm.SetCellValue(sheetNameM, "D1", "ชื่อทีม")
 	fm.SetColWidth(sheetNameM, "D", "D", 20)
-	fm.SetCellValue(sheetNameM, "E1", "สถานันการศึกษา")
+	fm.SetCellValue(sheetNameM, "E1", "สถาบันการศึกษา")
 	fm.SetColWidth(sheetNameM, "E", "E", 20)
+	fm.SetCellValue(sheetNameM, "F1", "วันอนุมัติ")
+	fm.SetColWidth(sheetNameM, "F", "F", 20)
 	//สถานันการศึกษา
 
 	// fmt.Println("team :", teams)
@@ -106,9 +107,16 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 			//academy
 			convertRow = fmt.Sprintf("E%d", id)
 			fm.SetCellValue(sheetNameM, convertRow, value.Academy)
+
+			convertRow = fmt.Sprintf("F%d", id)
+			fm.SetCellValue(sheetNameM, convertRow, value.PaidDateTime)
 		}
 
 	}
+
+	fm.DeleteSheet("Sheet1")
+	fm.SetActiveSheet(index)
+
 	fileName := fmt.Sprintf("team-%v-%v-%v.xlsx", time.Now().Day(), time.Now().Month(), time.Now().Year())
 	fileExt := filepath.Ext(fileName)
 	originalFileName := strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
@@ -117,6 +125,22 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 	dst := filepath.Join(env.DataPath, "teams", "export", filenames)
 
 	if err := fm.SaveAs(dst); err != nil {
+	}
+	f, err := excelize.OpenFile(dst)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		// return
+	}
+	index2, _ := f.NewSheet("member")
+	f.SetCellValue("member", "A1", "Hello from Sheet2!")
+
+	// Set Sheet1 as the active sheet
+	f.SetActiveSheet(index2)
+
+	// Save the changes to the file
+	if err := f.SaveAs(dst); err != nil {
+		fmt.Println("Error saving file:", err)
+		// return
 	}
 	fileBytes, err := ioutil.ReadFile(dst)
 	if err != nil {

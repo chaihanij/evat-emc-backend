@@ -35,6 +35,9 @@ func PartialUpdateTeam(input *entities.TeamPartialUpdate) *bson.D {
 	}
 	if input.IsPaid != nil {
 		updateFields = append(updateFields, bson.E{Key: "is_paid", Value: input.IsPaid})
+		if *input.IsPaid == true {
+			updateFields = append(updateFields, bson.E{Key: "paid_date_time", Value: time.Now()})
+		}
 	}
 	if input.PaymentMethod != nil {
 		updateFields = append(updateFields, bson.E{Key: "payment_method", Value: input.PaymentMethod})
