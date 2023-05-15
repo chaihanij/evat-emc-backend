@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------------------
 
 #Builder stage
-FROM golang:1.18 as builder
+FROM golang:1.19 as builder
 
 # Force the go compiler to use modules
 ENV GO111MODULE=on
@@ -55,7 +55,7 @@ RUN go build -o /go/src/evat/evat-emc-backend app/main.go
 # ------------------------------------------------------------------------------
 
 # #App stage
-FROM golang:1.18
+FROM golang:1.19
 
 RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata && \
     apt-get clean

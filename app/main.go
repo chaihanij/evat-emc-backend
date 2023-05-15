@@ -149,7 +149,7 @@ func main() {
 	assignmentsUseCase := _assignmentsUseCase.InitUseCase(assignmentsRepo, filesRepo, logsettingRepo)
 	userUseCase := _usersUseCase.InitUseCase(userRepo)
 	teamsUseCase := _teamsUseCase.InitUseCase(teamsRepo, userRepo, membersRepo, filesRepo, assignmentTeamsRepo, omiseRepo, logsettingRepo)
-	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo, logsettingRepo)
+	memberUseCase := _memberUseCase.InitUseCase(membersRepo, filesRepo, logsettingRepo, configRepo)
 	filesUseCase := _filesUseCase.InitUseCase(filesRepo)
 	announcementsUseCase := _announcementsUseCase.InitUseCase(announcementsTeamsRepo)
 	fildracteamsUseCas := _fildracteamsUseCas.InitUseCase(fildracteamsRepo)

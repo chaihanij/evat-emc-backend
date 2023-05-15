@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"gitlab.com/chaihanij/evat/app/entities"
+	"gitlab.com/chaihanij/evat/app/layers/repositories/config"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/files"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/logsetting"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/members"
@@ -13,6 +14,7 @@ type useCase struct {
 	MembersRepo    members.Repo
 	FilesRepo      files.Repo
 	LogsettingRepo logsetting.Repo
+	ConfigRepo     config.Repo
 }
 
 type UseCase interface {
@@ -25,12 +27,14 @@ type UseCase interface {
 	UpdateMemberPullDocument(ctx context.Context, memberUUID string, fileUUID string) error
 	UpdateMemberPushDocument(ctx context.Context, memberUUID string, file *entities.File) (*entities.File, error)
 	UseCaseMemberCheckeIn(ctx context.Context, input *entities.MemberCheckIn) (*entities.Member, error)
+	CreateCertificate(ctx context.Context, member_uuid string) (*entities.Member, error)
 }
 
-func InitUseCase(membersRepo members.Repo, filesRepo files.Repo, logSettingRepo logsetting.Repo) UseCase {
+func InitUseCase(membersRepo members.Repo, filesRepo files.Repo, logSettingRepo logsetting.Repo, configRepo config.Repo) UseCase {
 	return &useCase{
 		MembersRepo:    membersRepo,
 		FilesRepo:      filesRepo,
 		LogsettingRepo: logSettingRepo,
+		ConfigRepo:     configRepo,
 	}
 }

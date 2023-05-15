@@ -30,6 +30,7 @@ func (req *FindOneMemberRequest) ToEntity() *entities.MemberFilter {
 type FindOneMemberResponseJSON MemberResponse
 
 func (res *FindOneMemberResponseJSON) Parse(c *gin.Context, input *entities.Member) *FindOneMemberResponseJSON {
+
 	copier.Copy(res, input)
 	if val, ok := input.Image.(entities.File); ok {
 		res.Image = new(FileResponse).Parse(c, &val)
@@ -42,6 +43,9 @@ func (res *FindOneMemberResponseJSON) Parse(c *gin.Context, input *entities.Memb
 			document := new(FileResponse).Parse(c, &value)
 			documents = append(documents, *document)
 		}
+		res.Is_national = *input.Check_national
+		res.Is_data = *input.Is_check_data
+		res.Is_image = *input.Is_Check_image
 		res.Documents = &documents
 	} else {
 		res.Documents = &FilesResponse{}
