@@ -39,6 +39,8 @@ type UseCase interface {
 
 	RegisterTeam(ctx context.Context, team *entities.Team, user *entities.User, member *entities.Member) (*entities.Team, *entities.User, *entities.OmiseCharge, error)
 	WebHooks(ctx context.Context, input *entities.OmiseEvent) error
+
+	ExportTeamMember(ctx context.Context, inputteam *entities.TeamFilter, inputmember *entities.MemberFilter) ([]entities.Team, []entities.Member, error)
 }
 
 func InitUseCase(teamsRepo teams.Repo,

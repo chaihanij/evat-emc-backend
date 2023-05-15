@@ -44,7 +44,7 @@ func (req *ExportTeamRequestJSON) ToEntity() *entities.TeamFilter {
 
 type ExportAllTeamResponseJSON []TeamResponse
 
-func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) *ExportAllTeamResponseJSON {
+func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, members []entities.Member) *ExportAllTeamResponseJSON {
 	var teams ExportAllTeamResponseJSON = ExportAllTeamResponseJSON{}
 	for _, value := range data {
 		team := &TeamResponse{
@@ -131,10 +131,81 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team) 
 		fmt.Println("Error opening file:", err)
 		// return
 	}
+	sheetMember := "member"
 	index2, _ := f.NewSheet("member")
 	f.SetCellValue("member", "A1", "Hello from Sheet2!")
 
+	f.SetCellValue(sheetMember, "A1", "ลำดับ")
+	f.SetColWidth(sheetMember, "A", "A", 20)
+	f.SetCellValue(sheetMember, "B1", "ชื่อ - นามสกุล")
+	f.SetColWidth(sheetMember, "B", "B", 20)
+	f.SetCellValue(sheetMember, "C1", "วันที่ลงทะเบียน")
+	f.SetColWidth(sheetMember, "C", "C", 40)
+	f.SetCellValue(sheetMember, "D1", "เลขบัตรประชาชน")
+	f.SetColWidth(sheetMember, "D", "D", 25)
+	f.SetCellValue(sheetMember, "E1", "ข้อมูล")
+	f.SetColWidth(sheetMember, "E", "E", 20)
+	f.SetCellValue(sheetMember, "F1", "รูปตรงบัตรประชาชน")
+	f.SetColWidth(sheetMember, "F", "F", 20)
+	f.SetCellValue(sheetMember, "G1", "ลงทะเบียน")
+	f.SetColWidth(sheetMember, "G", "G", 20)
+
 	// Set Sheet1 as the active sheet
+	idx := 1
+
+	for _, value := range members {
+		// idx += 1
+		is_national := "ไม่ผ่าน"
+
+		if *value.Check_national == true {
+			is_national = "ผ่าน"
+		}
+
+		is_data := "ข้อมูลไม่ถูกต้อง"
+
+		if *value.Is_check_data == true {
+			is_data = "ข้อมูลถูกต้อง"
+		}
+
+		is_image := "รูปไม่ตรงบัตรประชาชน"
+
+		if *value.Is_Check_image == true {
+			is_image = "รูปตรงบัตรประชาชน"
+		}
+
+		is_checkin := "ยังไม่ได้ลงทะเบียน"
+		if *value.Is_checkin == true {
+			is_checkin = "ลงทะเบียนแล้ว"
+		}
+
+		for i := 1; i <= 1; i++ {
+			idx += 1
+
+			row := fmt.Sprintf("A%d", idx)
+			f.SetCellValue(sheetMember, row, idx-1)
+
+			row = fmt.Sprintf("B%d", idx)
+			name := fmt.Sprintf("%s %s %s ", *value.Prefix, value.FirstName, value.LastName)
+			f.SetCellValue(sheetMember, row, name)
+
+			row = fmt.Sprintf("C%d", idx)
+			f.SetCellValue(sheetMember, row, value.Checkin_date)
+
+			row = fmt.Sprintf("D%d", idx)
+			f.SetCellValue(sheetMember, row, is_national)
+
+			row = fmt.Sprintf("E%d", idx)
+			f.SetCellValue(sheetMember, row, is_data)
+
+			row = fmt.Sprintf("F%d", idx)
+			f.SetCellValue(sheetMember, row, is_image)
+
+			row = fmt.Sprintf("G%d", idx)
+			f.SetCellValue(sheetMember, row, is_checkin)
+
+		}
+	}
+
 	f.SetActiveSheet(index2)
 
 	// Save the changes to the file
