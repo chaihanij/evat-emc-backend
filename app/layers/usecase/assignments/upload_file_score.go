@@ -9,13 +9,13 @@ import (
 )
 
 func (u useCase) UploadFileScore(ctx context.Context, assignmentUUID string, file *entities.File) (*entities.Assignment, error) {
-	_, err := u.FilesRepo.CreateFile(ctx, file)
+	files, err := u.FilesRepo.CreateFile(ctx, file)
 	if err != nil {
 		return nil, err
 	}
 	fileinput := entities.Fileassignment{
-		FileUrl:    file.UUID,
-		FileName:   file.FileName,
+		FileUrl:    files.UUID,
+		FileName:   files.FileName,
 		CreateDate: time.Now(),
 	}
 
