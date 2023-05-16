@@ -2,18 +2,13 @@ package dtos
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
-	"io/ioutil"
-	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/copier"
+	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/entities"
-	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/errors"
 )
 
@@ -270,34 +265,15 @@ const templateString = `
                         </div>
                     
             </div>
-            
-            
-                
-                
-                    
-                
-            
         </div> 
     </div>
 </body>
 </html>
 `
 
-func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) *ResponseCertificate {
-	copier.Copy(res, input)
-
+func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) ([]byte, error) {
 	var templ *template.Template
-
 	var err error
-
-	// data := struct {
-	// 	Title   string
-	// 	Content string
-	// }{
-	// 	Title:   "My PDF Document",
-	// 	Content: "This is the content of my PDF document.",
-	// }
-
 	data := struct {
 		Prefix    string
 		Firstname string
@@ -308,62 +284,42 @@ func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) *R
 		Lastname:  res.LastName,
 	}
 
-	if templ, err = template.ParseFiles("/app/data/template/index.html"); err != nil {
-		fmt.Println("err ;", err)
+	if templ, err = template.ParseFiles("/var/app/template/index.html"); err != nil {
+		// fmt.Println("err ;", err)
+		log.WithError(err).Errorln("Parse File Error")
+		return nil, err
 	}
 
-	buf := new(bytes.Buffer)
-
-	if err = templ.Execute(buf, data); err != nil {
-		fmt.Println("err ;", err)
+	var body bytes.Buffer
+	if err = templ.Execute(&body, data); err != nil {
+		// fmt.Println("err ;", err)
+		log.WithError(err).Errorln("Execute template")
+		return nil, err
 	}
-
-	body := buf.String()
-
-	filename := fmt.Sprintf("%s", res.FirstName)
-
-	mockFile := `/app/data/template/` + filename + `.html`
-	if err1 := ioutil.WriteFile(mockFile, []byte(body), 0644); err1 != nil {
-		fmt.Println("err1 GenPDF : ", err1.Error())
-	}
-
-	f, err := os.Open(mockFile)
-	if err != nil {
-		fmt.Println("err openFile : ", err.Error())
-	}
-
-	// defer os.Remove(mockFile)
-	defer f.Close()
-
-	dir := filepath.Join("template")
-	os.MkdirAll(filepath.Join(env.DataPath, dir), os.ModePerm)
-	dst := filepath.Join(env.DataPath, dir)
-	fmt.Println("dst :", dst)
-
-	wkhtmltopdf.SetPath(dst)
 
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
-		fmt.Println("err pdfg :", err)
+		log.WithError(err).Errorln("New PDF Generator Error")
+		return nil, err
 	}
-	pageReader := wkhtmltopdf.NewPageReader(f)
+	// read the HTML page as a PDF page
+	page := wkhtmltopdf.NewPageReader(bytes.NewReader(body.Bytes()))
 
-	pageReader.PageOptions.EnableLocalFileAccess.Set(true)
-	pdfg.AddPage(pageReader)
+	// enable this if the HTML file contains local references such as images, CSS, etc.
+	page.EnableLocalFileAccess.Set(true)
+
+	// add the page to your generator
+	pdfg.AddPage(page)
 	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA4)
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationLandscape)
-
 	pdfg.Dpi.Set(300)
 
 	err = pdfg.Create()
 	if err != nil {
-		fmt.Println("error2 create PDF : ", err)
+		log.WithError(err).Errorln("Create PDF Error")
+		return nil, err
 	}
-	err = pdfg.WriteFile(`/app/data/template/` + filename + `.pdf`)
-	if err != nil {
-		fmt.Println("err WriteFile ;", err)
-	}
-	fmt.Println("pdf :", pdfg.Bytes())
 
-	return res
+	return pdfg.Bytes(), nil
+
 }

@@ -34,5 +34,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 
 		//CreateCertificate
 		v1Auth.GET("/member/certificate/:member_uuid", handler.CreateCertificate)
+		v1Auth.GET("/members/:member_uuid/certificate", handler.CreateCertificate)
+
 	}
 }

@@ -9,10 +9,15 @@ FROM golang:1.19 as builder
 
 # Force the go compiler to use modules
 ENV GO111MODULE=on
+ENV XDG_RUNTIME_DIR=/tmp
 
 
 # Update OS package and install Git
-RUN apt-get update && apt-get -qy install netcat
+RUN apt-get update && apt-get -qy install locales tzdata netcat wkhtmltopdf \
+    && sed -i 's/# th_/th_/' /etc/locale.gen \
+    && locale-gen \
+    && cp /usr/share/zoneinfo/Asia/Bangkok /etc/localtime
+
 
 # Set working directory
 WORKDIR /go/src/evat
@@ -36,7 +41,7 @@ ADD go.mod go.mod
 ADD go.sum go.sum
 ADD app app
 ADD Makefile Makefile
-
+ADD resources/template/index.html /var/app/template/index.html
 RUN go mod download
 
 # Install air for local development
@@ -57,11 +62,16 @@ RUN go build -o /go/src/evat/evat-emc-backend app/main.go
 # #App stage
 FROM golang:1.19
 
-RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata && \
-    apt-get clean
+RUN apt update && apt-get install -y curl grep sed dpkg tini tzdata wkhtmltopdf locales tzdata \
+    && sed -i 's/# th_/th_/' /etc/locale.gen \
+    && locale-gen \
+    && cp /usr/share/zoneinfo/Asia/Bangkok /etc/localtime \
+    && apt-get clean
+
+ENV XDG_RUNTIME_DIR=/tmp
 
 WORKDIR /app
-
+COPY --from=builder /var/app/template/index.html   /var/app/template/index.html
 COPY --from=builder /go/src/evat/evat-emc-backend  /app.bin
 
 

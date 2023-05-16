@@ -200,6 +200,9 @@ func main() {
 		port = "8080"
 	}
 
+	ginEngine.Static("/assets", "./assets")
+	ginEngine.LoadHTMLGlob("/var/app/template/*.html")
+
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: ginEngine,

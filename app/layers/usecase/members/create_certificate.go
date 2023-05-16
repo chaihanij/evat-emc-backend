@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"gitlab.com/chaihanij/evat/app/entities"
-	"gitlab.com/chaihanij/evat/app/errors"
 )
 
 func (u useCase) CreateCertificate(ctx context.Context, member_uuid string) (*entities.Member, error) {
@@ -18,10 +17,10 @@ func (u useCase) CreateCertificate(ctx context.Context, member_uuid string) (*en
 	// 	return nil, err
 	// }
 
-	if *member.Is_Check_image == true && *member.Is_check_data == true && *member.Is_checkin == true {
-		return member, nil
-	}
+	// if *member.Is_Check_image == true && *member.Is_check_data == true && *member.Is_checkin == true {
+	// 	return member, nil
+	// }
 
-	return nil, errors.ParameterError{Message: err.Error()}
+	return member, nil
 
 }
