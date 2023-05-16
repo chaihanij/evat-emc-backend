@@ -9,23 +9,29 @@ import (
 )
 
 type AssignmentTeam struct {
-	ID             primitive.ObjectID `bson:"_id"`
-	AssignmentUUID string             `bson:"assignment_uuid"`
-	TeamUUID       string             `bson:"team_uuid"`
-	Description    string             `bson:"description"`
-	Documents      []string           `bson:"documents"`
-	IsConfirmed    bool               `bson:"is_confirmed"`
-	Score          float64            `bson:"score"`
-	CreatedAt      time.Time          `bson:"created_at"`
-	UpdatedAt      time.Time          `bson:"updated_at"`
-	CreatedBy      string             `bson:"created_by"`
-	UpdatedBy      string             `bson:"update_by"`
+	ID              primitive.ObjectID `bson:"_id"`
+	AssignmentUUID  string             `bson:"assignment_uuid"`
+	TeamUUID        string             `bson:"team_uuid"`
+	Description     string             `bson:"description"`
+	Documents       []string           `bson:"documents"`
+	IsConfirmed     bool               `bson:"is_confirmed"`
+	Score           float64            `bson:"score"`
+	CreatedAt       time.Time          `bson:"created_at"`
+	UpdatedAt       time.Time          `bson:"updated_at"`
+	CreatedBy       string             `bson:"created_by"`
+	UpdatedBy       string             `bson:"update_by"`
+	AssignmentTopic string             `bson:"assignment_topic"`
 }
 
 type DliveryTime struct {
 	DliveryTime time.Time `json:"delivery_time" bson:"delivery_time"`
 	DueDate     time.Time `json:"due_date" bson:"due_date"`
 	TimeNow     time.Time
+}
+
+type DocumentAssignment struct {
+	FileUUID        string `json:"documentUUID" bson:"documentUUID" `
+	AssionmentTopic string `json:"AssionmentTopic" bson:"AssionmentTopic"`
 }
 
 func (at *AssignmentTeam) ToEntity() (*entities.AssignmentTeam, error) {

@@ -49,7 +49,7 @@ func (r repo) UpdateAssignmentTeamPushDocument(ctx context.Context, input *entit
 
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After).SetUpsert(true)
 	filter := models.NewAssignmentTeamFilter(input)
-	update := models.UpdateAssignmentTeamPushDocument(documentUUID)
+	update := models.UpdateAssignmentTeamPushDocument(documentUUID, input.Topic)
 	var assignmentTeam models.AssignmentTeam
 	err := r.MongoDBClient.Database(env.MongoDBName).
 		Collection(constants.CollectionAssignmentTeams).

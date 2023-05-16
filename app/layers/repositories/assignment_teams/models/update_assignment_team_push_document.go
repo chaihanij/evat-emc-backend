@@ -5,12 +5,24 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func UpdateAssignmentTeamPushDocument(documentUUID string) *bson.M {
+func UpdateAssignmentTeamPushDocument(documentUUID string, assionmentTopic string) *bson.M {
 	doc := []string{}
 	doc = append(doc, documentUUID)
+
+	// file_uuid
+	// assignment_topic
+
+	DocumentsAssignment := new(DocumentAssignment)
+
+	DocumentsAssignment.AssionmentTopic = assionmentTopic
+	DocumentsAssignment.FileUUID = documentUUID
+
 	update := bson.M{
-		"$addToSet": bson.M{
-			"documents": bson.M{"$each": doc},
+		// "$addToSet": bson.M{
+		// 	"documents": bson.M{"$each": doc},
+		// },
+		"$push": bson.M{
+			"document": DocumentsAssignment,
 		},
 	}
 	log.WithField("value", update).Debugln("models.UpdateAssignmentTeamPushDocument")

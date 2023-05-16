@@ -47,6 +47,7 @@ type AssignmentResponse struct {
 	Consideration []ConsiderationAssignment `json:"consideration"`
 	IsShowMenu    bool                      `json:"isShowMenu"`
 	File          []File                    `json:"files" bson:"files"`
+	Topic         []string                  `json:"topic"`
 }
 
 type File struct {

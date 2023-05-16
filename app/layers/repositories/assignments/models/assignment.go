@@ -30,6 +30,7 @@ type Assignment struct {
 	DeliveryTime  time.Time                 `bson:"delivery_time"`
 	IsShowMenu    bool                      `bson:"isShowMenu"`
 	UploadFile    []File                    `bson:"files"`
+	Topic         []string                  `bson:"topic"`
 }
 
 type File struct {

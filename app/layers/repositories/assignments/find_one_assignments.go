@@ -2,6 +2,7 @@ package assignments
 
 import (
 	"context"
+	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -26,5 +27,6 @@ func (r repo) FindOneAssignment(ctx context.Context, input *entities.AssignmentF
 		return nil, err
 	}
 	// log.WithField("	value", assignment).Debugln("DB FindOneAssignment")
+	fmt.Println("assignment :", assignment.Topic)
 	return assignment.ToEntity()
 }

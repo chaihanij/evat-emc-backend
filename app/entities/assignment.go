@@ -25,6 +25,7 @@ type Assignment struct {
 	// OverDue      time.Time
 	DeliveryTime   time.Time
 	Fileassignment []Fileassignment
+	Topic          []string
 }
 
 type Fileassignment struct {

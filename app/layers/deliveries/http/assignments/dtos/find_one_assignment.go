@@ -71,6 +71,7 @@ func (m *FindOneAssignmentResponseJSON) Parse(c *gin.Context, input *entities.As
 		DeliveryTime: input.DeliveryTime,
 		IsShowMenu:   input.IsShowMenu,
 		File:         files,
+		Topic:        input.Topic,
 	}
 	if val, ok := input.Document.(entities.File); ok {
 		assignment.Document = new(FileResponse).Parse(c, &val)
