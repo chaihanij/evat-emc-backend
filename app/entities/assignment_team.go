@@ -25,6 +25,7 @@ type AssignmentTeamPartialUpdate struct {
 	Documents      interface{}
 	Score          *float64
 	UpdatedBy      string
+	Topic          string
 }
 
 type AssignmentTeamFilter struct {

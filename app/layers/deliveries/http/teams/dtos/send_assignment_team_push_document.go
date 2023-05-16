@@ -20,6 +20,7 @@ import (
 type SendAssignmentTeamPushDocumentRequestJSON struct {
 	TeamUUID         string                `uri:"team_uuid"`
 	AssignmentUUID   string                `uri:"assignment_uuid"`
+	Topic            string                `uri:"topic"`
 	Document         *multipart.FileHeader `swaggerignore:"true" form:"document"`
 	OriginalFileName string                `swaggerignore:"true"`
 	FileName         string                `swaggerignore:"true"`
@@ -33,6 +34,7 @@ func (req *SendAssignmentTeamPushDocumentRequestJSON) Parse(c *gin.Context) (*Se
 	if err := c.ShouldBindUri(req); err != nil {
 		return nil, errors.ParameterError{Message: err.Error()}
 	}
+
 	document, err := c.FormFile("document")
 	if err != nil {
 		return nil, errors.InternalError{Message: err.Error()}
@@ -77,6 +79,7 @@ func (req *SendAssignmentTeamPushDocumentRequestJSON) ToEntity() (*entities.Assi
 			TeamUUID:       pointer.ToString(req.TeamUUID),
 			AssignmentUUID: pointer.ToString(req.AssignmentUUID),
 			UpdatedBy:      req.UpdatedBy,
+			Topic:          req.Topic,
 		},
 		&entities.File{
 			OriginalFileName: req.OriginalFileName,

@@ -336,9 +336,9 @@ func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) *R
 	defer f.Close()
 
 	dir := filepath.Join("template")
-	fmt.Println("dir :", dir)
 	os.MkdirAll(filepath.Join(env.DataPath, dir), os.ModePerm)
 	dst := filepath.Join(env.DataPath, dir)
+	fmt.Println("dst :", dst)
 
 	wkhtmltopdf.SetPath(dst)
 
@@ -354,8 +354,6 @@ func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) *R
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationLandscape)
 
 	pdfg.Dpi.Set(300)
-
-	fmt.Println("pdfg :", pdfg.Create())
 
 	err = pdfg.Create()
 	if err != nil {

@@ -80,11 +80,18 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 	fm.SetColWidth(sheetNameM, "E", "E", 20)
 	fm.SetCellValue(sheetNameM, "F1", "วันอนุมัติ")
 	fm.SetColWidth(sheetNameM, "F", "F", 20)
-	//สถานันการศึกษา
 
-	// fmt.Println("team :", teams)
 	id := 1
 	for _, value := range teams {
+
+		var PaidDateTime interface{}
+		PaidDateTime = ""
+
+		theTime := time.Date(0001, 01, 01, 00, 00, 00, 100, time.UTC)
+
+		if theTime.Unix() != value.PaidDateTime.Unix() {
+			PaidDateTime = value.PaidDateTime
+		}
 
 		for i := 1; i <= 1; i++ {
 			id += 1
@@ -109,7 +116,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 			fm.SetCellValue(sheetNameM, convertRow, value.Academy)
 
 			convertRow = fmt.Sprintf("F%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, value.PaidDateTime)
+			fm.SetCellValue(sheetNameM, convertRow, PaidDateTime)
 		}
 
 	}
@@ -150,7 +157,6 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 	f.SetCellValue(sheetMember, "G1", "ลงทะเบียน")
 	f.SetColWidth(sheetMember, "G", "G", 20)
 
-	// Set Sheet1 as the active sheet
 	idx := 1
 
 	for _, value := range members {
@@ -178,6 +184,19 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 			is_checkin = "ลงทะเบียนแล้ว"
 		}
 
+		var dateCheckIn interface{}
+		dateCheckIn = ""
+
+		// if *value.Checkin_date == ""{
+
+		// }
+
+		theTime := time.Date(0001, 01, 01, 00, 00, 00, 100, time.UTC)
+
+		if theTime.Unix() != value.Checkin_date.Unix() {
+			dateCheckIn = value.Checkin_date
+		}
+
 		for i := 1; i <= 1; i++ {
 			idx += 1
 
@@ -189,7 +208,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 			f.SetCellValue(sheetMember, row, name)
 
 			row = fmt.Sprintf("C%d", idx)
-			f.SetCellValue(sheetMember, row, value.Checkin_date)
+			f.SetCellValue(sheetMember, row, dateCheckIn)
 
 			row = fmt.Sprintf("D%d", idx)
 			f.SetCellValue(sheetMember, row, is_national)
