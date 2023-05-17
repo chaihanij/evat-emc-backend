@@ -9,6 +9,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/consideration/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (r repo) AllScoreConsiderationAssignment(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error) {
@@ -19,9 +20,22 @@ func (r repo) AllScoreConsiderationAssignment(ctx context.Context, input entitie
 	defer cancel()
 
 	filter := models.AllScoreFilter(input)
+	oo, _ :=  primitive.ObjectIDFromHex("63eb10556bcc684ff7cb7210")
+	ooa, _ :=  primitive.ObjectIDFromHex("6458c099f27f388312ca12e9")
 
 	stateAssignment := []bson.M{
-
+		{
+			"$match": bson.M{
+				"_id": bson.M{
+					"$not": bson.M{
+						"$in": bson.A{
+							oo,
+							ooa,
+						},
+					},
+				},
+			},
+		},
 		{
 			"$unwind": "$consideration",
 		},
