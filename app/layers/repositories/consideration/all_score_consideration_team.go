@@ -9,6 +9,7 @@ import (
 	"gitlab.com/chaihanij/evat/app/env"
 	"gitlab.com/chaihanij/evat/app/layers/repositories/consideration/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]entities.AllScore, error) {
@@ -20,59 +21,17 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 	filter := models.AllScoreFilter(input)
 	filterTeamType := models.AllScoreTeamtype(input)
 
+	oo, _ := primitive.ObjectIDFromHex("63eb10556bcc684ff7cb7210")
+	ooa, _ := primitive.ObjectIDFromHex("6458c099f27f388312ca12e9")
+
 	stateAssignment := []bson.M{
-
-		// {
-		// 	"$unwind": "$consideration",
-		// },
-
-		// {
-		// 	"$project": bson.M{
-		// 		"_id":           1,
-		// 		"consideration": 1,
-		// 		"title":         1,
-		// 	},
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id":       bson.M{"id": "$consideration.nameteam", "title": "$title"},
-		// 		"team":      bson.M{"$first": "$consideration.nameteam"},
-		// 		"code":      bson.M{"$first": "$consideration.id"},
-		// 		"title":     bson.M{"$first": "$title"},
-		// 		"team_type": bson.M{"$first": "$consideration.teamtype"},
-		// 		"no":        bson.M{"$first": "$consideration.no"},
-		// 		"considerations": bson.M{"$push": bson.M{
-		// 			"id":        "$consideration.id",
-		// 			"nameteam":  "$consideration.nameteam",
-		// 			"team_type": "$consideration.teamtype",
-		// 			"title":     "$title",
-		// 			"score":     "$consideration.score",
-		// 		}},
-		// 		"total": bson.M{"$sum": "$consideration.score"},
-		// 	},
-		// },
-		// {
-		// 	"$group": bson.M{
-		// 		"_id":      bson.M{"team": "$team"},
-		// 		"team":     bson.M{"$first": "$team"},
-		// 		"code":     bson.M{"$first": "$code"},
-		// 		"teamtype": bson.M{"$first": "$team_type"},
-		// 		"no":       bson.M{"$first": "$no"},
-		// 		"considerations": bson.M{"$push": bson.M{
-		// 			"title": "$title",
-		// 			"total": bson.M{"$sum": "$considerations.score"},
-		// 		}},
-		// 		"total": bson.M{"$sum": "$total"},
-		// 	},
-		// },
-		// filter,
-		// filterTeamType,
-		// {
-		// 	"$sort": bson.M{
-		// 		"total": -1,
-		// 	},
-		// },
-
+		{
+			"$match": bson.M{
+				"_id": bson.M{
+					"$nin": bson.A{oo, ooa},
+				},
+			},
+		},
 		{
 			"$unwind": "$consideration",
 		},
