@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func UpdateAssignmentTeamPushDocument(documentUUID string, assionmentTopic string) *bson.M {
+func UpdateAssignmentTeamPushDocument(documentUUID string, assignmentTopic string) *bson.M {
 	doc := []string{}
 	doc = append(doc, documentUUID)
 
@@ -14,7 +14,7 @@ func UpdateAssignmentTeamPushDocument(documentUUID string, assionmentTopic strin
 
 	DocumentsAssignment := new(DocumentAssignment)
 
-	DocumentsAssignment.AssionmentTopic = assionmentTopic
+	DocumentsAssignment.AssignmentTopic = assignmentTopic
 	DocumentsAssignment.FileUUID = documentUUID
 
 	update := bson.M{

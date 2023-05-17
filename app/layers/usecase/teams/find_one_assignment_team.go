@@ -13,6 +13,14 @@ func (u useCase) FindOneAssignmentTeam(ctx context.Context, input *entities.Assi
 	if err != nil {
 		return nil, err
 	}
+
+	var doc []entities.File
+	for _, val := range assignmentTeam.Document {
+		documents, _ := u.FilesRepo.FindAllFile(ctx, &entities.FileFilter{UUID: &val.DocumentUUID})
+		doc = append(doc, documents...)
+		assignmentTeam.Documents = doc
+	}
+
 	if val, ok := assignmentTeam.Documents.([]string); ok {
 		log.WithField("value", val).Debugln("FindOneMember documents")
 		if len(val) > 0 {
@@ -23,5 +31,6 @@ func (u useCase) FindOneAssignmentTeam(ctx context.Context, input *entities.Assi
 			assignmentTeam.Documents = documents
 		}
 	}
+
 	return assignmentTeam, nil
 }

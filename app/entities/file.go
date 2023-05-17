@@ -13,6 +13,7 @@ type File struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	UpdateBy         string
+	Topic            string
 }
 
 type Files []File

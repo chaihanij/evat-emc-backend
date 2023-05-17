@@ -14,6 +14,12 @@ type AssignmentTeam struct {
 	UpdatedAt      time.Time
 	CreatedBy      string
 	UpdatedBy      string
+	Document       []Document
+}
+
+type Document struct {
+	DocumentUUID    string
+	AssignmentTopic string
 }
 
 type AssignmentTeamPartialUpdate struct {

@@ -21,6 +21,12 @@ type AssignmentTeam struct {
 	CreatedBy       string             `bson:"created_by"`
 	UpdatedBy       string             `bson:"update_by"`
 	AssignmentTopic string             `bson:"assignment_topic"`
+	Document        []Document         `bson:"document"`
+}
+
+type Document struct {
+	DocumentUUID    string `bson:"documentUUID"`
+	AssignmentTopic string `bson:"AssignmentTopic"`
 }
 
 type DliveryTime struct {
@@ -31,7 +37,7 @@ type DliveryTime struct {
 
 type DocumentAssignment struct {
 	FileUUID        string `json:"documentUUID" bson:"documentUUID" `
-	AssionmentTopic string `json:"AssionmentTopic" bson:"AssionmentTopic"`
+	AssignmentTopic string `json:"AssignmentTopic" bson:"AssignmentTopic"`
 }
 
 func (at *AssignmentTeam) ToEntity() (*entities.AssignmentTeam, error) {

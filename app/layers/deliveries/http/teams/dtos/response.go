@@ -15,6 +15,7 @@ type FileResponse struct {
 	UUID             string `json:"uuid"`
 	OriginalFileName string `json:"originalFileName"`
 	FileName         string `json:"fileName"`
+	Topic            string `json:"topic"`
 }
 
 func (file *FileResponse) Parse(c *gin.Context, data *entities.File) *FileResponse {
@@ -32,6 +33,7 @@ type AssignmentResponse struct {
 	Documents      *FilesResponse `json:"documents"`
 	IsConfirmed    bool           `json:"isConfirmed"`
 	Score          float64        `json:"score"`
+	Document       []Doc          `json:"document"`
 }
 
 type MemberResponse struct {

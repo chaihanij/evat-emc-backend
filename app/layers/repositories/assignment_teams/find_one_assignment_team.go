@@ -24,6 +24,7 @@ func (r repo) FindOneAssignmentTeam(ctx context.Context, input *entities.Assignm
 		log.WithError(err).Errorln("DB FindOneAssignmentTeam Error")
 		return nil, err
 	}
+
 	log.WithField("value", assignmentTeam).Debugln("DB FindOneAssignmentTeam")
 	return assignmentTeam.ToEntity()
 }
