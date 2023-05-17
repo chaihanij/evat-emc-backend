@@ -27,7 +27,7 @@ func (u useCase) findAllTeam(wg *sync.WaitGroup, ctx context.Context, input *ent
 	result, err := u.TeamsRepo.FindAllTeam(ctx, input)
 
 	// if input.Name != nil {
-	if *input.Name == "" {
+	if *input.Name != "" {
 		resultmember, _ := u.UsersRepo.FindAllUser(ctx, &entities.UserFilter{Tel: input.Name})
 		if resultmember != nil {
 			for _, v := range resultmember {
