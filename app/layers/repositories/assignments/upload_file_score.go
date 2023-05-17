@@ -16,7 +16,8 @@ func (r repo) UploadFileScore(ctx context.Context, input *entities.AssignmentPar
 	ctx, cancel := context.WithTimeout(ctx, env.MongoDBRequestTimeout)
 	defer cancel()
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
-	filter := models.NewAssignmentFilter(input)
+	// filter := models.NewAssignmentFilter(input)
+	filter := models.UpdateFileAssignmentFilter(input.AssignmentUUID)
 	update := models.UploadFileScore(input)
 
 	var assignment models.Assignment
