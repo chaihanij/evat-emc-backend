@@ -55,6 +55,7 @@ type MemberPartialUpdate struct {
 	BirthDay     *time.Time
 	NationalId   *string
 	Prefix       *string
+	Files        *string
 }
 
 type MemberFilter struct {
@@ -75,4 +76,9 @@ type MemberCheckIn struct {
 	Check_national *bool
 	Is_check_data  *bool
 	Is_Check_image *bool
+}
+
+type MemberUpdatePDF struct {
+	MemberUUID string
+	Files      string
 }

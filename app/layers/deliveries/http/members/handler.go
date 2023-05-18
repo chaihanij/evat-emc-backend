@@ -33,8 +33,11 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/member/checkin/:member_uuid", handler.MemberCheckIn)
 
 		//CreateCertificate
-		v1Auth.GET("/member/certificate/:member_uuid", handler.CreateCertificate)
+		v1Auth.GET("/member/certificate/:member_uuid", handler.CreateC)
 		v1Auth.GET("/members/:member_uuid/certificate", handler.CreateCertificate)
+
+		//UploadPDFMember
+		v1Auth.POST("/member/upload/:member_uuid", handler.UploadPDFMember)
 
 	}
 }

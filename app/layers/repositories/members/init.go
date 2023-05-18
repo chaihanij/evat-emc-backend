@@ -23,6 +23,7 @@ type Repo interface {
 	PushDocument(ctx context.Context, uuid string, input string) (*entities.Member, error)
 	PullDocument(ctx context.Context, uuid string, input string) (*entities.Member, error)
 	MemberCheckIn(ctx context.Context, input *entities.MemberCheckIn) (*entities.Member, error)
+	UploadPDFMember(ctx context.Context, input *entities.MemberUpdatePDF) (*entities.Member, error)
 }
 
 func InitRepo(mongoDBClient *mongo.Client) Repo {

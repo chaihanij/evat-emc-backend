@@ -28,6 +28,7 @@ type UseCase interface {
 	UpdateMemberPushDocument(ctx context.Context, memberUUID string, file *entities.File) (*entities.File, error)
 	UseCaseMemberCheckeIn(ctx context.Context, input *entities.MemberCheckIn) (*entities.Member, error)
 	CreateCertificate(ctx context.Context, member_uuid string) (*entities.Member, error)
+	UploadPDFMember(ctx context.Context, memberUUID string, file *entities.File) (*entities.File, error)
 }
 
 func InitUseCase(membersRepo members.Repo, filesRepo files.Repo, logSettingRepo logsetting.Repo, configRepo config.Repo) UseCase {
