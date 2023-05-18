@@ -84,7 +84,7 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 				},
 				"output": bson.M{
 					"no": bson.M{
-						"$rank": bson.M{},
+						"$denseRank": bson.M{},
 					},
 				},
 			},
