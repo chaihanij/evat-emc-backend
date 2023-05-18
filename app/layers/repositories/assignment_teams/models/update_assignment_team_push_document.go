@@ -22,7 +22,7 @@ func UpdateAssignmentTeamPushDocument(documentUUID string, assignmentTopic strin
 		// 	"documents": bson.M{"$each": doc},
 		// },
 		"$push": bson.M{
-			"document": DocumentsAssignment,
+			"documents": DocumentsAssignment,
 		},
 	}
 	log.WithField("value", update).Debugln("models.UpdateAssignmentTeamPushDocument")

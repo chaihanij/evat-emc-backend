@@ -8,10 +8,10 @@ import (
 )
 
 func NewAssignmentTeam(input *entities.AssignmentTeam) *AssignmentTeam {
-	var documents []string = []string{}
-	if val, ok := input.Documents.([]string); ok {
-		documents = val
-	}
+	// var documents []string = []string{}
+	// if val, ok := input.Documents.([]string); ok {
+	// 	documents = val
+	// }
 	now := time.Now()
 	return &AssignmentTeam{
 		ID:             primitive.NewObjectID(),
@@ -19,7 +19,7 @@ func NewAssignmentTeam(input *entities.AssignmentTeam) *AssignmentTeam {
 		TeamUUID:       input.TeamUUID,
 		Description:    input.Description,
 		IsConfirmed:    false,
-		Documents:      documents,
+		// Documents:      documents,
 		Score:          input.Score,
 		CreatedAt:      now,
 		UpdatedAt:      now,
