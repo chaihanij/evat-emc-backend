@@ -27,8 +27,8 @@ func (h *Handler) CreateCertificate(c *gin.Context) {
 		utils.JSONErrorResponse(c, err)
 		return
 	}
-
-	w.Header().Set("Content-Disposition", "attachment; filename=kittens.pdf")
+	//res
+	w.Header().Set("Content-Disposition", `attachment; filename=`+res.FirstName+`.pdf`)
 	w.Header().Set("Content-Type", "application/pdf")
 	w.WriteHeader(http.StatusOK)
 	w.Write(responseData)
