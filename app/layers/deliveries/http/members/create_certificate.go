@@ -28,7 +28,7 @@ func (h *Handler) CreateCertificate(c *gin.Context) {
 		return
 	}
 	//res
-	w.Header().Set("Content-Disposition", `attachment; filename=`+res.FirstName+`.pdf`)
+	w.Header().Set("Content-Disposition", `attachment; filename=`+res.FirstName+" "+res.LastName+`.pdf`)
 	w.Header().Set("Content-Type", "application/pdf")
 	w.WriteHeader(http.StatusOK)
 	w.Write(responseData)
