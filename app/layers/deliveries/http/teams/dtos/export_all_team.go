@@ -66,8 +66,8 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 
 	fm := excelize.NewFile()
 
-	sheetNameM := "team"
-	index, _ := fm.NewSheet("team")
+	sheetNameM := "Team"
+	index, _ := fm.NewSheet("Team")
 	fm.SetCellValue(sheetNameM, "A1", "ลำดับ")
 	fm.SetColWidth(sheetNameM, "A", "A", 20)
 	fm.SetCellValue(sheetNameM, "B1", "รหัสทีม")
@@ -75,7 +75,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 	fm.SetCellValue(sheetNameM, "C1", "ประเภททีม")
 	fm.SetColWidth(sheetNameM, "C", "C", 20)
 	fm.SetCellValue(sheetNameM, "D1", "ชื่อทีม")
-	fm.SetColWidth(sheetNameM, "D", "D", 20)
+	fm.SetColWidth(sheetNameM, "D", "D", 25)
 	fm.SetCellValue(sheetNameM, "E1", "สถาบันการศึกษา")
 	fm.SetColWidth(sheetNameM, "E", "E", 20)
 	fm.SetCellValue(sheetNameM, "F1", "วันอนุมัติ")
@@ -88,6 +88,14 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 		PaidDateTime = ""
 
 		theTime := time.Date(0001, 01, 01, 00, 00, 00, 100, time.UTC)
+
+		teamType := ""
+
+		if value.TeamType == "STUDENT" {
+			teamType = "นักศึกษา"
+		} else {
+			teamType = "ประชาชนทั่วไป"
+		}
 
 		if theTime.Unix() != value.PaidDateTime.Unix() {
 			PaidDateTime = value.PaidDateTime
@@ -105,7 +113,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 
 			//teamtype
 			convertRow = fmt.Sprintf("C%d", id)
-			fm.SetCellValue(sheetNameM, convertRow, value.TeamType)
+			fm.SetCellValue(sheetNameM, convertRow, teamType)
 
 			//teamname
 			convertRow = fmt.Sprintf("D%d", id)
@@ -124,7 +132,7 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 	fm.DeleteSheet("Sheet1")
 	fm.SetActiveSheet(index)
 
-	fileName := fmt.Sprintf("team-%v-%v-%v.xlsx", time.Now().Day(), time.Now().Month(), time.Now().Year())
+	fileName := fmt.Sprintf("team-info-export.xlsx")
 	fileExt := filepath.Ext(fileName)
 	originalFileName := strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
 	filenames := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v-%v-%v", time.Now().Day(), time.Now().Month(), time.Now().Year()) + fileExt
@@ -138,16 +146,16 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 		fmt.Println("Error opening file:", err)
 		// return
 	}
-	sheetMember := "member"
-	index2, _ := f.NewSheet("member")
-	f.SetCellValue("member", "A1", "Hello from Sheet2!")
+	sheetMember := "Member"
+	index2, _ := f.NewSheet("Member")
+	// f.SetCellValue("member", "A1", "Hello from Sheet2!")
 
 	f.SetCellValue(sheetMember, "A1", "ลำดับ")
 	f.SetColWidth(sheetMember, "A", "A", 20)
 	f.SetCellValue(sheetMember, "B1", "ชื่อ - นามสกุล")
-	f.SetColWidth(sheetMember, "B", "B", 20)
+	f.SetColWidth(sheetMember, "B", "B", 30)
 	f.SetCellValue(sheetMember, "C1", "วันที่ลงทะเบียน")
-	f.SetColWidth(sheetMember, "C", "C", 40)
+	f.SetColWidth(sheetMember, "C", "C", 25)
 	f.SetCellValue(sheetMember, "D1", "เลขบัตรประชาชน")
 	f.SetColWidth(sheetMember, "D", "D", 25)
 	f.SetCellValue(sheetMember, "E1", "ข้อมูล")
@@ -167,16 +175,16 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 			is_national = "ผ่าน"
 		}
 
-		is_data := "ข้อมูลไม่ถูกต้อง"
+		is_data := "ไม่ถูกต้อง"
 
 		if *value.Is_check_data == true {
-			is_data = "ข้อมูลถูกต้อง"
+			is_data = "ถูกต้อง"
 		}
 
-		is_image := "รูปไม่ตรงบัตรประชาชน"
+		is_image := "ไม่ตรง"
 
 		if *value.Is_Check_image == true {
-			is_image = "รูปตรงบัตรประชาชน"
+			is_image = "ตรง"
 		}
 
 		is_checkin := "ยังไม่ได้ลงทะเบียน"
@@ -194,8 +202,16 @@ func (m *ExportAllTeamResponseJSON) Parse(c *gin.Context, data []entities.Team, 
 		theTime := time.Date(0001, 01, 01, 00, 00, 00, 100, time.UTC)
 
 		if theTime.Unix() != value.Checkin_date.Unix() {
-			dateCheckIn = value.Checkin_date
+			timecheckin := value.Checkin_date
+			referenceStartTime := time.Date(timecheckin.Year(), timecheckin.Month(), timecheckin.Day(), timecheckin.Hour(), timecheckin.Minute(), timecheckin.Second(), 0, time.Local)
+
+			s2 := referenceStartTime.Format("2006-01-02 15:04:05")
+
+			dateCheckIn = s2
+			fmt.Println("referenceStartTime :", s2)
 		}
+
+		// fmt.Println("dateCheckIn :", dateCheckIn )
 
 		for i := 1; i <= 1; i++ {
 			idx += 1
