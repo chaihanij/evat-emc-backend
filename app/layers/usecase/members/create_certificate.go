@@ -19,6 +19,9 @@ func (u useCase) CreateCertificate(ctx context.Context, member_uuid string) (*en
 	if err != nil {
 		return nil, err
 	}
+	if *member.Is_checkin != true {
+		return nil, nil
+	}
 
 	config, err := u.ConfigRepo.FindOneConfig(ctx, &entities.Config{UUID: "b8900428-c97d-48f0-aec0-2d47a1bf44b6"})
 	if err != nil {
