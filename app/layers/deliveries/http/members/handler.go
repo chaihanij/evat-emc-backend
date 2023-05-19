@@ -16,7 +16,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 	}
 	v1 := ginEngine.Group("v1")
 	{
-		v1.GET("/member/certificate/:member_uuid", handler.CreateC)
+		v1.GET("/member/certificate/:member_uuid", handler.CreateCertificate)
 	}
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
