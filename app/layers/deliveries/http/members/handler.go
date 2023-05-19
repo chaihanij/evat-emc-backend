@@ -14,6 +14,10 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 	handler := &Handler{
 		MemberUseCase: membersUseCase,
 	}
+	v1 := ginEngine.Group("v1")
+	{
+		v1.GET("/member/certificate/:member_uuid", handler.CreateCertificate)
+	}
 	v1Auth := ginEngine.Group("v1").Use(authMiddleware.Authentication)
 	{
 		v1Auth.GET("/members", handler.FindAllMember)
@@ -33,7 +37,7 @@ func NewEndpointHttpHandler(ginEngine *gin.Engine, authMiddleware middlewares.Au
 		v1Auth.POST("/member/checkin/:member_uuid", handler.MemberCheckIn)
 
 		//CreateCertificate
-		v1Auth.GET("/member/certificate/:member_uuid", handler.CreateC)
+		// v1Auth.GET("/member/certificate/:member_uuid", handler.CreateCertificate)
 		v1Auth.GET("/members/:member_uuid/certificate", handler.CreateCertificate)
 
 		//UploadPDFMember
