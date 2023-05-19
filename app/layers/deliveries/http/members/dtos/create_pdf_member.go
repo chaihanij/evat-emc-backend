@@ -14,7 +14,7 @@ import (
 )
 
 type UpdatePDFRequest struct {
-	MemberUUID string                `uri:"member_uuid" binding:"required,uuid"`
+	MemberUUID string                `uri:"member_uuid"`
 	Document   *multipart.FileHeader `swaggerignore:"true" form:"certificate"`
 
 	OriginalFileName string `swaggerignore:"true"`
@@ -37,7 +37,7 @@ func (req *UpdatePDFRequest) Parse(c *gin.Context) (*UpdatePDFRequest, error) {
 	originalFileName := strings.TrimSuffix(filepath.Base(req.Document.Filename), filepath.Ext(req.Document.Filename))
 	now := time.Now()
 	filename := strings.ReplaceAll(strings.ToLower(originalFileName), " ", "-") + "-" + fmt.Sprintf("%v", now.Unix()) + fileExt
-	dst := filepath.Join(env.DataPath, "members", "certificate", filename)
+	dst := filepath.Join(env.DataPath, "template", "image", filename)
 	if err := c.SaveUploadedFile(req.Document, dst); err != nil {
 		// log.WithError(err).Debugln("UpdateMemberPushDocumentRequest Parse Error")
 		return nil, errors.InternalError{Message: err.Error()}
@@ -46,7 +46,7 @@ func (req *UpdatePDFRequest) Parse(c *gin.Context) (*UpdatePDFRequest, error) {
 	req.FileName = filename
 	req.FileExtension = fileExt
 	req.FileFullPath = dst
-	req.FilePath = filepath.Join("members", "certificate", filename)
+	req.FilePath = filepath.Join("template", "image", filename)
 	// log.WithField("value", req).Debugln("UpdateMemberPushDocumentRequest Parse")
 	return req, nil
 }

@@ -13,12 +13,12 @@ func (u useCase) UploadPDFMember(ctx context.Context, memberUUID string, file *e
 		return nil, err
 	}
 
-	uploadPDFMember, err := u.MembersRepo.UploadPDFMember(ctx, &entities.MemberUpdatePDF{MemberUUID: memberUUID, Files: file.UUID})
+	// uploadPDFMember, err := u.MembersRepo.UploadPDFMember(ctx, &entities.MemberUpdatePDF{MemberUUID: memberUUID, Files: file.UUID})
 
 	logsetting := entities.LogSetting{
-		NewData:     uploadPDFMember,
-		UUID_User:   memberUUID,
-		Discription: "UpdatePDFMember",
+		NewData: file,
+		// UUID_User:   memberUUID,
+		Discription: "Update Image",
 	}
 	_, err = u.LogsettingRepo.CreateLogSetting(ctx, &logsetting)
 	if err != nil {

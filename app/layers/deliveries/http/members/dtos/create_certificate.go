@@ -79,15 +79,16 @@ func (res *ResponseCertificate) Parse(c *gin.Context, input *entities.Member) ([
 		log.WithError(err).Errorln("New PDF Generator Error")
 		return nil, err
 	}
+
+	pdfg.MarginBottom.Set(0)
+	pdfg.MarginLeft.Set(0)
+	pdfg.MarginRight.Set(0)
+	pdfg.MarginTop.Set(0)
 	// read the HTML page as a PDF page
 	page := wkhtmltopdf.NewPageReader(bytes.NewReader(body.Bytes()))
+
 	// enable this if the HTML file contains local references such as images, CSS, etc.
 	page.EnableLocalFileAccess.Set(true)
-
-	// pdfg.GlobalOptions = append(pdfg.GlobalOptions, "--encoding", "utf-8")
-
-	// pdfg.GlobalOptions = append(pdfg.GlobalOptions, "--encoding", "utf-8")
-	// pdfg.SetOptions(wkhtmltopdf.NewOptions().Set("encoding", "utf-8"))
 
 	// add the page to your generator
 	pdfg.AddPage(page)
