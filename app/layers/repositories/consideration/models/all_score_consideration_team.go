@@ -1,6 +1,8 @@
 package models
 
 import (
+	"sort"
+
 	"github.com/jinzhu/copier"
 	"gitlab.com/chaihanij/evat/app/entities"
 )
@@ -42,6 +44,10 @@ func (as AllScoreConsiderations) ToEntity() []entities.AllScore {
 			}
 			allScoresconsiderations = append(allScoresconsiderations, allScoreconsideration)
 		}
+
+		sort.Slice(allScoresconsiderations, func(i, j int) bool {
+			return allScoresconsiderations[i].Title < allScoresconsiderations[j].Title
+		})
 
 		alsc := entities.AllScore{
 			ID:                value.ID,
