@@ -2,6 +2,7 @@ package consideration
 
 import (
 	"context"
+	"sort"
 
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/chaihanij/evat/app/constants"
@@ -112,6 +113,10 @@ func (r repo) AllScore(ctx context.Context, input entities.AllScoreFilter) ([]en
 		log.WithError(err).Errorln("assignment Error")
 		return nil, err
 	}
+
+	sort.Slice(assignments, func(i, j int) bool {
+		return assignments[i].AllConsiderations[0].Title < assignments[j].AllConsiderations[0].Title
+	})
 
 	return assignments.ToEntity(), nil
 }
