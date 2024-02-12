@@ -13,7 +13,7 @@ ENV XDG_RUNTIME_DIR=/tmp
 
 
 # Update OS package and install Git
-RUN apt-get update && apt-get -qy install locales tzdata netcat wkhtmltopdf \
+RUN apt-get update && apt-get -qy install locales tzdata wkhtmltopdf \
     && sed -i 's/# th_/th_/' /etc/locale.gen \
     && locale-gen \
     && cp /usr/share/zoneinfo/Asia/Bangkok /etc/localtime
