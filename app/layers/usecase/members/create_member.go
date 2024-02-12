@@ -13,7 +13,8 @@ func (u useCase) CreateMember(ctx context.Context, input *entities.Member) (*ent
 	if err != nil {
 		return nil, err
 	}
-	if *count > 6 {
+	//OAK Test 7 member in team
+	if *count > 7 {
 		return nil, errors.ParameterError{Message: "Maximum Member in Team"}
 	}
 
