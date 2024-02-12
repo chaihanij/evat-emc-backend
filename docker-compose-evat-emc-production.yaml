@@ -10,9 +10,9 @@ services:
     volumes:
       - ./volumes/production/app:/app
     depends_on:
-      - emc-database-dev
+      - emc-database-production
     environment:
-      BASE_URL: "https://emc.evat.or.th/api"
+      BASE_URL: "https://emc.evat.or.th/apps/evat/emc/api/dev"
       DATA_PATH: /app/data
       LOG_PATH: /app/logs
       DEBUG: T
@@ -71,7 +71,7 @@ services:
     image: mongo:6
     restart: always
     ports:
-      - "47017:27017"
+      - "57017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=6QvgRthCDbfCr2tG

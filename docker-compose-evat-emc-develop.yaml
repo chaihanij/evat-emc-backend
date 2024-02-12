@@ -66,6 +66,7 @@ services:
         -----END PRIVATE KEY-----
       OMISE_PUBLIC_KEY: pkey_test_5v4l5xt6uc3ke9d5kjm
       OMISE_PRIVATE_KEY: skey_test_5v4l5xvlwf5lbxkaxvx
+
   emc-database-dev:
     image: mongo:6
     restart: always
