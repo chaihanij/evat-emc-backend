@@ -28,7 +28,7 @@ func (u useCase) RegisterTeam(ctx context.Context, team *entities.Team, user *en
 		return nil, nil, nil, err
 	}
 
-	var amount int64 = int64(100000)
+	var amount int64 = int64(200000)
 	sourceID, err := u.OmiseRepo.CreateSource(amount)
 	if err != nil {
 		return nil, nil, nil, err
