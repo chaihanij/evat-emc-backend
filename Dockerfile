@@ -45,7 +45,8 @@ ADD resources/template/index.html /var/app/template/index.html
 RUN go mod download
 
 # Install air for local development
-RUN go install github.com/cosmtrek/air@latest
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+# RUN go install github.com/cosmtrek/air@latest
 
 # Install go tool for convert go test output to junit xml
 RUN go get -u github.com/jstemmer/go-junit-report
