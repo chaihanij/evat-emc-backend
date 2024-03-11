@@ -10,7 +10,7 @@ import (
 )
 
 type FindAllUserRequestJSON struct {
-	Year     *string `form:"year" example:"2023"`
+	Year     *string `form:"year" example:"2024"`
 	Page     *int64  `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize *int64  `form:"pageSize" validate:"omitempty,gte=1" example:"20"`
 }

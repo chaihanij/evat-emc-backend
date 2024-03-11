@@ -11,10 +11,10 @@ import (
 )
 
 type FindAllMemberRequest struct {
-	UUID     *string `form:"uuid" example:"2023"`
-	TeamUUID *string `form:"teamUUID" example:"2023"`
-	Year     *string `form:"year" example:"2023"`
-	Sort     *string `form:"sort" example:"2023"`
+	UUID     *string `form:"uuid" example:"2024"`
+	TeamUUID *string `form:"teamUUID" example:"2024"`
+	Year     *string `form:"year" example:"2024"`
+	Sort     *string `form:"sort" example:"2024"`
 	Page     *int64  `form:"page" validate:"omitempty,gte=1" example:"1"`
 	PageSize *int64  `form:"pageSize" validate:"omitempty,gte=1" example:"20"`
 }

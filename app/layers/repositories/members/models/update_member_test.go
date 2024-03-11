@@ -19,7 +19,7 @@ func Test_UpdateMember(t *testing.T) {
 		Email:     "chaihanij@gmail.com",
 		Tel:       "0866304634",
 		Academy:   "มหาวิทยาลัยเทคโนโลยีสุรนารี",
-		Year:      "2023",
+		Year:      "2024",
 		Image:     "c11eecdd-f879-4608-b47b-6babe6a57179",
 		Documents: []string{"d0e1b5d6-b0d0-4b11-b2bb-c4668344d965", "d08afe43-f546-4591-afc5-e5b2e7a3b59a"},
 	}

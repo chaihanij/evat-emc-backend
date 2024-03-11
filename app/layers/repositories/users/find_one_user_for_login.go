@@ -33,10 +33,10 @@ func (r repo) FindOneUserLogin(ctx context.Context, input *entities.UserFilter) 
 		Decode(&user)
 
 	///OAK test 2024 login
-	a := fmt.Sprintf(user.Year)
-	if a != "2024"{
-		log.Print("Account is not in 2024:",a)
-		return nil, errors.RecordNotFoundError{Message: fmt.Sprintf("Account is not in 2024:",a)}
+	//a := fmt.Sprintf(user.Year)
+	if user.Year != "2024"{
+		log.Println("Account is not in 2024: %s",user.Year)
+		return nil, errors.RecordNotFoundError{Message: fmt.Sprintf("Account is not in 2024: %s",user.Year)}
 	}
 	
 	if err != nil{
