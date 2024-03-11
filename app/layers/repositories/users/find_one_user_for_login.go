@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/chaihanij/evat/app/errors"
+	//"gitlab.com/chaihanij/evat/app/errors"
 	"gitlab.com/chaihanij/evat/app/constants"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/env"
