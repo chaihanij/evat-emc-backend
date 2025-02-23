@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------------------
 
 #Builder stage
-FROM golang:1.19 as builder
+FROM golang:1.19 AS builder
 
 # Force the go compiler to use modules
 ENV GO111MODULE=on

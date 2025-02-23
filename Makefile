@@ -55,6 +55,10 @@ up-develop:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" up emc-service-dev
 
+stop-develop:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop.yaml" stop emc-service-dev
+
 up-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-local.yaml" up emc-service-local

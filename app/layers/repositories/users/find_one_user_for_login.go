@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/chaihanij/evat/app/errors"
 	"gitlab.com/chaihanij/evat/app/constants"
 	"gitlab.com/chaihanij/evat/app/entities"
 	"gitlab.com/chaihanij/evat/app/env"
@@ -32,14 +31,14 @@ func (r repo) FindOneUserLogin(ctx context.Context, input *entities.UserFilter) 
 		FindOne(ctx, filter, nil).
 		Decode(&user)
 
-	///OAK test 2024 login
+	/// OAK test 2024 login
 	//a := fmt.Sprintf(user.Year)
-	if user.Year != "2024"{
-		log.Println("Account is not in 2024: %s",user.Year)
-		return nil, errors.RecordNotFoundError{Message: fmt.Sprintf("Account is not in 2024: %s",user.Year)}
-	}
-	
-	if err != nil{
+	//if user.Year != "2024"{
+	//	log.Println("Account is not in 2024: %s",user.Year)
+	//	return nil, errors.RecordNotFoundError{Message: fmt.Sprintf("Account is not in 2024: %s",user.Year)}
+	//}
+
+	if err != nil {
 		log.WithError(err).Errorln("DB FindOneUser Error")
 		return nil, err
 	}

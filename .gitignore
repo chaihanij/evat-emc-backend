@@ -5,3 +5,4 @@ volumes/
 tmp
 vendor/
 out
+.idea

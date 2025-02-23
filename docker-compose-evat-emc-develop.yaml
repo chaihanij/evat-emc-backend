@@ -4,10 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: builder
+    command: sh -c 'cd app/ && air'
     restart: always
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
     volumes:
+      - ./app:/go/src/evat/app
       - ./volumes/dev/app:/app:rw
     depends_on:
       - emc-database-dev
@@ -66,6 +69,7 @@ services:
         -----END PRIVATE KEY-----
       OMISE_PUBLIC_KEY: pkey_test_5v4l5xt6uc3ke9d5kjm
       OMISE_PRIVATE_KEY: skey_test_5v4l5xvlwf5lbxkaxvx
+
 
   emc-database-dev:
     image: mongo:6
