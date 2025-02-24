@@ -39,6 +39,14 @@ develop:
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" pull
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" up -d
 
+debug-develop:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" build
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" stop
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" rm -f
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" pull
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" up -d
+
 local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============= "
 	docker compose  -f "docker-compose-evat-emc-local.yaml" build
@@ -55,9 +63,9 @@ up-develop:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" up emc-service-dev
 
-stop-develop:
+up-develop-debug:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
-	docker compose  -f "docker-compose-evat-emc-develop.yaml" stop emc-service-dev
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" up emc-service-dev
 
 up-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
@@ -70,6 +78,10 @@ stop-production:
 stop-develop:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
 	docker compose  -f "docker-compose-evat-emc-develop.yaml" stop emc-service-dev
+
+stop-develop-debug:
+	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="
+	docker compose  -f "docker-compose-evat-emc-develop-debug.yaml" stop emc-service-dev
 
 stop-local:
 	@echo "============= Docs -> https://docs.docker.com/compose/compose-v2/ ============="

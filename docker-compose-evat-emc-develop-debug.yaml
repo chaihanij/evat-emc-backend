@@ -4,7 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+      target: builder
+    command: sh -c 'cd app/ && air'
     ports:
       - "8080:8080"
     volumes:
