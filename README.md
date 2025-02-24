@@ -16,6 +16,10 @@ Example Flow (https://plantuml.com/)
  * docker compose
  * goland 1.18
 
+extract  evat-emc.gz
+copy voloums to evat-emc-back-end
+copy resources/key to evat-emc-back-end/resources
+
 Environment Production
 
  * docker-compose-evat-emc-develop.yaml
